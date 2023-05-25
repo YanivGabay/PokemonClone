@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.23)
 
-project (Final_Pokémon_Project)
+project (MiniMon)
 set (MY_AUTHORS "shahar_asher-yaniv_gabay")
 
 include (cmake/CompilerSettings.cmake)
@@ -23,6 +23,7 @@ find_package (SFML 2.5 COMPONENTS graphics REQUIRED)
 
 set_target_properties (sfml-main sfml-system sfml-window sfml-graphics sfml-audio sfml-network PROPERTIES MAP_IMPORTED_CONFIG_RELWITHDEBINFO RELEASE)
 
-target_link_libraries (${CMAKE_PROJECT_NAME} sfml-graphics sfml-audio sfml-main)
+target_link_libraries (${CMAKE_PROJECT_NAME} sfml-graphics sfml-main)
 
 include (cmake/SFML.cmake)
+
