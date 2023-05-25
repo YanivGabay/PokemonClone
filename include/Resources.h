@@ -1,11 +1,23 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include <unordered_map>
 #include <memory>
 #include <iostream>
 #include <array>
+
+const int TILE_SIZE = 16;
+
+enum tileID
+{
+	ROCK,
+	FLOWER,
+	GRASS,
+	TALLGRASS
+	
+};
 
 class Resources
 {
@@ -43,7 +55,16 @@ public:
 
 		return *m_font;
 	}
+	sf::Sprite& getTileSprite(TileID tileId)
+	{
+		if (m_tileSprites.find(tileId) == m_tileSprites.end())
+		{
+			std::cerr << "Tile sprite not found: " << tileId << std::endl;
+			throw std::runtime_error("Tile sprite not found.");
+		}
 
+		return *m_tileSprites[tileId];
+	}
 	void loadFont(const std::string& filename)
 	{
 		if (m_font)
@@ -60,17 +81,40 @@ public:
 		}
 	}
 
+	
+
 
 private:
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
+	std::unordered_map<TileID, std::unique_ptr<sf::Sprite>> m_tileSprites;
+	std::unordered_map<TileID, sf::IntRect>& m_tileRects;
 	std::unique_ptr<sf::Font> m_font;
-
+	
+	
 	Resources()
 			{
+		const int spaceBetween = 1;
+	
+
+
+		m_tileRects[GRASS] = sf::IntRect(startIndexs, tileSize);
+		
 	}
 
 	Resources(const Resources&) = delete;
 	Resources& operator=(const Resources&) = delete;
 
-	
+	void loadTileSpriteSheet(const std::string& filename, const std::unordered_map<TileID, sf::IntRect>& tileRects)
+	{
+		sf::Texture& texture = getTexture(filename);
+
+		for (const auto& pair : tileRects)
+		{
+			TileID tileId = pair.first;
+			const sf::IntRect& rect = pair.second;
+
+			std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
+			m_tileSprites[tileId] = std::move(sprite);
+		}
+	}
 };
