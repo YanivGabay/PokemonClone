@@ -1,9 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-const int TILE_SIZE = 32;
+
 const float SCREEN_WIDTH = 800;
 const float SCREEN_HEIGHT = 600;
+
+
 
 class Camera
 {

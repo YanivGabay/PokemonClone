@@ -1,30 +1,27 @@
 #include "Camera.h"
 #include <iostream>
+#include "entity/Player.h"
+
 
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Pokemon Game");
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game");
+    window.setFramerateLimit(60);
 
     // Create the camera
     Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    sf::RectangleShape player(sf::Vector2f(50, 50));
-    sf::RectangleShape test(sf::Vector2f(50, 50));
-    test.setPosition(sf::Vector2f(1000, 1000));
 
-    sf::RectangleShape test2(sf::Vector2f(50, 50));
-    test2.setPosition(sf::Vector2f(900, 600));
+    sf::RectangleShape shape(sf::Vector2f(50, 50));
+    shape.setPosition(1000, 800);
+    shape.setFillColor(sf::Color::Green);
+    Grid grid;
+    Player player(grid);
 
-    float playerX = SCREEN_WIDTH / 2 ;
-    float playerY = SCREEN_HEIGHT / 2;
-    player.setOrigin(player.getSize()/2.0f);
-    player.setPosition(playerX, playerY);
-    player.setFillColor(sf::Color::Red);
+    const sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 fps
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-    test.setFillColor(sf::Color::Green);
-    test2.setFillColor(sf::Color::Green);
-    // Load your map, player, and other game objects here
-
+    sf::Clock clock; // Start a clock for frame timing
     while (window.isOpen())
     {
         sf::Event event;
@@ -34,38 +31,26 @@ int main()
                 window.close();
         }
 
-        // Handle player movement (example: arrow keys)
-        float playerSpeed = 2.0f;
-       
+        sf::Time elapsedTime = clock.restart();
+        timeSinceLastUpdate += elapsedTime;
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            playerX -= playerSpeed;
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            playerX += playerSpeed;
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            playerY -= playerSpeed;
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            playerY += playerSpeed;
-        std::cout << "x:" << playerX << "y:" << playerY << std::endl;
-        // Update the camera
-      
-        player.setPosition(playerX, playerY);
-        
-        camera.update(playerX + player.getSize().x / 2, playerY + player.getSize().y / 2);  // Center camera around the player's center
+        while (timeSinceLastUpdate > TimePerFrame)
+        {
+            timeSinceLastUpdate -= TimePerFrame;
 
-        // Set the active view to the camera's view
+            player.handleInput();
+            player.update(TimePerFrame);
+        }
+
+        sf::Vector2f playerPixelPosition = grid.gridToPixelPosition(player.getPosition());
+
+        camera.update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);  // Center camera around the player's center
         window.setView(camera.getView());
 
-        // Clear the window
         window.clear();
-
-        // Render the visible area of the map and game objects
-        // ...
-        window.draw(test);
-        window.draw(test2);
-        window.draw(player);
-
-        // Display everything
+        grid.draw(window);
+        player.draw(window);
+        window.draw(shape);
         window.display();
     }
 
