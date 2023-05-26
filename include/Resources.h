@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
+
 #include <unordered_map>
 #include <memory>
 #include <iostream>
@@ -10,7 +11,7 @@
 
 const int TILE_SIZE = 16;
 
-enum tileID
+enum TileID
 {
 	ROCK,
 	FLOWER,
@@ -87,19 +88,22 @@ public:
 private:
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
 	std::unordered_map<TileID, std::unique_ptr<sf::Sprite>> m_tileSprites;
-	std::unordered_map<TileID, sf::IntRect>& m_tileRects;
+	std::unordered_map<TileID, sf::IntRect> m_tileRects;
 	std::unique_ptr<sf::Font> m_font;
 	
 	
 	Resources()
-			{
-		const int spaceBetween = 1;
-	
+	{
+		sf::Vector2i startIndexs(3, 61);
+		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 
+		m_tileRects[GRASS] = sf::IntRect(startIndexs, size);
+		startIndexs = startIndexs + sf::Vector2i(0, TILE_SIZE+1);
+		m_tileRects[TALLGRASS] = sf::IntRect(startIndexs, size);
 
-		m_tileRects[GRASS] = sf::IntRect(startIndexs, tileSize);
-		
-	}
+		loadTileSpriteSheet("tileset.png", m_tileRects);
+		std::cout << "after loading tileset.png" << std::endl;
+	};
 
 	Resources(const Resources&) = delete;
 	Resources& operator=(const Resources&) = delete;

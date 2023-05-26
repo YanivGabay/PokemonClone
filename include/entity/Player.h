@@ -1,45 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Camera.h"
-const float TILE_SIZE = 50.0f;
+#include "Tile.h"
+#include "world\TilesMap.h"
 
-class Grid
-{
-public:
-    Grid()
-    {
-        for (int j = 0; j < 20; j++)
-        {
-            for (int i = 0; i < 20; i++)
-            {
-                sf::RectangleShape shape(sf::Vector2f(50, 50));
-                shape.setPosition(i * 50, j * 50);
-                shape.setFillColor(sf::Color::White);
-                shapes.push_back(shape);
 
-            }
-        }
 
-    }
-    void draw(sf::RenderWindow& window)
-    {
-        for (auto& shape : shapes)
-        {
-            window.draw(shape);
-        }
-    }
-    sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
-    {
-        return sf::Vector2f(gridPosition.x * TILE_SIZE, gridPosition.y * TILE_SIZE);
-    }
-private:
-    std::vector <sf::RectangleShape> shapes;
-};
 
 class Player
 {
 public:
-    Player(Grid& grid) : grid(grid), isMoving(false), moveProgress(0.0f), moveSpeed(55.0f), position(0, 0) {}
+    Player() : isMoving(false), moveProgress(0.0f), moveSpeed(55.0f), position(0, 300) {};
 
     void handleInput()
     {
@@ -77,11 +48,11 @@ public:
 
     void draw(sf::RenderWindow& window)
     {
-        sf::Vector2f pixelPosition = grid.gridToPixelPosition(position);
+        sf::Vector2f pixelPosition = gridToPixelPosition(position);
 
         if (isMoving)
         {
-            sf::Vector2f targetPixelPosition = grid.gridToPixelPosition(targetPosition);
+            sf::Vector2f targetPixelPosition = gridToPixelPosition(targetPosition);
             pixelPosition += (targetPixelPosition - pixelPosition) * moveProgress;
         }
 
@@ -96,7 +67,7 @@ public:
     }
 
 private:
-    Grid& grid;
+    
     sf::Vector2i position;
     sf::Vector2i targetPosition;
     bool isMoving;
