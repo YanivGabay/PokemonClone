@@ -10,20 +10,20 @@
 class Player
 {
 public:
-    Player() : isMoving(false), moveProgress(0.0f), moveSpeed(55.0f), position(0, 300) {};
+    Player() : isMoving(false), moveProgress(0.0f), moveSpeed(55.0f), m_position(15, 15) {};
 
     void handleInput()
     {
         if (!isMoving)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                targetPosition = sf::Vector2i(position.x - 1, position.y);
+                targetPosition = sf::Vector2i(m_position.x - 1, m_position.y);
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                targetPosition = sf::Vector2i(position.x + 1, position.y);
+                targetPosition = sf::Vector2i(m_position.x + 1, m_position.y);
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                targetPosition = sf::Vector2i(position.x, position.y - 1);
+                targetPosition = sf::Vector2i(m_position.x, m_position.y - 1);
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                targetPosition = sf::Vector2i(position.x, position.y + 1);
+                targetPosition = sf::Vector2i(m_position.x, m_position.y + 1);
             else
                 return;
 
@@ -39,7 +39,7 @@ public:
 
             if (moveProgress >= 1.0f)
             {
-                position = targetPosition;
+                m_position = targetPosition;
                 isMoving = false;
                 moveProgress = 0.0f;
             }
@@ -48,7 +48,7 @@ public:
 
     void draw(sf::RenderWindow& window)
     {
-        sf::Vector2f pixelPosition = gridToPixelPosition(position);
+        sf::Vector2f pixelPosition = gridToPixelPosition(m_position);
 
         if (isMoving)
         {
@@ -59,16 +59,17 @@ public:
         sf::RectangleShape shape(sf::Vector2f(TILE_SIZE, TILE_SIZE));
         shape.setFillColor(sf::Color::Red);
         shape.setPosition(pixelPosition);
+      
         window.draw(shape);
     }
     sf::Vector2i getPosition()
     {
-        return position;
+        return m_position;
     }
 
 private:
     
-    sf::Vector2i position;
+    sf::Vector2i m_position;
     sf::Vector2i targetPosition;
     bool isMoving;
     float moveProgress;

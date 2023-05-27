@@ -2,7 +2,7 @@
 #include <iostream>
 #include "entity/Player.h"
 #include "world/TilesMap.h"
-
+#include "Tile.h"
 
 int main()
 {
@@ -14,9 +14,7 @@ int main()
     // Create the camera
     Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    sf::RectangleShape shape(sf::Vector2f(50, 50));
-    shape.setPosition(0, 300);
-    shape.setFillColor(sf::Color::Green);
+  
    
     Player myPlayer = Player();
 
@@ -52,6 +50,7 @@ int main()
         window.clear();
         map.draw(window);
         myPlayer.draw(window);
+       
        
        // window.draw(shape);
         window.display();

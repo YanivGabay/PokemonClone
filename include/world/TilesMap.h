@@ -12,26 +12,28 @@ sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
 class TilesMap
 {
 public:
-	TilesMap() 
+	TilesMap(): m_mapXSize(30),m_mapYSize(30), m_lowerTiles(initTiles(30, 30,GRASS)),m_mediumTiles(initTiles(15,15,TALLGRASS))
 	{
-		m_lowerTiles = initTiles(m_mapXSize, m_mapYSize);
+		
 	};
 
 	~TilesMap()
 	{
 	};
-	std::vector<std::unique_ptr<Tile>> initTiles(int mapXSize,int mapYSize)
+	//this is an example of a specfic function that will init a single map
+	//need to make it more generic,or make a bank of maps
+	std::vector<std::unique_ptr<Tile>> initTiles(int mapXSize,int mapYSize,TileID tileType)
 	{
 		Resources& resources = Resources::getInstance();
 		std::vector < std::unique_ptr<Tile>> tiles;
 
-		sf::Sprite& grass = resources.getTileSprite(GRASS);
+		
 		for (int j = 0; j < mapYSize; j++)
 		{
 			for (int i = 0; i < mapXSize; i++)
 			{
-				sf::Vector2f position(i * 16, SCREEN_HEIGHT - (j * 16));
-				tiles.push_back(std::make_unique<Tile>(GRASS, grass, position));
+				sf::Vector2f position(i * TILE_SIZE, (j * TILE_SIZE));
+				tiles.push_back(std::make_unique<Tile>(tileType, resources.getTileSprite(tileType), position));
 				std::cout << "x:" << position.x << "y:" << position.y << std::endl;
 
 			}
@@ -47,14 +49,21 @@ public:
 			
 			
 		}
-		window.display();
-		sf::sleep(sf::Time(sf::seconds(0.025)));
+		for (auto& tile : m_mediumTiles)
+		{
+			tile->draw(window);
+
+
+
+		}
+		
+	
 	}
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
 	std::vector<std::unique_ptr<Tile>> m_mediumTiles;
 	std::vector<std::unique_ptr<Tile>> m_upperTiles;
-
-	const int m_mapXSize = 30;
-	const int m_mapYSize = 30;
+ 
+	int m_mapXSize;
+	int m_mapYSize;
 };
