@@ -29,7 +29,7 @@ public:
 private:
 
 	enum TileID m_myid;
-	sf::Sprite& m_mySprite;
+	 sf::Sprite& m_mySprite;
 	sf::Vector2f m_position;
 
 };
