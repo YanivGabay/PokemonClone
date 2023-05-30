@@ -5,8 +5,6 @@
 #include "world\TilesMap.h"
 
 
-
-
 class Player
 {
 public:

@@ -3,36 +3,36 @@
 #include "entity/Player.h"
 #include "world/TilesMap.h"
 #include "Tile.h"
+#include "Resources.h"
 // Disable MSVC analysis warnings for the box2d include
 #pragma warning(push)
 #pragma warning(disable: 26495 26813)
 #include "box2d/box2d.h"
 #pragma warning(pop)
+
+
 int main()
 {
-    
+    sf::RenderWindow& m_window = Resources::getInstance().getWindow();
 
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game");
-    window.setFramerateLimit(60);
+    m_window.setFramerateLimit(60);
     TilesMap map = TilesMap();
     // Create the camera
     Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-  
-   
+    
     Player myPlayer = Player();
 
     const sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 fps
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
     sf::Clock clock; // Start a clock for frame timing
-    while (window.isOpen())
+    while (m_window.isOpen())
     {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (m_window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                window.close();
+                m_window.close();
         }
 
         sf::Time elapsedTime = clock.restart();
@@ -49,15 +49,15 @@ int main()
         sf::Vector2f playerPixelPosition = gridToPixelPosition(myPlayer.getPosition());
 
         camera.update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);  // Center camera around the player's center
-        window.setView(camera.getView());
+        m_window.setView(camera.getView());
 
-        window.clear();
-        map.draw(window);
-        myPlayer.draw(window);
+        m_window.clear();
+        map.draw(m_window);
+        myPlayer.draw(m_window);
        
        
        // window.draw(shape);
-        window.display();
+        m_window.display();
     }
 
     return 0;

@@ -2,12 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
-
-
 #include <unordered_map>
 #include <memory>
 #include <iostream>
 #include <array>
+
+#include "utilities.h"
 
 const int TILE_SIZE = 16;
 
@@ -17,7 +17,6 @@ enum TileID
 	FLOWER,
 	GRASS,
 	TALLGRASS
-	
 };
 
 class Resources
@@ -82,10 +81,13 @@ public:
 		}
 	}
 
-	
-
+	sf::RenderWindow& getWindow() {
+		return m_window;
+	}
 
 private:
+	sf::RenderWindow m_window;
+
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
 	std::unordered_map<TileID, std::unique_ptr<sf::Sprite>> m_tileSprites;
 	std::unordered_map<TileID, sf::IntRect> m_tileRects;
@@ -93,7 +95,10 @@ private:
 	
 	
 	Resources()
+		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
 	{
+		m_window.setFramerateLimit(FPS);
+
 		sf::Vector2i startIndexs(3, 61);
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 

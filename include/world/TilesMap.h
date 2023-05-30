@@ -3,6 +3,7 @@
 #include "entity/Player.h"
 #include "Tile.h"
 
+
 sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
 {
 	return sf::Vector2f(gridPosition.x * TILE_SIZE, gridPosition.y * TILE_SIZE);

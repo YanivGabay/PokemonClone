@@ -1,10 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Resources.h"
-
-const float SCREEN_WIDTH = 800;
-const float SCREEN_HEIGHT = 600;
-
+#include "utilities.h"
 
 
 class Camera
