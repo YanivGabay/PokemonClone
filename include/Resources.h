@@ -9,15 +9,6 @@
 
 #include "utilities.h"
 
-const int TILE_SIZE = 16;
-
-enum TileID
-{
-	ROCK,
-	FLOWER,
-	GRASS,
-	TALLGRASS
-};
 
 class Resources
 {
@@ -39,12 +30,10 @@ public:
 				throw std::runtime_error("Failed to load texture.");
 			}
 		}
-
+		
 		return *m_textures[filename];
 	}
-
-
-
+	
 	sf::Font& getFont()
 	{
 		if (!m_font)
@@ -55,6 +44,7 @@ public:
 
 		return *m_font;
 	}
+
 	sf::Sprite& getTileSprite(TileID tileId)
 	{
 		if (m_tileSprites.find(tileId) == m_tileSprites.end())
@@ -65,6 +55,7 @@ public:
 
 		return *m_tileSprites[tileId];
 	}
+
 	void loadFont(const std::string& filename)
 	{
 		if (m_font)
@@ -72,8 +63,9 @@ public:
 			std::cerr << "Font has already been loaded." << std::endl;
 			throw std::runtime_error("Font has already been loaded.");
 		}
-
+		
 		m_font = std::make_unique<sf::Font>();
+		
 		if (!m_font->loadFromFile(filename))
 		{
 			std::cerr << "Failed to load font: " << filename << std::endl;
@@ -81,7 +73,8 @@ public:
 		}
 	}
 
-	sf::RenderWindow& getWindow() {
+	sf::RenderWindow& getWindow()
+	{
 		return m_window;
 	}
 
@@ -93,7 +86,11 @@ private:
 	std::unordered_map<TileID, sf::IntRect> m_tileRects;
 	std::unique_ptr<sf::Font> m_font;
 	
+	//------
 	
+	Resources(const Resources&) = delete;
+	Resources& operator=(const Resources&) = delete;
+
 	Resources()
 		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
 	{
@@ -103,15 +100,15 @@ private:
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 
 		m_tileRects[GRASS] = sf::IntRect(startIndexs, size);
-		startIndexs = startIndexs + sf::Vector2i(0, TILE_SIZE+1);
+
+		startIndexs += sf::Vector2i(0, TILE_SIZE+1);
+
 		m_tileRects[TALLGRASS] = sf::IntRect(startIndexs, size);
 
 		loadTileSpriteSheet("tileset.png", m_tileRects);
-		std::cout << "after loading tileset.png" << std::endl;
-	};
 
-	Resources(const Resources&) = delete;
-	Resources& operator=(const Resources&) = delete;
+		// std::cout << "after loading tileset.png" << std::endl;
+	};
 
 	void loadTileSpriteSheet(const std::string& filename, const std::unordered_map<TileID, sf::IntRect>& tileRects)
 	{

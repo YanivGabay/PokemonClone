@@ -1,15 +1,12 @@
 #pragma once
 
+
 class State
 {
 public:
-	State()
-	{
-	}
+	State(){}
 
-	~State()
-	{
-	}
+	~State(){}
 
 private:
 
