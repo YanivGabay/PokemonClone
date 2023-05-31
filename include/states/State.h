@@ -1,13 +1,14 @@
 #pragma once
+#include "StateMachine.h"
 
-
-class State
+class BaseState : boost::statechart::simple_state<BaseState, StateMachine>
 {
-public:
-	State(){}
 
-	~State(){}
+	
+	virtual void entry() = 0;
+	virtual void exit() = 0;
 
-private:
-
+	virtual void update() = 0;
+	virtual void handleEvents() = 0;
+	virtual void draw(sf::RenderWindow window) = 0;
 };

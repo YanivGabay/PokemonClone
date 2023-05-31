@@ -19,7 +19,7 @@ public:
 
     void handleInput()
     {
-        float moveForce = 500.0f;
+        
         if (!m_isMoving)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))

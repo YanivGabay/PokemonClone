@@ -11,15 +11,16 @@
 #include "world/TilesMap.h"
 #include "Tile.h"
 #include "Resources.h"
-
+#include "StateMachine.h"
 
 int main()
 {
     sf::RenderWindow& m_window = Resources::getInstance().getWindow();
 
     TilesMap map = TilesMap();
-    
+    auto stateMachine = std::make_unique<StateMachine>();
     // Create the camera
+    stateMachine->initiate();
     Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     
     Player myPlayer = Player();
@@ -35,6 +36,11 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 m_window.close();
+            else
+            {
+                // Pass event to the current state
+              
+            }
         }
         
         sf::Time elapsedTime = clock.restart();
