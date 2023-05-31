@@ -5,13 +5,17 @@
 #include "Camera.h"
 #include "Tile.h"
 #include "world\TilesMap.h"
+#include "PhysicsMove.h"
 
 
 class Player
 {
 public:
     Player()
-        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15) {};
+        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE))
+    {
+        m_shape.setFillColor(sf::Color::Red);
+    }
 
     void handleInput()
     {
@@ -58,8 +62,7 @@ public:
             pixelPosition += ((targetPixelPosition - pixelPosition) * m_moveProgress);
         }
 
-        sf::RectangleShape shape(sf::Vector2f(TILE_SIZE, TILE_SIZE));
-        shape.setFillColor(sf::Color::Red);
+        
         shape.setPosition(pixelPosition);
         
         window.draw(shape);
@@ -77,4 +80,8 @@ private:
     bool m_isMoving;
     float m_moveProgress;
     float m_moveSpeed;
+
+    PhysicsMove movingObj;
+
+    sf::RectangleShape m_shape;
 };
