@@ -12,13 +12,14 @@ class Player
 {
 public:
     Player()
-        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE)), m_targetPixelPosition(gridToPixelPosition(m_targetPosition))
+        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE)), m_targetPixelPosition(gridToPixelPosition(m_targetPosition)), m_movingObj(15, 15)
     {
         m_shape.setFillColor(sf::Color::Red);
     }
 
     void handleInput()
     {
+
         if (!m_isMoving)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -54,6 +55,7 @@ public:
 
     void update(sf::Time dt)
     {
+        m_movingObj.setMove();
         if (m_isMoving)
         {
             m_moveProgress += (m_moveSpeed * dt.asSeconds());

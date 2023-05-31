@@ -15,14 +15,14 @@
 
 class PhysicsMove {
 public:
-	PhysicsMove()
-        : m_gravity(0.0f, -10.0f), m_world(std::make_unique<b2World>(m_gravity)), m_groundBody(m_world->CreateBody(&m_groundBodyDef)), m_body(m_world->CreateBody(&m_bodyDef)), m_timeStep(1.0f / 60.0f), m_velocityIterations(6), m_positionIterations(2),m_position(m_body->GetPosition()), m_angle(m_body->GetAngle()), m_rect({ 40.f, 40.f }) //, m_worldStepCounter(60)
+	PhysicsMove(int startPosX, int startPosY)
+        : m_gravity(0.0f, 9.8f), m_world(std::make_unique<b2World>(m_gravity)), m_groundBody(m_world->CreateBody(&m_groundBodyDef)), m_body(m_world->CreateBody(&m_bodyDef)), m_timeStep(1.0f / 60.0f), m_velocityIterations(6), m_positionIterations(2),m_position(startPosX, startPosY), m_angle(m_body->GetAngle())
     {
         m_groundBodyDef.position.Set(0.0f, -10.0f);
         m_groundBox.SetAsBox(50.0f, 10.0f);
         m_groundBody->CreateFixture(&m_groundBox, 0.0f);
 
-        m_bodyDef.type = b2_dynamicBody;
+        m_bodyDef.type = b2_staticBody;
         m_bodyDef.position.Set(0.0f, 4.0f);
 
         m_dynamicBox.SetAsBox(1.0f, 1.0f);
@@ -31,8 +31,6 @@ public:
         m_fixtureDef.density = 1.0f;
         m_fixtureDef.friction = 0.3f;
         m_body->CreateFixture(&m_fixtureDef);
-
-        m_rect.setFillColor(sf::Color::Green);
     }
 	
     ~PhysicsMove() = default;
@@ -46,7 +44,7 @@ public:
         m_position = m_body->GetPosition();
         
         // (box2d numbers are not in pixels, so we need some scaling here)
-        m_position *= 100.f;
+        m_position *= 30.f;
         m_angle = m_body->GetAngle();
     }
 
@@ -81,8 +79,4 @@ private:
 
     b2Vec2 m_position;
     float m_angle;
-    
-    sf::RectangleShape m_rect;
-
-    // unsigned int m_worldStepCounter;
 };
