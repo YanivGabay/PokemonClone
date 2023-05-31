@@ -50,7 +50,7 @@ public:
         m_angle = m_body->GetAngle();
     }
 
-    b2Vec2 getMove()
+    b2Vec2 getPos()
     {
         return m_position;
     }

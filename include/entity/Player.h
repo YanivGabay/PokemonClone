@@ -12,7 +12,7 @@ class Player
 {
 public:
     Player()
-        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE))
+        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE)), m_targetPixelPosition(gridToPixelPosition(m_targetPosition))
     {
         m_shape.setFillColor(sf::Color::Red);
     }
@@ -22,13 +22,29 @@ public:
         if (!m_isMoving)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                m_targetPosition = sf::Vector2i(m_position.x - 1, m_position.y);
+            {
+                m_movingObj.setMove();
+
+                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x - 1, m_movingObj.getPos().y);
+            }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                m_targetPosition = sf::Vector2i(m_position.x + 1, m_position.y);
+            {
+                m_movingObj.setMove();
+
+                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x + 1, m_movingObj.getPos().y);
+            }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                m_targetPosition = sf::Vector2i(m_position.x, m_position.y - 1);
+            {
+                m_movingObj.setMove();
+
+                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x, m_movingObj.getPos().y - 1);
+            }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                m_targetPosition = sf::Vector2i(m_position.x, m_position.y + 1);
+            {
+                m_movingObj.setMove();
+
+                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x, m_movingObj.getPos().y + 1);
+            }
             else
                 return;
 
@@ -57,15 +73,15 @@ public:
         
         if (m_isMoving)
         {
-            sf::Vector2f targetPixelPosition = gridToPixelPosition(m_targetPosition);
+            //sf::Vector2f targetPixelPosition = gridToPixelPosition(m_targetPosition);
             
-            pixelPosition += ((targetPixelPosition - pixelPosition) * m_moveProgress);
+            pixelPosition += ((m_targetPixelPosition - pixelPosition) * m_moveProgress);
         }
 
+        m_shape.setPosition(m_movingObj.getPos().x, m_movingObj.getPos().y);
+        m_shape.setRotation(m_movingObj.getAngle());
         
-        shape.setPosition(pixelPosition);
-        
-        window.draw(shape);
+        window.draw(m_shape);
     }
 
     sf::Vector2i getPosition()
@@ -77,11 +93,13 @@ private:
     sf::Vector2i m_position;
     sf::Vector2i m_targetPosition;
 
+    sf::Vector2f m_targetPixelPosition;
+
     bool m_isMoving;
     float m_moveProgress;
     float m_moveSpeed;
 
-    PhysicsMove movingObj;
+    PhysicsMove m_movingObj;
 
     sf::RectangleShape m_shape;
 };
