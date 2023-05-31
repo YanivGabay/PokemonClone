@@ -17,3 +17,11 @@ enum TileID
 	GRASS,
 	TALLGRASS
 };
+
+enum Side
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};

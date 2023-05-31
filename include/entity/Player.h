@@ -19,32 +19,44 @@ public:
 
     void handleInput()
     {
-
+        float moveForce = 500.0f;
         if (!m_isMoving)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
-                m_movingObj.setMove();
+                m_movingObj.setMove(LEFT);
 
-                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x - 1, m_movingObj.getPos().y);
+                m_position.x = m_movingObj.getPos().x;
+                m_position.y = m_movingObj.getPos().y;
+
+                m_targetPosition = sf::Vector2i(m_position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
-                m_movingObj.setMove();
+                m_movingObj.setMove(RIGHT);
 
-                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x + 1, m_movingObj.getPos().y);
+                m_position.x = m_movingObj.getPos().x;
+                m_position.y = m_movingObj.getPos().y;
+
+                m_targetPosition = sf::Vector2i(m_position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
             {
-                m_movingObj.setMove();
+                m_movingObj.setMove(UP);
 
-                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x, m_movingObj.getPos().y - 1);
+                m_position.x = m_movingObj.getPos().x;
+                m_position.y = m_movingObj.getPos().y;
+
+                m_targetPosition = sf::Vector2i(m_position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
             {
-                m_movingObj.setMove();
+                m_movingObj.setMove(DOWN);
 
-                m_targetPosition = sf::Vector2i(m_movingObj.getPos().x, m_movingObj.getPos().y + 1);
+                m_position.x = m_movingObj.getPos().x;
+                m_position.y = m_movingObj.getPos().y;
+
+                m_targetPosition = sf::Vector2i(m_position);
             }
             else
                 return;
@@ -55,7 +67,6 @@ public:
 
     void update(sf::Time dt)
     {
-        m_movingObj.setMove();
         if (m_isMoving)
         {
             m_moveProgress += (m_moveSpeed * dt.asSeconds());
@@ -75,12 +86,12 @@ public:
         
         if (m_isMoving)
         {
-            //sf::Vector2f targetPixelPosition = gridToPixelPosition(m_targetPosition);
+            sf::Vector2f targetPixelPosition = gridToPixelPosition(m_targetPosition);
             
             pixelPosition += ((m_targetPixelPosition - pixelPosition) * m_moveProgress);
         }
 
-        m_shape.setPosition(m_movingObj.getPos().x, m_movingObj.getPos().y);
+        m_shape.setPosition(pixelPosition);
         m_shape.setRotation(m_movingObj.getAngle());
         
         window.draw(m_shape);
