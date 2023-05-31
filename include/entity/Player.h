@@ -88,7 +88,7 @@ public:
         {
             sf::Vector2f targetPixelPosition = gridToPixelPosition(m_targetPosition);
             
-            pixelPosition += ((m_targetPixelPosition - pixelPosition) * m_moveProgress);
+            pixelPosition += ((targetPixelPosition - pixelPosition) * m_moveProgress);
         }
 
         m_shape.setPosition(pixelPosition);
