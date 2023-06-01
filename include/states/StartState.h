@@ -1,4 +1,5 @@
 #pragma once
+#include "State.h"
 
 class StartState : BaseState
 {
@@ -11,6 +12,7 @@ public:
 	{
 	}
 
+	
 private:
-
+	
 };

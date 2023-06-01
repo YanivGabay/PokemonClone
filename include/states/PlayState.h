@@ -1,9 +1,10 @@
 #pragma once
+#include "State.h"
 class PlayState : BaseState
 {
 public:
 	PlayState()
-	{s
+	{
 	}
 
 	~PlayState()

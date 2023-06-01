@@ -18,9 +18,7 @@ int main()
     sf::RenderWindow& m_window = Resources::getInstance().getWindow();
 
     TilesMap map = TilesMap();
-    auto stateMachine = std::make_unique<StateMachine>();
-    // Create the camera
-    stateMachine->initiate();
+ 
     Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     
     Player myPlayer = Player();

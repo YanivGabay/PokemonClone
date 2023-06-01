@@ -5,23 +5,52 @@
 #include "states/PlayState.h"
 #include "states/StartState.h"
 #include "states/State.h"
-#include <boost/statechart/state_machine.hpp>
-#include <boost/statechart/simple_state.hpp>
-#include <boost/statechart/event.hpp>
-#include <boost/statechart/transition.hpp>
-#include <boost/statechart/deep_history.hpp>
-#include <boost/mpl/list.hpp>
+#include "Tile.h"
 
 
 
-struct StateMachine : public boost::statechart::state_machine<StateMachine, StartState>
+class StateMachine 
 {
 public:
-	StateMachine(){}
+	StateMachine() : m_window(Resources::getInstance().getWindow())
+	{
+	};
+	~StateMachine() {};
+	void pushState(std::unique_ptr<BaseState> state)
+	{
+		m_states.push_back(std::move(state));
+	}
 
-	~StateMachine(){}
+	void popState()
+	{
+		if (!m_states.empty())
+		{
+			m_states.pop_back();
+		}
+	}
 
-	typedef boost::statechart::deep_history<PlayState> InitialState;
-private:
+	void update()
+	{
+		if (!m_states.empty())
+		{
+			m_states.back()->update();
+		}
+	}
+
 	
+
+	void draw() 
+	{
+		for (auto& state : m_states)
+		{
+			state->draw(getWindow());
+		}
+	}
+	sf::RenderWindow& getWindow() 
+	{
+		return m_window;
+	}
+private:
+	std::vector <std::unique_ptr<BaseState>> m_states;
+	sf::RenderWindow& m_window;
 };
