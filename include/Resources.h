@@ -10,15 +10,16 @@
 #include "utilities.h"
 enum FrameID
 {
-	LEFT_UP_CORNER,
+	LEFT_UP_CORNER,  
+	UP_HORIZ,
 	RIGHT_UP_CORNER,
-	LEFT_DOWN_CORNER,
-	RIGHT_DOWN_CORNER,
+	LEFT_VERTICAL,
 	MIDDLE,
-	RIGHT_STRAIGHT,
-	LEFT_STRAIGHT,
-	LEFT_HORIZ,
-	RIGHT_HORIZ
+	RIGHT_VERTICAL,
+	LEFT_DOWN_CORNER,
+	DOWN_HORIZ,
+	RIGHT_DOWN_CORNER
+	
 };
 enum Colors
 {
@@ -75,21 +76,21 @@ public:
 	}
 	void loadFrames()
 	{
-		/*LEFT_UP_CORNER,
-			RIGHT_UP_CORNER,
-			LEFT_DOWN_CORNER,
-			RIGHT_DOWN_CORNER,
-			MIDDLE,
-			RIGHT_STRAIGHT,
-			LEFT_STRAIGHT,
-			LEFT_HORIZ,
-			RIGHT_HORIZ
-			*/
+		
 		sf::Vector2i size = sf::Vector2i(TILE_SIZE/2, TILE_SIZE / 2);
 		sf::Vector2i position = sf::Vector2i(0, 0);
 		loadFont("Pokemon.FON");
 		
-		m_frameBoxRects[LEFT_UP_CORNER] = std::make_unique<sf::IntRect>(position,size);
+		for (FrameID id = LEFT_UP_CORNER; id <= RIGHT_DOWN_CORNER; id = static_cast<FrameID>(static_cast<int>(id) + 1))
+		{
+			int row = static_cast<int>(id) / 3;  // Calculate the row index
+			int col = static_cast<int>(id) % 3;  // Calculate the column index
+
+			position.x = col * (TILE_SIZE / 2);   // Update the x position
+			position.y = row * (TILE_SIZE / 2);   // Update the y position
+
+			m_frameBoxRects[id] = std::make_unique<sf::IntRect>(position.x,position.y, size.x,size.y);
+		}
 
 	}
 	sf::Sprite& getTileSprite(TileID tileId)

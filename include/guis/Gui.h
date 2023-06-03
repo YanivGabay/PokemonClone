@@ -8,7 +8,7 @@ class Gui
 {
 public:
 
-    Gui(const sf::Font& font) : m_font(font), m_frameBoxRects(Resources::getInstance().getFrameCord()) , m_frameTexture(Resources::getInstance().getTexture("framesSpritesheet.png"))
+    Gui(const sf::Font& font) : m_font(font),m_frameTexture(Resources::getInstance().getTexture("framesSpritesheet.png"))
     {
         m_text.setFont(m_font);
         m_text.setCharacterSize(30);
@@ -36,8 +36,8 @@ public:
 
 private:
     sf::Text m_text;
-    sf::Texture& m_frameTexture;
-    std::unordered_map<FrameID, sf::IntRect>& m_frameBoxRects;
+    sf::Texture m_frameTexture;
+    
     sf::Vector2f m_position;
     const sf::Font& m_font;
 };
