@@ -9,6 +9,13 @@
 
 #include "utilities.h"
 
+enum Colors
+{
+	RED,
+	BLUE,
+	BLACK,
+	WHITE
+};
 
 class Resources
 {
@@ -18,7 +25,18 @@ public:
 		static Resources instance;
 		return instance;
 	}
+	sf::Color getColor(Colors color)
+	{
+		static std::unordered_map<Colors, sf::Color> colorMap = {
+			{Colors::RED, sf::Color::Red},
+			{Colors::BLUE, sf::Color::Blue},
+			{Colors::BLACK, sf::Color::Black},
+			{Colors::WHITE, sf::Color::White}
+		};
+		
 
+		return colorMap[color];
+	}
 	sf::Texture& getTexture(const std::string& filename)
 	{
 		if (m_textures.find(filename) == m_textures.end())
@@ -72,7 +90,7 @@ public:
 			throw std::runtime_error("Failed to load font.");
 		}
 	}
-
+	
 	sf::RenderWindow& getWindow()
 	{
 		return m_window;
@@ -80,7 +98,7 @@ public:
 
 private:
 	sf::RenderWindow m_window;
-
+	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
 	std::unordered_map<TileID, std::unique_ptr<sf::Sprite>> m_tileSprites;
 	std::unordered_map<TileID, sf::IntRect> m_tileRects;
