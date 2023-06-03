@@ -8,7 +8,18 @@
 #include <array>
 
 #include "utilities.h"
-
+enum FrameID
+{
+	LEFT_UP_CORNER,
+	RIGHT_UP_CORNER,
+	LEFT_DOWN_CORNER,
+	RIGHT_DOWN_CORNER,
+	MIDDLE,
+	RIGHT_STRAIGHT,
+	LEFT_STRAIGHT,
+	LEFT_HORIZ,
+	RIGHT_HORIZ
+};
 enum Colors
 {
 	RED,
@@ -62,7 +73,25 @@ public:
 
 		return *m_font;
 	}
+	void loadFrames()
+	{
+		/*LEFT_UP_CORNER,
+			RIGHT_UP_CORNER,
+			LEFT_DOWN_CORNER,
+			RIGHT_DOWN_CORNER,
+			MIDDLE,
+			RIGHT_STRAIGHT,
+			LEFT_STRAIGHT,
+			LEFT_HORIZ,
+			RIGHT_HORIZ
+			*/
+		sf::Vector2i size = sf::Vector2i(TILE_SIZE/2, TILE_SIZE / 2);
+		sf::Vector2i position = sf::Vector2i(0, 0);
+		loadFont("Pokemon.FON");
+		
+		m_frameBoxRects[LEFT_UP_CORNER] = std::make_unique<sf::IntRect>(position,size);
 
+	}
 	sf::Sprite& getTileSprite(TileID tileId)
 	{
 		if (m_tileSprites.find(tileId) == m_tileSprites.end())
@@ -90,7 +119,10 @@ public:
 			throw std::runtime_error("Failed to load font.");
 		}
 	}
-	
+	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>>& getFrameCord()
+	{
+		return m_frameBoxRects;
+	}
 	sf::RenderWindow& getWindow()
 	{
 		return m_window;
@@ -100,8 +132,11 @@ private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
+
 	std::unordered_map<TileID, std::unique_ptr<sf::Sprite>> m_tileSprites;
-	std::unordered_map<TileID, sf::IntRect> m_tileRects;
+	std::unordered_map<TileID, sf::IntRect> m_tileIdRects;
+
+	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
 	std::unique_ptr<sf::Font> m_font;
 	
 	//------
@@ -117,13 +152,13 @@ private:
 		sf::Vector2i startIndexs(3, 61);
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 
-		m_tileRects[GRASS] = sf::IntRect(startIndexs, size);
+		m_tileIdRects[GRASS] = sf::IntRect(startIndexs, size);
 
 		startIndexs += sf::Vector2i(0, TILE_SIZE+1);
 
-		m_tileRects[TALLGRASS] = sf::IntRect(startIndexs, size);
+		m_tileIdRects[TALLGRASS] = sf::IntRect(startIndexs, size);
 
-		loadTileSpriteSheet("tileset.png", m_tileRects);
+		loadTileSpriteSheet("tileset.png", m_tileIdRects);
 
 		// std::cout << "after loading tileset.png" << std::endl;
 	};

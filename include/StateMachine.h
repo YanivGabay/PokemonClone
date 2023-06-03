@@ -39,12 +39,28 @@ public:
 			m_states.pop_back();
 		}
 	}
-
-	void update()
+	void handleEvents()
 	{
 		if (!m_states.empty())
 		{
-			m_states.back()->update();
+			sf::Event event;
+			while (m_window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+					m_window.close();
+				else
+				{
+					m_states.back()->handleEvents(event);
+
+				}
+			}
+		}
+	}
+	void update(float dt)
+	{
+		if (!m_states.empty())
+		{
+			m_states.back()->update(dt);
 			if (!m_states.back()->getStatus())
 				this->popState();
 		}

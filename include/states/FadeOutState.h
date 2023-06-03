@@ -32,7 +32,7 @@ public:
 			 setStatus(false); // Set the status to false to indicate that the fade-out is complete
 		 }
 	 }
-	 void handleEvents() {
+	 void handleEvents(sf::Event event) {
 
 	 }
 	 void draw(sf::RenderWindow& window) {

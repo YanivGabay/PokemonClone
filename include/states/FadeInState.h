@@ -29,7 +29,7 @@ public:
         }
     }
 
-    void handleEvents() {}
+    void handleEvents(sf::Event event) {}
 
     void draw(sf::RenderWindow& window)
     {

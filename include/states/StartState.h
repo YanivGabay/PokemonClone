@@ -4,12 +4,35 @@
 #include "FadeOutState.h"
 #include "TransitionState.h"
 #include "StartMenuState.h"
+#include <optional>
 
+const int MENU_OPTIONS = 3;
 enum StartMenuOptions
 {
-
+	NEW_GAME,
+	LOAD_GAME,
+	QUIT
 };
 
+std::optional<StartMenuOptions> operator++(std::optional<StartMenuOptions> option)
+{
+	if (option)
+	{
+		*option = static_cast<StartMenuOptions>((static_cast<int>(*option) + 1) % MENU_OPTIONS);
+	}
+	return option;
+}
+std::optional<StartMenuOptions> operator--(std::optional<StartMenuOptions> option)
+{
+	if (option)
+	{
+		int value = static_cast<int>(*option) - 1;
+		if (value < 0)
+			value = MENU_OPTIONS - 1;
+		*option = static_cast<StartMenuOptions>(value);
+	}
+	return option;
+}
 class StartState : BaseState
 {
 public:
@@ -25,9 +48,9 @@ public:
 
 	void entry()
 	{
-
+		
 		m_states.get().pushState(std::move(std::make_unique<FadeInState>(m_states,Resources::getInstance().getColor(BLACK))));
-
+		m_startMenu = std::move(std::make_unique<StartMenuState>(m_states));
 	}
 	void exit()
 	{
@@ -40,19 +63,22 @@ public:
 
 	void update(float dt) 
 	{
-		if (choice)
+		m_startMenu->update(dt);
+		if (m_startMenu->getChoice()==NEW_GAME)
 		{
+			m_choice = std::nullopt;
 			exit();
 		}
 	}
-	void handleEvents()
+	void handleEvents(sf::Event event)
 	{
-
+		m_startMenu->handleEvents(event);
 	}
 	void draw(sf::RenderWindow& window) {
-
+		m_startMenu->draw(window);
 	}
 private:
+	std::optional<StartMenuOptions> m_choice{ std::nullopt };
 	std::reference_wrapper<StateMachine> m_states{ getStateMachine() };
 	std::unique_ptr<StartMenuState> m_startMenu
 

@@ -10,7 +10,7 @@ public:
 	virtual void exit() = 0;
 
 	virtual void update(float dt) = 0;
-	virtual void handleEvents() = 0;
+	virtual void handleEvents(sf::Event event) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 
 
