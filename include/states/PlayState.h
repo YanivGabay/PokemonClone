@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseState.h"
+#include "world/TilesMap.h"
 class PlayState : BaseState
 {
 public:
@@ -12,5 +13,5 @@ public:
 	}
 
 private:
-
+	//std::unique_ptr<Level> m_currentLevel;
 };
