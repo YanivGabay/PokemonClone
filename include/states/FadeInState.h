@@ -1,21 +1,22 @@
 #pragma once
+
 #include "BaseState.h"
+
 
 class FadeInState : public BaseState
 {
 public:
-    FadeInState(StateMachine& states, sf::Color color) : BaseState(states)
+    FadeInState(StateMachine& states, sf::Color color)
+        : BaseState(states)
     {
         m_fadeShape.setSize(sf::Vector2f(getWindowSize()));
         m_fadeShape.setFillColor(color);
     }
 
-    ~FadeInState() {}
+    ~FadeInState() = default;
 
     void entry() {}
-
     void exit() {}
-
     void update(sf::Time dt)
     {
         sf::Time increment = 255.0f / 1.0f * dt; // Adjust the fade-in speed as needed

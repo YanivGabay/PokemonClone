@@ -1,12 +1,16 @@
 #pragma once
 
-#include "BaseState.h"
 #include <optional>
+
+#include "BaseState.h"
 #include "StateMachine.h" 
 #include "FadeInState.h"
 #include "FadeOutState.h"
 #include "PlayState.h"
 #include "TransitionState.h"
+#include "StartMenuState.h"
+
+
 const int MENU_OPTIONS = 3;
 enum StartMenuOptions
 {
@@ -35,34 +39,29 @@ std::optional<StartMenuOptions> operator--(std::optional<StartMenuOptions> optio
 	return option;
 }
 
-#include "StartMenuState.h"
 
 class StartState : public BaseState
 {
 public:
-	StartState(StateMachine& states) :
-		BaseState(states)
+	StartState(StateMachine& states)
+		: BaseState(states)
 	{
 		entry();
 	}
 
-	~StartState ()
-	{
-	}
+	~StartState() = default;
 
 	void entry()
 	{
-		
 		m_states.get().pushState(std::move(std::make_unique<FadeInState>(m_states,Resources::getInstance().getColor(BLACK))));
 		m_startMenu = std::move(std::make_unique<StartMenuState>(m_states));
 	}
+	
 	void exit()
 	{
-		
 		auto playState = std::make_unique<PlayState>(m_states);
 		auto transition = std::make_unique< TransitionState>(std::move(playState), Resources::getInstance().getColor(BLACK));
 		m_states.get().pushState(std::move(transition));
-		
 	}
 
 	void update(sf::Time dt)
@@ -74,16 +73,19 @@ public:
 			exit();
 		}
 	}
+	
 	void handleEvents(sf::Event event)
 	{
 		m_startMenu->handleEvents(event);
 	}
-	void draw(sf::RenderWindow& window) {
+	
+	void draw(sf::RenderWindow& window)
+	{
 		m_startMenu->draw(window);
 	}
+
 private:
 	std::optional<StartMenuOptions> m_choice{ std::nullopt };
 	std::reference_wrapper<StateMachine> m_states{ getStateMachine() };
 	std::unique_ptr<StartMenuState> m_startMenu;
-
 };

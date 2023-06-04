@@ -1,16 +1,15 @@
 #pragma once
+
 #include "BaseState.h"
 #include "world/TilesMap.h"
+
+
 class PlayState : BaseState
 {
 public:
-	PlayState()
-	{
-	}
+	PlayState() = default;
 
-	~PlayState()
-	{
-	}
+	~PlayState() = default;
 
 private:
 	//std::unique_ptr<Level> m_currentLevel;
