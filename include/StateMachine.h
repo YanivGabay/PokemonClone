@@ -7,7 +7,7 @@
 #include "states/BaseState.h"
 #include "Tile.h"
 #include <boost/signals2.hpp>
-
+#include "SFML/Graphics.hpp"
 
 class StateMachine 
 {
@@ -19,6 +19,43 @@ public:
 	~StateMachine() {};
 
 	
+	void runGame()
+	{
+		const sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 fps
+		sf::Time timeSinceLastUpdate = sf::Time::Zero;
+		sf::Clock clock; // Start a clock for frame timing
+		Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		this->pushState(std::make_unique<StartState>(*this));
+
+		while (m_window.isOpen())
+		{
+			this->handleEvents();
+			
+			sf::Time elapsedTime = clock.restart();
+			timeSinceLastUpdate += elapsedTime;
+
+			while (timeSinceLastUpdate > TimePerFrame)
+			{
+				timeSinceLastUpdate -= TimePerFrame;
+				this->update(TimePerFrame);
+				
+			}
+
+			//sf::Vector2f playerPixelPosition = gridToPixelPosition(myPlayer.getPosition());
+
+			//camera.update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);  // Center camera around the player's center
+
+			m_window.setView(camera.getView());
+			m_window.clear();
+
+			this->draw();
+
+			// window.draw(shape);
+			m_window.display();
+		}
+
+		
+	}
 	void pushFadeOut(std::unique_ptr<BaseState> nextstate, std::unique_ptr<BaseState> fadein)
 	{
 		this->popState();
@@ -56,7 +93,7 @@ public:
 			}
 		}
 	}
-	void update(float dt)
+	void update(sf::Time dt)
 	{
 		if (!m_states.empty())
 		{

@@ -21,7 +21,7 @@ public:
 
 	 }
 
-	 void update(float dt) {
+	 void update(sf::Time dt) {
 		 float decrement = 255.0f / 1.0f * dt; // Adjust the fade-out speed as needed
 
 		 m_progress -= static_cast<sf::Uint8>(decrement);

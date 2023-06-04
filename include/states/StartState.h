@@ -33,7 +33,7 @@ std::optional<StartMenuOptions> operator--(std::optional<StartMenuOptions> optio
 	}
 	return option;
 }
-class StartState : BaseState
+class StartState : public BaseState
 {
 public:
 	StartState(StateMachine& states) :
@@ -61,7 +61,7 @@ public:
 		
 	}
 
-	void update(float dt) 
+	void update(sf::Time dt)
 	{
 		m_startMenu->update(dt);
 		if (m_startMenu->getChoice()==NEW_GAME)
@@ -80,6 +80,6 @@ public:
 private:
 	std::optional<StartMenuOptions> m_choice{ std::nullopt };
 	std::reference_wrapper<StateMachine> m_states{ getStateMachine() };
-	std::unique_ptr<StartMenuState> m_startMenu
+	std::unique_ptr<StartMenuState> m_startMenu;
 
 };

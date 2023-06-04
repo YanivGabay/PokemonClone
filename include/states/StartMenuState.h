@@ -32,7 +32,7 @@ public:
 		 
 	 }
 
-	 void update(float dt) 
+	 void update(sf::Time dt)
 	 {
 		 StartMenuOptions option = m_hover.value();
 		 for (size_t i = 0; i < MENU_OPTIONS; i++)

@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 
 // Disable MSVC analysis warnings for the box2d include
@@ -12,9 +13,25 @@
 #include "Tile.h"
 #include "Resources.h"
 #include "StateMachine.h"
-#include "Game.h"
-int main()
+class Game
 {
-	auto game = std::make_unique<Game>();
-	game->runGame();
-}
+public:
+	Game()
+	{
+		runGame();
+	}
+
+	~Game()
+	{
+	}
+	void runGame()
+	{
+        auto stateMachine = std::make_unique<StateMachine>();
+        stateMachine->runGame();
+       
+        
+	}
+
+private:
+
+};

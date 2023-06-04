@@ -23,7 +23,7 @@ public:
     {
         return std::move(m_fadeInState);
     }
-    void update(float dt)
+    void update(sf::Time dt)
     {
         if (m_fadeOutState->getStatus())
         {

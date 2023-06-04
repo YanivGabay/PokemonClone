@@ -16,7 +16,7 @@ public:
 
     void exit() {}
 
-    void update(float dt)
+    void update(sf::Time dt)
     {
         float increment = 255.0f / 1.0f * dt; // Adjust the fade-in speed as needed
 
