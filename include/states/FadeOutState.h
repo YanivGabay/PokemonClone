@@ -22,15 +22,16 @@ public:
 	 }
 
 	 void update(sf::Time dt) {
-		 float decrement = 255.0f / 1.0f * dt; // Adjust the fade-out speed as needed
+		 sf::Time decrement = 255.0f / 1.0f * dt; // Adjust the fade-out speed as needed
 
-		 m_progress -= static_cast<sf::Uint8>(decrement);
+		 m_progress -= static_cast<sf::Uint8>(decrement.asSeconds());
 
 		 if (m_progress <= 0)
 		 {
 			 m_progress = 0;
 			 setStatus(false); // Set the status to false to indicate that the fade-out is complete
 		 }
+		
 	 }
 	 void handleEvents(sf::Event event) {
 

@@ -1,9 +1,10 @@
 #pragma once
+
+
 #include "BaseState.h"
+#include "StateMachine.h"
 #include "FadeInState.h"
 #include "FadeOutState.h"
-#include <boost/signals2.hpp>
-
 class TransitionState : public BaseState
 {
 public:
@@ -47,7 +48,6 @@ private:
     std::unique_ptr<BaseState> m_fadeOutState;
     std::unique_ptr<BaseState> m_fadeInState;
   
-    
-public:
+
       
 };

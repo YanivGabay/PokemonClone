@@ -7,12 +7,13 @@
 #include "box2d/box2d.h"
 #pragma warning(pop)
 
-#include "Camera.h"
-#include "entity/Player.h"
-#include "world/TilesMap.h"
-#include "Tile.h"
-#include "Resources.h"
+#include <memory>
+#include <vector>
 #include "StateMachine.h"
+#include "world/TilesMap.h"
+#include <boost/signals2.hpp>
+#include "SFML/Graphics.hpp"
+#include <iostream>
 class Game
 {
 public:

@@ -3,6 +3,7 @@
 #include "guis/Gui.h"
 #include <optional>
 #include "StartState.h"
+
 class StartMenuState : public BaseState
 {
 public:
@@ -21,7 +22,7 @@ public:
 		 float x = m_windowSize.x / 2 - (buttonSize.x / 2);
 		 for (size_t i = 0; i < MENU_OPTIONS; i++)
 		 {
-			 m_menuSelection[i] = std::make_unique<Gui>(font, buttonSize, sf::Vector2f(x, 50+ buttonSize.y*i));
+			 m_menuSelection[i] = std::move(std::make_unique<Gui>(font, buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
 		 }
 		 m_menuSelection[NEW_GAME]->setText("New Game");
 		 m_menuSelection[LOAD_GAME]->setText("Load Game");
@@ -81,7 +82,7 @@ public:
 	 }
 private:
 	std::array<std::unique_ptr<Gui>, MENU_OPTIONS> m_menuSelection {};
-	std::optional<StartMenuOptions> m_hover{ NEW_GAME };
+	std::optional<StartMenuOptions> m_hover{ std::optional<StartMenuOptions>(NEW_GAME) };
 	std::optional<StartMenuOptions> m_choice {std::nullopt};
 	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
 };

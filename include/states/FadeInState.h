@@ -18,9 +18,9 @@ public:
 
     void update(sf::Time dt)
     {
-        float increment = 255.0f / 1.0f * dt; // Adjust the fade-in speed as needed
+        sf::Time increment = 255.0f / 1.0f * dt; // Adjust the fade-in speed as needed
 
-        m_progress += static_cast<sf::Uint8>(increment);
+        m_progress += static_cast<sf::Uint8>(increment.asSeconds());
 
         if (m_progress >= 255)
         {

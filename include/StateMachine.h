@@ -1,13 +1,11 @@
 #pragma once
 
+
+#include "Resources.h"
+#include "states/StartState.h"
 #include <memory>
 #include <vector>
-#include "states/PlayState.h"
-#include "states/StartState.h"
-#include "states/BaseState.h"
-#include "Tile.h"
-#include <boost/signals2.hpp>
-#include "SFML/Graphics.hpp"
+#include "Camera.h"
 
 class StateMachine 
 {

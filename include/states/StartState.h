@@ -1,11 +1,12 @@
 #pragma once
+
 #include "BaseState.h"
+#include <optional>
+#include "StateMachine.h" 
 #include "FadeInState.h"
 #include "FadeOutState.h"
+#include "PlayState.h"
 #include "TransitionState.h"
-#include "StartMenuState.h"
-#include <optional>
-
 const int MENU_OPTIONS = 3;
 enum StartMenuOptions
 {
@@ -33,6 +34,9 @@ std::optional<StartMenuOptions> operator--(std::optional<StartMenuOptions> optio
 	}
 	return option;
 }
+
+#include "StartMenuState.h"
+
 class StartState : public BaseState
 {
 public:

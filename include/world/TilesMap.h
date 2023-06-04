@@ -2,7 +2,7 @@
 
 #include "Resources.h"
 #include "entity/Player.h"
-#include "Tile.h"
+#include "../Tile.h"
 
 
 sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
