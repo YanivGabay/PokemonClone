@@ -12,36 +12,76 @@ public:
 	}
 	void init()
 	{
-		auto shape = std::make_unique<sf::RectangleShape>(m_size);
-		shape->setTexture(&m_texture);
-		shape->setPosition(m_startPosition);
+		auto middle = std::make_unique<sf::RectangleShape>(m_size);
+		middle->setTexture(&m_texture);
+		middle->setPosition(m_startPosition);
 
+		auto leftUpperCorner = std::make_unique<sf::RectangleShape>(TILE_SIZE/2,TILE_SIZE/2);
 		sf::IntRect rect = *m_frameBoxRects[LEFT_UP_CORNER];
-		shape->setTextureRect(rect);
-		m_shapes.push_back(std::move(shape));
+		leftUpperCorner->setTextureRect(rect);
+		leftUpperCorner->setPosition(m_startPosition);
+		m_shapes.push_back(std::move(leftUpperCorner));
 
-		for (size_t i = 0; i < m_size.x-1; i++)
+		auto rightUpperCorner = std::make_unique<sf::RectangleShape>(TILE_SIZE / 2, TILE_SIZE / 2);
+		sf::IntRect rect = *m_frameBoxRects[RIGHT_UP_CORNER];
+		rightUpperCorner->setTextureRect(rect);
+		rightUpperCorner->setPosition(m_startPosition.x+m_size.x,m_startPosition.y);
+		m_shapes.push_back(std::move(rightUpperCorner));
+
+		auto leftButtomCorner = std::make_unique<sf::RectangleShape>(TILE_SIZE / 2, TILE_SIZE / 2);
+		sf::IntRect rect = *m_frameBoxRects[LEFT_DOWN_CORNER];
+		leftButtomCorner->setTextureRect(rect);
+		leftButtomCorner->setPosition(m_startPosition.x, m_startPosition.y+m_size.y);
+		m_shapes.push_back(std::move(leftButtomCorner));
+
+		auto rightButtomCorner = std::make_unique<sf::RectangleShape>(TILE_SIZE / 2, TILE_SIZE / 2);
+		sf::IntRect rect = *m_frameBoxRects[RIGHT_DOWN_CORNER];
+		rightButtomCorner->setTextureRect(rect);
+		rightButtomCorner->setPosition(m_startPosition.x+m_size.x, m_startPosition.y + m_size.y);
+		m_shapes.push_back(std::move(rightButtomCorner));
+		//between left and right upper corner // horiz up
+
+		for (size_t i = 1; i < m_size.x; i++)
 		{
-			shape->setPosition(m_startPosition.x * i*TILE_SIZE/2, m_startPosition.y);
-			 rect = *m_frameBoxRects[UP_HORIZ];
-			shape->setTextureRect(rect);
-			m_shapes.push_back(std::move(shape));
-		}
-		rect = *m_frameBoxRects[RIGHT_UP_CORNER];
-		shape->setTextureRect(rect);
-		m_shapes.push_back(std::move(shape));
+			auto horizUp = std::make_unique<sf::RectangleShape>(TILE_SIZE / 2, TILE_SIZE / 2);
+			sf::IntRect rect = *m_frameBoxRects[UP_HORIZ];
+			horizUp->setTextureRect(rect);
+			horizUp->setPosition(m_startPosition.x + i* 8, m_startPosition.y );
+			m_shapes.push_back(std::move(horizUp));
 
-		for (size_t i = 0; i < m_size.y-1; i++)
+			auto horizDown = std::make_unique<sf::RectangleShape>(TILE_SIZE / 2, TILE_SIZE / 2);
+			sf::IntRect rect = *m_frameBoxRects[DOWN_HORIZ];
+			horizDown->setTextureRect(rect);
+			horizDown->setPosition(m_startPosition.x + i * 8, m_startPosition.y+m_size.y);
+			m_shapes.push_back(std::move(horizDown));
+		}
+
+		for (size_t i = 1; i < m_size.y; i++)
 		{
+			auto verticalLeft = std::make_unique<sf::RectangleShape>(TILE_SIZE / 2, TILE_SIZE / 2);
+			sf::IntRect rect = *m_frameBoxRects[UP_HORIZ];
+			verticalLeft->setTextureRect(rect);
+			verticalLeft->setPosition(m_startPosition.x , m_startPosition.y+i*8);
+			m_shapes.push_back(std::move(verticalLeft));
 
+			auto verticalRight = std::make_unique<sf::RectangleShape>(TILE_SIZE / 2, TILE_SIZE / 2);
+			sf::IntRect rect = *m_frameBoxRects[DOWN_HORIZ];
+			verticalRight->setTextureRect(rect);
+			verticalRight->setPosition(m_startPosition.x +m_size.x, m_startPosition.y + i * 8);
+			m_shapes.push_back(std::move(verticalRight));
 		}
-		for (size_t i = 0; i < length; i++)
-		{
-
-		}
+		
+		
 	}
 	~Button()
 	{
+	}
+	void draw(sf::RenderWindow& window)
+	{
+		for (const auto& shape : m_shapes)
+		{
+			window.draw(*shape);
+		}
 	}
 
 private:

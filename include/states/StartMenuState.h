@@ -16,8 +16,16 @@ public:
 	}
 	 void entry() 
 	 {
-		//initilize guis
-
+		 sf::Font font = Resources::getInstance().getFont();
+		 sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 4, m_windowSize.y / 4);
+		 float x = m_windowSize.x / 2 - (buttonSize.x / 2);
+		 for (size_t i = 0; i < MENU_OPTIONS; i++)
+		 {
+			 m_menuSelection[i] = std::make_unique<Gui>(font, buttonSize, sf::Vector2f(x, 50+ buttonSize.y*i));
+		 }
+		 m_menuSelection[NEW_GAME]->setText("New Game");
+		 m_menuSelection[LOAD_GAME]->setText("Load Game");
+		 m_menuSelection[QUIT]->setText("Quit");
 	 }
 	 void exit() 
 	 {
@@ -26,6 +34,16 @@ public:
 
 	 void update(float dt) 
 	 {
+		 StartMenuOptions option = m_hover.value();
+		 for (size_t i = 0; i < MENU_OPTIONS; i++)
+		 {
+			 if (i = option)
+			 {
+				 m_menuSelection[i]->setHoverColor();
+			 }
+			 else
+				 m_menuSelection[i]->setResetColor();
+		 }
 		 if (m_choice != std::nullopt)
 		 {
 			 setStatus(false);
@@ -52,7 +70,10 @@ public:
 	 }
 	 void draw(sf::RenderWindow& window) 
 	 {
-	 
+		 for (auto& gui : m_menuSelection)
+		 {
+			 gui->draw(window);
+		 }
 	 }
 	 std::optional <StartMenuOptions> getChoice()
 	 {

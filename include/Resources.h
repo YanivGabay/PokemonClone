@@ -160,7 +160,7 @@ private:
 		m_tileIdRects[TALLGRASS] = sf::IntRect(startIndexs, size);
 
 		loadTileSpriteSheet("tileset.png", m_tileIdRects);
-
+		loadFrames();
 		// std::cout << "after loading tileset.png" << std::endl;
 	};
 
