@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Resources.h"
 #include <functional>
+#include "Stack.h"
 
 class StateMachine;
 
@@ -16,11 +17,11 @@ public:
 	virtual void handleEvents(sf::Event event) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 	
-	BaseState(StateMachine& states)
+	BaseState(Stack<BaseState>& states)
 		: m_states(states)
 	{}
 	
-	std::reference_wrapper<StateMachine> getStateMachine()
+	std::reference_wrapper<Stack<BaseState>> getStateMachine()
 	{
 		return std::ref(m_states);
 	}
@@ -42,6 +43,6 @@ public:
 
 private:
 	bool m_status {true};
-	StateMachine& m_states;
+	Stack<BaseState>& m_states;
 	sf::Vector2i m_windowSize {Resources::getInstance().getWindow().getSize()};
 };

@@ -60,9 +60,18 @@ public:
 			}
 		}
 	}
-
+	void pushQueueState(std::unique_ptr<T> state)
+	{
+		m_stateQueue.push(std::move(state));
+	}
 	void update(sf::Time dt)
 	{
+
+		while (!m_stateQueue.empty())
+		{
+			m_states.push_back(std::move(m_stateQueue.front()));
+			m_stateQueue.pop();
+		}
 		if (!m_states.empty())
 		{
 			m_states.back()->update(dt);
@@ -88,4 +97,5 @@ public:
 private:
 	std::vector <std::unique_ptr<T>> m_states;
 	sf::RenderWindow& m_window;
+	std::queue<std::unique_ptr<T>> m_stateQueue;
 };

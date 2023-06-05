@@ -6,7 +6,7 @@
 class FadeOutState :public BaseState
 {
 public:
-	FadeOutState(StateMachine& states,sf::Color color)
+	FadeOutState(Stack<BaseState>& states,sf::Color color)
 		: BaseState(states)
 	{
 		m_fadeShape.setSize(sf::Vector2f(getWindowSize()));
@@ -15,11 +15,11 @@ public:
 
 	~FadeOutState() = default;
 	
-	void entry() {}
-	void exit() {}
+	void entry() override {}
+	void exit() override {}
 	
 	void update(sf::Time dt)
-	{
+	override {
 		 sf::Time decrement = 255.0f / 1.0f * dt; // Adjust the fade-out speed as needed
 
 		 m_progress -= static_cast<sf::Uint8>(decrement.asSeconds());
@@ -31,8 +31,8 @@ public:
 		 }	
 	 }
 	
-	void handleEvents(sf::Event event) {}
-	void draw(sf::RenderWindow& window)
+	void handleEvents(sf::Event event) override {}
+	void draw(sf::RenderWindow& window) override
 	{
 		window.draw(m_fadeShape);
 	}

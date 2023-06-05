@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <vector>
-
+#include <queue>
 #include "Resources.h"
 #include "states/StartState.h"
 #include "Camera.h"
@@ -24,7 +24,7 @@ public:
 		sf::Time timeSinceLastUpdate = sf::Time::Zero;
 		sf::Clock clock; // Start a clock for frame timing
 		Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		m_states.pushState(std::make_unique<StartState>(*this));
+		m_stateStack.pushState(std::make_unique<StartState>(*this));
 		
 		while (m_window.isOpen())
 		{
@@ -57,17 +57,17 @@ public:
 
 	void handleEvents()
 	{
-		m_states.handleEvents();
+		m_stateStack.handleEvents();
 	}
 	
 	void update(sf::Time dt)
 	{
-		m_states.update(dt);
+		m_stateStack.update(dt);
 	}
 	
 	void draw() 
 	{
-		m_states.draw();
+		m_stateStack.draw();
 	}
 	
 	sf::RenderWindow& getWindow() 
@@ -80,28 +80,29 @@ public:
 
 	void pushFadeOut(std::unique_ptr<BaseState> nextstate, std::unique_ptr<BaseState> fadein)
 	{
-		m_states.pushFadeOut(std::move(nextstate), std::move(fadein));
+		m_stateStack.pushFadeOut(std::move(nextstate), std::move(fadein));
 	}
 
 	void pushState(std::unique_ptr<BaseState> state)
 	{
-		m_states.pushState(std::move(state));
+		m_stateStack.pushState(std::move(state));
 	}
 
 	void popState()
 	{
-		m_states.popState();
+		m_stateStack.popState();
 	}
 
 	BaseState& back() {
-		return m_states.back();
+		return m_stateStack.back();
 	}
 
 	bool empty() {
-		return m_states.empty();
+		return m_stateStack.empty();
 	}
 
 private:
-	Stack<BaseState> m_states;
+	Stack<BaseState> m_stateStack;
+	
 	sf::RenderWindow& m_window;
 };

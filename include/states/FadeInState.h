@@ -6,7 +6,7 @@
 class FadeInState : public BaseState
 {
 public:
-    FadeInState(StateMachine& states, sf::Color color)
+    FadeInState(Stack<BaseState>& states, sf::Color color)
         : BaseState(states)
     {
         m_fadeShape.setSize(sf::Vector2f(getWindowSize()));
@@ -15,9 +15,9 @@ public:
 
     ~FadeInState() = default;
 
-    void entry() {}
-    void exit() {}
-    void update(sf::Time dt)
+    void entry()override {}
+    void exit() override{}
+    void update(sf::Time dt) override 
     {
         sf::Time increment = 255.0f / 1.0f * dt; // Adjust the fade-in speed as needed
 
@@ -30,7 +30,7 @@ public:
         }
     }
 
-    void handleEvents(sf::Event event) {}
+    void handleEvents(sf::Event event) override {}
 
     void draw(sf::RenderWindow& window)
     {

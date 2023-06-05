@@ -4,7 +4,7 @@
 #include "guis/Gui.h"
 #include <optional>
 #include "StartState.h"
-
+#include "StartMenuState.h"
 
 class StartMenuState : public BaseState
 {
