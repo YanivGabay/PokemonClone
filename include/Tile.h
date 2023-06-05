@@ -7,7 +7,7 @@
 class Tile
 {
 public:
-	Tile(TileID id, sf::Sprite& mysprite, sf::Vector2f position)
+	Tile(TilesId id, sf::Sprite& mysprite, sf::Vector2f position)
 		: m_myid(id), m_mySprite(mysprite), m_position(position)
 	{
 		if (!m_mySprite.getTexture()) {
@@ -31,7 +31,7 @@ public:
 	}
 
 private:
-	enum TileID m_myid;
+	TilesId m_myid;
 	sf::Sprite& m_mySprite;
 	sf::Vector2f m_position;
 };

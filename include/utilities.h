@@ -10,13 +10,34 @@ const unsigned int FPS = 60;
 
 // --------------------------------
 
-enum TileID
-{
-	ROCK,
-	FLOWER,
-	GRASS,
-	TALLGRASS
-};
+//if you add another, add it to Resourcses::TUPLE
+
+	enum class FrameID
+	{
+		LEFT_UP_CORNER,
+		UP_HORIZ,
+		RIGHT_UP_CORNER,
+		LEFT_VERTICAL,
+		MIDDLE,
+		RIGHT_VERTICAL,
+		LEFT_DOWN_CORNER,
+		DOWN_HORIZ,
+		RIGHT_DOWN_CORNER,
+		//toadd
+
+		END
+	};
+	enum class MapID
+	{
+		ROCK,
+		FLOWER,
+		GRASS,
+		TALLGRASS,
+		//toadd
+
+		END
+
+	};
 
 enum Side
 {

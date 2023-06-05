@@ -9,9 +9,9 @@ class Gui
 public:
 
     Gui(const sf::Font& font,
-        sf::Vector2f buttonSize,sf::Vector2f buttonPosition) : m_font(font),m_frameTexture(Resources::getInstance().getTexture("resources/framesSpritesheet.png")),
-                                                                                    m_button(std::move(std::make_unique<Button>(buttonSize,buttonPosition,m_frameTexture))),
-                                                                                    m_color(sf::Color::White)
+        sf::Vector2f buttonSize,sf::Vector2f buttonPosition) : m_font(font),
+        m_button(std::move(std::make_unique<Button>(buttonSize,buttonPosition))),
+        m_color(sf::Color::White)
     {
         m_text.setFont(m_font);
         m_text.setCharacterSize(30);
@@ -53,7 +53,7 @@ public:
 private:
     sf::Color m_color;
     sf::Text m_text;
-    sf::Texture m_frameTexture;
+
     std::unique_ptr<Button> m_button;
     sf::Vector2f m_position;
     const sf::Font& m_font;

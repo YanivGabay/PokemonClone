@@ -8,19 +8,8 @@
 #include <array>
 
 #include "utilities.h"
-enum FrameID
-{
-	LEFT_UP_CORNER,  
-	UP_HORIZ,
-	RIGHT_UP_CORNER,
-	LEFT_VERTICAL,
-	MIDDLE,
-	RIGHT_VERTICAL,
-	LEFT_DOWN_CORNER,
-	DOWN_HORIZ,
-	RIGHT_DOWN_CORNER
-	
-};
+
+
 enum Colors
 {
 	RED,
@@ -81,7 +70,7 @@ public:
 		sf::Vector2i position = sf::Vector2i(0, 0);
 		loadFont("resources/fonts/Pokemon.ttf");
 		
-		for (FrameID id = LEFT_UP_CORNER; id <= RIGHT_DOWN_CORNER; id = static_cast<FrameID>(static_cast<int>(id) + 1))
+		for (FrameID id = FrameID::LEFT_UP_CORNER; id != FrameID::END; id = static_cast<FrameID>(static_cast<int>(id) + 1))
 		{
 			int row = static_cast<int>(id) / 3;  // Calculate the row index
 			int col = static_cast<int>(id) % 3;  // Calculate the column index
@@ -93,15 +82,17 @@ public:
 		}
 
 	}
-	sf::Sprite& getTileSprite(TileID tileId)
+	sf::Sprite& getTileSprite(FrameID frameId, MapID mapId)
 	{
-		if (m_tileSprites.find(tileId) == m_tileSprites.end())
+		const auto key = static_cast<int>(frameId) * static_cast<int>(MapID::END) + static_cast<int>(mapId);
+
+		if (m_tileSprites.find(key) == m_tileSprites.end())
 		{
-			std::cerr << "Tile sprite not found: " << tileId << std::endl;
+			std::cerr << "Tile sprite not found: " << std::endl;
 			throw std::runtime_error("Tile sprite not found.");
 		}
 
-		return *m_tileSprites[tileId];
+		return *m_tileSprites[key];
 	}
 
 	void loadFont(const std::string& filename)
@@ -120,7 +111,7 @@ public:
 			throw std::runtime_error("Failed to load font.");
 		}
 	}
-	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>>& getFrameCord()
+	std::unordered_map<TilesId::FrameID, std::unique_ptr<sf::IntRect>>& getFrameCord()
 	{
 		return m_frameBoxRects;
 	}
@@ -133,11 +124,11 @@ private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
-
-	std::unordered_map<TileID, std::unique_ptr<sf::Sprite>> m_tileSprites;
-	std::unordered_map<TileID, sf::IntRect> m_tileIdRects;
-
+	std::unordered_map<int, std::unique_ptr<sf::Sprite>> m_tileSprites;
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
+	std::unordered_map<MapID, std::unique_ptr<sf::IntRect>> m_mapIdRects;
+
+
 	std::unique_ptr<sf::Font> m_font;
 	
 	//------
@@ -153,28 +144,33 @@ private:
 		sf::Vector2i startIndexs(3, 61);
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 
-		m_tileIdRects[GRASS] = sf::IntRect(startIndexs, size);
+		m_mapIdRects[MapID::GRASS] = sf::IntRect(startIndexs, size);
 
 		startIndexs += sf::Vector2i(0, TILE_SIZE+1);
 
-		m_tileIdRects[TALLGRASS] = sf::IntRect(startIndexs, size);
+		m_mapIdRects[MapID::TALLGRASS] = sf::IntRect(startIndexs, size);
 
-		loadTileSpriteSheet("resources/tileset.png", m_tileIdRects);
+		loadTileSpriteSheet("resources/tileset.png", m_mapIdRects);
 		loadFrames();
 		// std::cout << "after loading tileset.png" << std::endl;
 	};
 
-	void loadTileSpriteSheet(const std::string& filename, const std::unordered_map<TileID, sf::IntRect>& tileRects)
+	void loadTileSpriteSheet(const std::string& filename, const sf::Vector2i& startIndexs, const sf::Vector2i& size)
 	{
 		sf::Texture& texture = getTexture(filename);
 
-		for (const auto& pair : tileRects)
+		for (int frameId = 0; frameId < static_cast<int>(FrameID::END); ++frameId)
 		{
-			TileID tileId = pair.first;
-			const sf::IntRect& rect = pair.second;
+			for (int mapId = 0; mapId < static_cast<int>(MapID::END); ++mapId)
+			{
+				const sf::IntRect rect(startIndexs.x + (mapId * (size.x + 1)), startIndexs.y + (frameId * (size.y + 1)), size.x, size.y);
+				const int key = frameId * static_cast<int>(MapID::END) + mapId;
 
-			std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
-			m_tileSprites[tileId] = std::move(sprite);
+				std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
+				m_tileSprites.emplace(key, std::move(sprite));
+			}
 		}
 	}
+
+
 };

@@ -5,79 +5,63 @@
 class Button
 {
 public:
-	Button(sf::Vector2f guiSize,sf::Vector2f position,sf::Texture texture):m_frameBoxRects(Resources::getInstance().getFrameCord()),
-													m_size(guiSize), m_startPosition(position),m_texture(texture)
+	Button(sf::Vector2f guiSize,sf::Vector2f position):m_frameBoxRects(Resources::getInstance().getFrameCord()),
+													m_size(guiSize), m_startPosition(position),m_texture(Resources::getInstance().getTexture("resources/framesSpritesheet.png"))
 	{
 		init();
 	}
-	void init()
-	{
-		auto sizeVector = sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2);
+    void init()
+    {
+        auto sizeVector = sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2);
 
+        auto middle = createSprite(TilesId::FrameID::MIDDLE);
+        middle->setPosition(m_startPosition);
+        m_shapes.push_back(std::move(middle));
 
-		auto middle = std::make_unique<sf::RectangleShape>(sizeVector);
-		sf::IntRect rect = *m_frameBoxRects[MIDDLE];
-		middle->setTexture(&m_texture);
-		middle->setPosition(m_startPosition);
-		m_shapes.push_back(std::move(middle));
+        auto createSprite = [&](TilesId::FrameID frameID, const sf::Vector2f& position) {
+            auto rect = *m_frameBoxRects[frameID];
+           auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
+            sprite->setPosition(position);
+            m_shapes.push_back(std::move(sprite));
+        };
 
-		auto leftUpperCorner = std::make_unique<sf::RectangleShape>(sizeVector);
-		 rect = *m_frameBoxRects[LEFT_UP_CORNER];
-		leftUpperCorner->setTextureRect(rect);
-		leftUpperCorner->setPosition(m_startPosition);
-		m_shapes.push_back(std::move(leftUpperCorner));
+        // Calculate the position of each part of the frame based on m_startPosition and m_size
 
-		auto rightUpperCorner = std::make_unique<sf::RectangleShape>(sizeVector);
-		 rect = *m_frameBoxRects[RIGHT_UP_CORNER];
-		rightUpperCorner->setTextureRect(rect);
-		rightUpperCorner->setPosition(m_startPosition.x+m_size.x,m_startPosition.y);
-		m_shapes.push_back(std::move(rightUpperCorner));
+        const float startX = m_startPosition.x + sizeVector.x;
+        const float startY = m_startPosition.y + sizeVector.y;
+        const float endX = m_startPosition.x + m_size.x - sizeVector.x;
+        const float endY = m_startPosition.y + m_size.y - sizeVector.y;
 
-		auto leftButtomCorner = std::make_unique<sf::RectangleShape>(sizeVector);
-		 rect = *m_frameBoxRects[LEFT_DOWN_CORNER];
-		leftButtomCorner->setTextureRect(rect);
-		leftButtomCorner->setPosition(m_startPosition.x, m_startPosition.y+m_size.y);
-		m_shapes.push_back(std::move(leftButtomCorner));
+        // Corners
+        createSprite(TilesId::FrameID::LEFT_UP_CORNER, sf::Vector2f(m_startPosition.x, m_startPosition.y));
+        createSprite(TilesId::FrameID::RIGHT_UP_CORNER, sf::Vector2f(endX, m_startPosition.y));
+        createSprite(TilesId::FrameID::LEFT_DOWN_CORNER, sf::Vector2f(m_startPosition.x, endY));
+        createSprite(TilesId::FrameID::RIGHT_DOWN_CORNER, sf::Vector2f(endX, endY));
 
-		auto rightButtomCorner = std::make_unique<sf::RectangleShape>(sizeVector);
-		 rect = *m_frameBoxRects[RIGHT_DOWN_CORNER];
-		rightButtomCorner->setTextureRect(rect);
-		rightButtomCorner->setPosition(m_startPosition.x+m_size.x, m_startPosition.y + m_size.y);
-		m_shapes.push_back(std::move(rightButtomCorner));
-		//between left and right upper corner // horiz up
+        // Horizontal lines
+        for (float x = startX; x < endX; x += sizeVector.x)
+        {
+            createSprite(TilesId::FrameID::UP_HORIZ, sf::Vector2f(x, m_startPosition.y));
+            createSprite(TilesId::FrameID::DOWN_HORIZ, sf::Vector2f(x, endY));
+        }
 
-		for (size_t i = 1; i < m_size.x; i++)
-		{
-			auto horizUp = std::make_unique<sf::RectangleShape>(sizeVector);
-			 rect = *m_frameBoxRects[UP_HORIZ];
-			horizUp->setTextureRect(rect);
-			horizUp->setPosition(m_startPosition.x + i* 8, m_startPosition.y );
-			m_shapes.push_back(std::move(horizUp));
+        // Vertical lines
+        for (float y = startY; y < endY; y += sizeVector.y)
+        {
+            createSprite(TilesId::FrameID::LEFT_VERTICAL, sf::Vector2f(m_startPosition.x, y));
+            createSprite(TilesId::FrameID::RIGHT_VERTICAL, sf::Vector2f(endX, y));
+        }
 
-			auto horizDown = std::make_unique<sf::RectangleShape>(sizeVector);
-			 rect = *m_frameBoxRects[DOWN_HORIZ];
-			horizDown->setTextureRect(rect);
-			horizDown->setPosition(m_startPosition.x + i * 8, m_startPosition.y+m_size.y);
-			m_shapes.push_back(std::move(horizDown));
-		}
+        // Fill between the lines
+        for (float x = startX; x < endX; x += sizeVector.x)
+        {
+            for (float y = startY; y < endY; y += sizeVector.y)
+            {
+                createSprite(TilesId::FrameID::MIDDLE, sf::Vector2f(x, y));
+            }
+        }
+    }
 
-		for (size_t i = 1; i < m_size.y; i++)
-		{
-			auto verticalLeft = std::make_unique<sf::RectangleShape>(sizeVector);
-			 rect = *m_frameBoxRects[UP_HORIZ];
-			verticalLeft->setTextureRect(rect);
-			verticalLeft->setPosition(m_startPosition.x , m_startPosition.y+i*8);
-			m_shapes.push_back(std::move(verticalLeft));
-
-			auto verticalRight = std::make_unique<sf::RectangleShape>(sizeVector);
-			 rect = *m_frameBoxRects[DOWN_HORIZ];
-			verticalRight->setTextureRect(rect);
-			verticalRight->setPosition(m_startPosition.x +m_size.x, m_startPosition.y + i * 8);
-			m_shapes.push_back(std::move(verticalRight));
-		}
-		
-		
-	}
 	~Button()
 	{
 	}
@@ -90,11 +74,18 @@ public:
 	}
 
 private:
-	sf::Texture m_texture;
-	sf::Sprite m_sprite;
-	std::vector<std::unique_ptr<sf::RectangleShape>> m_shapes;
+	std::unique_ptr<sf::Sprite> createSprite(TilesId::FrameID frameID)
+	{
+		auto rect = *m_frameBoxRects[frameID];
+		auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
+		return sprite;
+	}
+	sf::Texture& m_texture;
+	
+
+	std::vector<std::unique_ptr<sf::Sprite>> m_shapes;
 	sf::Vector2f m_startPosition;
 	sf::Vector2f m_size;
-	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>>& m_frameBoxRects;
+	std::unordered_map<TilesId::FrameID, std::unique_ptr<sf::IntRect>>& m_frameBoxRects;
 	
 };
