@@ -19,13 +19,13 @@ public:
 	
 	void entry()
 	{
-		sf::Font font = Resources::getInstance().getFont();
+		
 		sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 4, m_windowSize.y / 4);
 		float x = m_windowSize.x / 2 - (buttonSize.x / 2);
 		
 		for (size_t i = 0; i < MENU_OPTIONS; i++)
 		{
-			m_menuSelection[i] = std::move(std::make_unique<Gui>(font, buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
+			m_menuSelection[i] = std::move(std::make_unique<Gui>(Resources::getInstance().getFont() , buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
 		}
 		m_menuSelection[NEW_GAME]->setText("New Game");
 		m_menuSelection[LOAD_GAME]->setText("Load Game");
@@ -36,10 +36,12 @@ public:
 	
 	void update(sf::Time dt)
 	{
+		std::cout << "inside startmenustate->update" << std::endl;
 		StartMenuOptions option = m_hover.value();
-		for (size_t i = 0; i < MENU_OPTIONS; i++)
+		for (int i = 0; i < MENU_OPTIONS; i++)
 		{
-			if (i = option)
+			std::cout << "inside for loop ->startmenustate->update" << std::endl;
+			if (i == option)
 			{
 				m_menuSelection[i]->setHoverColor();
 			}
@@ -54,7 +56,7 @@ public:
 	
 	void handleEvents(sf::Event event)
 	{
-		if (event.KeyReleased)
+		if (event.type == sf::Event::KeyReleased)
 		{
 			if (event.key.code == sf::Keyboard::Enter)
 			{

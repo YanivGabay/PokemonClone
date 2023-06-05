@@ -43,15 +43,18 @@ public:
 	void update(sf::Time dt)
 	{
 		m_startMenu->update(dt);
+		std::cout << "after startstatemenu->update" << std::endl;
 		if (m_startMenu->getChoice()==NEW_GAME)
 		{
 			m_choice = std::nullopt;
 			exit();
 		}
+		std::cout << "finished startstate->update" << std::endl;
 	}
 	
 	void handleEvents(sf::Event event)
 	{
+		std::cout << "inside startstate handlevents" << std::endl;
 		m_startMenu->handleEvents(event);
 	}
 	

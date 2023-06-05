@@ -20,23 +20,25 @@ public:
 
 	void runGame()
 	{
+		std::cout << "inside rungame of statemachine" << std::endl;
 		const sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 fps
 		sf::Time timeSinceLastUpdate = sf::Time::Zero;
 		sf::Clock clock; // Start a clock for frame timing
 		Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
-		
+		std::cout << "afterpushing" << std::endl;
 		while (m_window.isOpen())
 		{
 			this->handleEvents();
 			
 			sf::Time elapsedTime = clock.restart();
 			timeSinceLastUpdate += elapsedTime;
-
+			std::cout << "after handleevents,statemachine" << std::endl;
 			while (timeSinceLastUpdate > TimePerFrame)
 			{
 				timeSinceLastUpdate -= TimePerFrame;
-				this->update(TimePerFrame);				
+				this->update(TimePerFrame);		
+				std::cout << "afterupdate,inside whiletime,statemachine" << std::endl;
 			}
 
 			//sf::Vector2f playerPixelPosition = gridToPixelPosition(myPlayer.getPosition());
@@ -47,7 +49,7 @@ public:
 			m_window.clear();
 
 			this->draw();
-
+			std::cout << "after draw,statemachine" << std::endl;
 			// window.draw(shape);
 			m_window.display();
 		}

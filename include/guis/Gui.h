@@ -11,11 +11,11 @@ public:
     Gui(const sf::Font& font,
         sf::Vector2f buttonSize,sf::Vector2f buttonPosition) : m_font(font),m_frameTexture(Resources::getInstance().getTexture("resources/framesSpritesheet.png")),
                                                                                     m_button(std::move(std::make_unique<Button>(buttonSize,buttonPosition,m_frameTexture))),
-                                                                                    m_color(sf::Color::Black)
+                                                                                    m_color(sf::Color::White)
     {
         m_text.setFont(m_font);
         m_text.setCharacterSize(30);
-        m_text.setFillColor(sf::Color::Black);
+        //m_text.setFillColor(sf::Color::White);
         setPosition(buttonPosition.x, buttonPosition.y+TILE_SIZE);
         
     }

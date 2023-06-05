@@ -67,16 +67,19 @@ public:
 		}
 		if (!m_states.empty())
 		{
+			std::cout << "inside stack->update"<< std::endl;
 			m_states.back()->update(dt);
 			if (!m_states.back()->getStatus())
 				this->popState();
 		}
+		std::cout << "finish stack->update" << std::endl;
 	}
 
 	void draw()
 	{
 		for (auto& state : m_states)
 		{
+			std::cout << "drawing inside the stack draw" << std::endl;
 			state->draw(m_window);
 		}
 	}
