@@ -1,15 +1,15 @@
 #pragma once
 
 #include "BaseState.h"
-#include "StateMachine.h"
+
 #include "FadeInState.h"
 #include "FadeOutState.h"
-
+#include "Stack.h"
 
 class TransitionState : public BaseState
 {
 public:
-    TransitionState(StateMachine& states, std::unique_ptr<BaseState> nextState,sf::Color color)
+    TransitionState(Stack<BaseState>& states, std::unique_ptr<BaseState> nextState,sf::Color color)
         : BaseState(states),
           m_nextState(std::move(nextState)),
           m_fadeOutState(std::make_unique<FadeOutState>(states,color)),
@@ -26,11 +26,14 @@ public:
         return std::move(m_fadeInState);
     }
     
-    void update(sf::Time dt)
+    void update (sf::Time dt)override
     {
         if (m_fadeOutState->getStatus())
         {
-            m_states.get().pushFadeOut(getNextState(),getFadeIn());
+            m_states.get().pushQueueState(getNextState());
+            m_states.get().pushQueueState(getFadeIn());
+            setStatus(false);
+            exit();
         }
         else
         {
@@ -38,14 +41,28 @@ public:
         }
     }
     
-    void draw(sf::RenderWindow& window)
+    void draw (sf::RenderWindow& window)override
     {
        
         m_fadeOutState->draw(window);
     }
+    void entry()override
+    {
+
+     }
+    void exit()override
+    {
+
+     }
+  
+     void handleEvents(sf::Event event)override
+    {
+         
+    }
+   
 
 private:
-    std::reference_wrapper<StateMachine> m_states{ getStateMachine() };
+    std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
     std::unique_ptr<BaseState> m_nextState;
     std::unique_ptr<BaseState> m_fadeOutState;
     std::unique_ptr<BaseState> m_fadeInState;

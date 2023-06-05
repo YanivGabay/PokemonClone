@@ -24,7 +24,7 @@ public:
 		sf::Time timeSinceLastUpdate = sf::Time::Zero;
 		sf::Clock clock; // Start a clock for frame timing
 		Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		m_stateStack.pushState(std::make_unique<StartState>(*this));
+		m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
 		
 		while (m_window.isOpen())
 		{
@@ -75,12 +75,9 @@ public:
 		return m_window;
 	}
 
-
-
-
-	void pushFadeOut(std::unique_ptr<BaseState> nextstate, std::unique_ptr<BaseState> fadein)
+	Stack<BaseState>& getStateStack()
 	{
-		m_stateStack.pushFadeOut(std::move(nextstate), std::move(fadein));
+		return m_stateStack;
 	}
 
 	void pushState(std::unique_ptr<BaseState> state)
@@ -93,9 +90,6 @@ public:
 		m_stateStack.popState();
 	}
 
-	BaseState& back() {
-		return m_stateStack.back();
-	}
 
 	bool empty() {
 		return m_stateStack.empty();

@@ -12,15 +12,7 @@ public:
 		: m_window(Resources::getInstance().getWindow())
 	{}
 	~Stack() = default;
-
-
-	void pushFadeOut(std::unique_ptr<T> nextstate, std::unique_ptr<T> fadein)
-	{
-		this->popState();
-		this->popState();
-		this->pushState(std::move(nextstate));
-		this->pushState(std::move(fadein));
-	}
+		
 
 	void pushState(std::unique_ptr<T> state)
 	{
@@ -35,7 +27,8 @@ public:
 		}
 	}
 
-	T& back() {
+	std::unique_ptr<T>& back()
+	{
 		return m_states.back();
 	}
 
@@ -84,7 +77,7 @@ public:
 	{
 		for (auto& state : m_states)
 		{
-			state->draw(getWindow());
+			state->draw(m_window);
 		}
 	}
 

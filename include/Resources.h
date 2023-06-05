@@ -79,7 +79,7 @@ public:
 		
 		sf::Vector2i size = sf::Vector2i(TILE_SIZE/2, TILE_SIZE / 2);
 		sf::Vector2i position = sf::Vector2i(0, 0);
-		loadFont("Pokemon.FON");
+		loadFont("resources/fonts/Pokemon.ttf");
 		
 		for (FrameID id = LEFT_UP_CORNER; id <= RIGHT_DOWN_CORNER; id = static_cast<FrameID>(static_cast<int>(id) + 1))
 		{
@@ -159,7 +159,7 @@ private:
 
 		m_tileIdRects[TALLGRASS] = sf::IntRect(startIndexs, size);
 
-		loadTileSpriteSheet("tileset.png", m_tileIdRects);
+		loadTileSpriteSheet("resources/tileset.png", m_tileIdRects);
 		loadFrames();
 		// std::cout << "after loading tileset.png" << std::endl;
 	};

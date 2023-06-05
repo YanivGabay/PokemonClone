@@ -6,7 +6,6 @@ set (MY_AUTHORS "shahar_asher-yaniv_gabay")
 include (cmake/CompilerSettings.cmake)
 
 add_executable (${CMAKE_PROJECT_NAME})
-
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
 target_link_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
 

@@ -5,7 +5,7 @@
 #include <functional>
 #include "Stack.h"
 
-class StateMachine;
+
 
 
 class BaseState 
@@ -21,7 +21,7 @@ public:
 		: m_states(states)
 	{}
 	
-	std::reference_wrapper<Stack<BaseState>> getStateMachine()
+	std::reference_wrapper<Stack<BaseState>> getStateStack()
 	{
 		return std::ref(m_states);
 	}

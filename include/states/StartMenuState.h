@@ -4,12 +4,12 @@
 #include "guis/Gui.h"
 #include <optional>
 #include "StartState.h"
-#include "StartMenuState.h"
+#include "Utilities/StartMenuOptions.h"
 
 class StartMenuState : public BaseState
 {
 public:
-	StartMenuState(StateMachine& states)
+	StartMenuState(Stack<BaseState>& states)
 		: BaseState(states)
 	{
 		entry();
@@ -86,7 +86,7 @@ public:
 
 private:
 	std::array<std::unique_ptr<Gui>, MENU_OPTIONS> m_menuSelection {};
-	std::optional<StartMenuOptions> m_hover{ std::optional<StartMenuOptions>(NEW_GAME) };
+	std::optional<StartMenuOptions> m_hover{ NEW_GAME };
 	std::optional<StartMenuOptions> m_choice {std::nullopt};
 	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
 };
