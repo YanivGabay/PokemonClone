@@ -5,19 +5,24 @@
 class Button
 {
 public:
-	Button(sf::Vector2f size,sf::Vector2f position,sf::Texture texture):m_frameBoxRects(Resources::getInstance().getFrameCord()),
-													m_size(size), m_startPosition(position),m_texture(texture)
+	Button(sf::Vector2f guiSize,sf::Vector2f position,sf::Texture texture):m_frameBoxRects(Resources::getInstance().getFrameCord()),
+													m_size(guiSize), m_startPosition(position),m_texture(texture)
 	{
 		init();
 	}
 	void init()
 	{
-		auto middle = std::make_unique<sf::RectangleShape>(m_size);
+		auto sizeVector = sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2);
+
+
+		auto middle = std::make_unique<sf::RectangleShape>(sizeVector);
+		sf::IntRect rect = *m_frameBoxRects[MIDDLE];
 		middle->setTexture(&m_texture);
 		middle->setPosition(m_startPosition);
-		auto sizeVector = sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2);
+		m_shapes.push_back(std::move(middle));
+
 		auto leftUpperCorner = std::make_unique<sf::RectangleShape>(sizeVector);
-		sf::IntRect rect = *m_frameBoxRects[LEFT_UP_CORNER];
+		 rect = *m_frameBoxRects[LEFT_UP_CORNER];
 		leftUpperCorner->setTextureRect(rect);
 		leftUpperCorner->setPosition(m_startPosition);
 		m_shapes.push_back(std::move(leftUpperCorner));
@@ -86,6 +91,7 @@ public:
 
 private:
 	sf::Texture m_texture;
+	sf::Sprite m_sprite;
 	std::vector<std::unique_ptr<sf::RectangleShape>> m_shapes;
 	sf::Vector2f m_startPosition;
 	sf::Vector2f m_size;
