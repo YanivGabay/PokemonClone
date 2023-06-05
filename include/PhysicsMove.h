@@ -18,7 +18,7 @@ const float moveForce = 1.0f;
 class PhysicsMove {
 public:
 	PhysicsMove(int startPosX, int startPosY)
-        : m_gravity(SCREEN_WIDTH, SCREEN_HEIGHT), m_world(std::make_unique<b2World>(m_gravity)), m_groundBody(m_world->CreateBody(&m_groundBodyDef)), m_body(m_world->CreateBody(&m_bodyDef)), m_timeStep(1.0f / 60.0f), m_velocityIterations(6), m_positionIterations(2),m_position(startPosX, startPosY), m_angle(m_body->GetAngle())
+        : m_gravity(0.0f, 9.8f), m_world(std::make_unique<b2World>(m_gravity)), m_groundBody(m_world->CreateBody(&m_groundBodyDef)), m_body(m_world->CreateBody(&m_bodyDef)), m_timeStep(1.0f / 60.0f), m_velocityIterations(6), m_positionIterations(2),m_position(startPosX, startPosY), m_angle(m_body->GetAngle())
     {
         m_groundBodyDef.position.Set(startPosX, startPosY);
         m_groundBox.SetAsBox(50.0f, 10.0f);

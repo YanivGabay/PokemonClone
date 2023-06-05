@@ -11,9 +11,10 @@
 #include <vector>
 #include "StateMachine.h"
 #include "world/TilesMap.h"
-#include <boost/signals2.hpp>
 #include "SFML/Graphics.hpp"
 #include <iostream>
+
+
 class Game
 {
 public:

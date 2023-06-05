@@ -30,7 +30,6 @@ public:
     {
         if (m_fadeOutState->getStatus())
         {
-           
             m_states.get().pushFadeOut(getNextState(),getFadeIn());
         }
         else

@@ -75,8 +75,33 @@ public:
 		return m_window;
 	}
 
+
+
+
+	void pushFadeOut(std::unique_ptr<BaseState> nextstate, std::unique_ptr<BaseState> fadein)
+	{
+		m_states.pushFadeOut(std::move(nextstate), std::move(fadein));
+	}
+
+	void pushState(std::unique_ptr<BaseState> state)
+	{
+		m_states.pushState(std::move(state));
+	}
+
+	void popState()
+	{
+		m_states.popState();
+	}
+
+	BaseState& back() {
+		return m_states.back();
+	}
+
+	bool empty() {
+		return m_states.empty();
+	}
+
 private:
-	// std::vector <std::unique_ptr<BaseState>> m_states;
 	Stack<BaseState> m_states;
 	sf::RenderWindow& m_window;
 };
