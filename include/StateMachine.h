@@ -26,6 +26,7 @@ public:
 		sf::Clock clock; // Start a clock for frame timing
 		Camera camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
+		m_stateStack.pushState(std::move(std::make_unique<FadeInState>(getStateStack(), Resources::getInstance().getColor(BLACK))));
 		std::cout << "afterpushing" << std::endl;
 		while (m_window.isOpen())
 		{

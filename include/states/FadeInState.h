@@ -27,7 +27,7 @@ public:
 
         if (shapeColor.a <  5)
         {
-            shapeColor.a = 0;
+            shapeColor.a = 2;
             setStatus(false); // Set the status to false to indicate that the fade-in is complete
         }
 

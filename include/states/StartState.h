@@ -29,7 +29,7 @@ public:
 	void entry()
 	{
 		m_startMenu = std::move(std::make_unique<StartMenuState>(m_states));
-		m_states.get().pushQueueState(std::move(std::make_unique<FadeInState>(m_states.get(), Resources::getInstance().getColor(BLACK))));
+		
 		
 	}
 	
