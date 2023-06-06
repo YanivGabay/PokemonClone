@@ -52,8 +52,7 @@ public:
 				}
 			}
 		}
-		if (m_states.empty())
-			m_window.close();
+		
 	}
 	void pushQueueState(std::unique_ptr<T> state)
 	{
@@ -90,7 +89,12 @@ public:
 	{
 		return m_window;
 	}
-
+	int size()
+	{	
+		if (m_states.empty())
+			return 0;
+		return m_states.size();
+	}
 
 private:
 	std::vector <std::unique_ptr<T>> m_states;

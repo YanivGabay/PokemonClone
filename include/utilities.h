@@ -11,6 +11,18 @@ const unsigned int FPS = 60;
 // --------------------------------
 
 //if you add another, add it to Resourcses::TUPLE
+enum class LevelID
+{
+	POKE_CENTER,
+	START_TOWN,
+	START_FIELD,
+	SECOND_TOWN,
+	SECOND_FIELD,
+	MINI_PHYSICS_LEVEL,
+
+
+	END
+};
 
 	enum class FrameID
 	{

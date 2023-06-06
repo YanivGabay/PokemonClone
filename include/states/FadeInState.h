@@ -23,9 +23,10 @@ public:
 
         sf::Color shapeColor = m_fadeShape.getFillColor();
         shapeColor.a -= (increment);
-        std::cout << "inside FFF fadeout ->update, alpha = " << static_cast<int>(shapeColor.a) << std::endl;
-
-        if (shapeColor.a <  5)
+        m_progress += increment;
+        std::cout << "inside FFF fadein ->update, alpha = " << static_cast<int>(shapeColor.a) << std::endl;
+        std::cout << "inside FFF fadein ->update, m_progress = " << m_progress << std::endl;
+        if (m_progress>5)
         {
             shapeColor.a = 2;
             setStatus(false); // Set the status to false to indicate that the fade-in is complete
@@ -39,7 +40,7 @@ public:
 
     void draw(sf::RenderWindow& window) override
     {
-        std::cout << "inside FFF fateout ->draw" << std::endl;
+        std::cout << "inside FFF fadein->draw" << std::endl;
         window.draw(m_fadeShape);
     }
 

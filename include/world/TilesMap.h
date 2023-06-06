@@ -46,13 +46,16 @@ public:
 
 		for (auto& tile : m_mediumTiles)
 			tile->draw(window);
+
+		
 	}
 
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
 	std::vector<std::unique_ptr<Tile>> m_mediumTiles;
 	std::vector<std::unique_ptr<Tile>> m_upperTiles;
- 
+	std::vector<std::unique_ptr<Tile>> m_exits;
+	
 	int m_mapXSize;
 	int m_mapYSize;
 };

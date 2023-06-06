@@ -71,6 +71,7 @@ public:
 
     void update(sf::Time dt)
     {
+        std::cout << "player->update" << std::endl;
         if (m_isMoving)
         {
             m_moveProgress += (m_moveSpeed * dt.asSeconds());

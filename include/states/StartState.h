@@ -47,6 +47,7 @@ public:
 		//std::cout << "after startstatemenu->update" << std::endl;
 		if (m_startMenu->getChoice() == QUIT)
 		{
+			m_choice = std::nullopt;
 			setStatus(false);
 		}
 		if (m_startMenu->getChoice()==NEW_GAME)
@@ -56,7 +57,7 @@ public:
 			setStatus(false);
 		}
 		
-		//std::cout << "finished startstate->update" << std::endl;
+	
 	}
 	
 	void handleEvents(sf::Event event)
