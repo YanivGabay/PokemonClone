@@ -45,11 +45,17 @@ public:
 	{
 		m_startMenu->update(dt);
 		//std::cout << "after startstatemenu->update" << std::endl;
+		if (m_startMenu->getChoice() == QUIT)
+		{
+			setStatus(false);
+		}
 		if (m_startMenu->getChoice()==NEW_GAME)
 		{
 			m_choice = std::nullopt;
 			exit();
+			setStatus(false);
 		}
+		
 		//std::cout << "finished startstate->update" << std::endl;
 	}
 	

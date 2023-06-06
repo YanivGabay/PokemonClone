@@ -52,6 +52,8 @@ public:
 				}
 			}
 		}
+		if (m_states.empty())
+			m_window.close();
 	}
 	void pushQueueState(std::unique_ptr<T> state)
 	{
