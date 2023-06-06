@@ -14,11 +14,11 @@ public:
     {
         auto sizeVector = sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2);
 
-        auto middle = createSprite(TilesId::FrameID::MIDDLE);
+        auto middle = createSprite(FrameID::MIDDLE);
         middle->setPosition(m_startPosition);
         m_shapes.push_back(std::move(middle));
 
-        auto createSprite = [&](TilesId::FrameID frameID, const sf::Vector2f& position) {
+        auto createSprite = [&](FrameID frameID, const sf::Vector2f& position) {
             auto rect = *m_frameBoxRects[frameID];
            auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
             sprite->setPosition(position);
@@ -33,23 +33,23 @@ public:
         const float endY = m_startPosition.y + m_size.y - sizeVector.y;
 
         // Corners
-        createSprite(TilesId::FrameID::LEFT_UP_CORNER, sf::Vector2f(m_startPosition.x, m_startPosition.y));
-        createSprite(TilesId::FrameID::RIGHT_UP_CORNER, sf::Vector2f(endX, m_startPosition.y));
-        createSprite(TilesId::FrameID::LEFT_DOWN_CORNER, sf::Vector2f(m_startPosition.x, endY));
-        createSprite(TilesId::FrameID::RIGHT_DOWN_CORNER, sf::Vector2f(endX, endY));
+        createSprite(FrameID::LEFT_UP_CORNER, sf::Vector2f(m_startPosition.x, m_startPosition.y));
+        createSprite(FrameID::RIGHT_UP_CORNER, sf::Vector2f(endX, m_startPosition.y));
+        createSprite(FrameID::LEFT_DOWN_CORNER, sf::Vector2f(m_startPosition.x, endY));
+        createSprite(FrameID::RIGHT_DOWN_CORNER, sf::Vector2f(endX, endY));
 
         // Horizontal lines
         for (float x = startX; x < endX; x += sizeVector.x)
         {
-            createSprite(TilesId::FrameID::UP_HORIZ, sf::Vector2f(x, m_startPosition.y));
-            createSprite(TilesId::FrameID::DOWN_HORIZ, sf::Vector2f(x, endY));
+            createSprite(FrameID::UP_HORIZ, sf::Vector2f(x, m_startPosition.y));
+            createSprite(FrameID::DOWN_HORIZ, sf::Vector2f(x, endY));
         }
 
         // Vertical lines
         for (float y = startY; y < endY; y += sizeVector.y)
         {
-            createSprite(TilesId::FrameID::LEFT_VERTICAL, sf::Vector2f(m_startPosition.x, y));
-            createSprite(TilesId::FrameID::RIGHT_VERTICAL, sf::Vector2f(endX, y));
+            createSprite(FrameID::LEFT_VERTICAL, sf::Vector2f(m_startPosition.x, y));
+            createSprite(FrameID::RIGHT_VERTICAL, sf::Vector2f(endX, y));
         }
 
         // Fill between the lines
@@ -57,7 +57,7 @@ public:
         {
             for (float y = startY; y < endY; y += sizeVector.y)
             {
-                createSprite(TilesId::FrameID::MIDDLE, sf::Vector2f(x, y));
+                createSprite(FrameID::MIDDLE, sf::Vector2f(x, y));
             }
         }
     }
@@ -74,7 +74,7 @@ public:
 	}
 
 private:
-	std::unique_ptr<sf::Sprite> createSprite(TilesId::FrameID frameID)
+	std::unique_ptr<sf::Sprite> createSprite(FrameID frameID)
 	{
 		auto rect = *m_frameBoxRects[frameID];
 		auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
@@ -86,6 +86,6 @@ private:
 	std::vector<std::unique_ptr<sf::Sprite>> m_shapes;
 	sf::Vector2f m_startPosition;
 	sf::Vector2f m_size;
-	std::unordered_map<TilesId::FrameID, std::unique_ptr<sf::IntRect>>& m_frameBoxRects;
+	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>>& m_frameBoxRects;
 	
 };
