@@ -19,15 +19,15 @@ public:
     void exit() override{}
     void update(sf::Time dt) override
     {
-        float increment = 255.0f / 5.0f * dt.asSeconds(); // Adjust the fade-in speed as needed
+        float increment = 255.0f /200.0f * dt.asSeconds(); // Adjust the fade-in speed as needed
 
         sf::Color shapeColor = m_fadeShape.getFillColor();
-        shapeColor.a += static_cast<sf::Uint8>(increment);
+        shapeColor.a -= (increment);
         std::cout << "inside FFF fadeout ->update, alpha = " << static_cast<int>(shapeColor.a) << std::endl;
 
-        if (shapeColor.a >= 255)
+        if (shapeColor.a <  5)
         {
-            shapeColor.a = 255;
+            shapeColor.a = 0;
             setStatus(false); // Set the status to false to indicate that the fade-in is complete
         }
 
