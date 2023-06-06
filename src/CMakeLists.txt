@@ -5,4 +5,4 @@ target_sources (${CMAKE_PROJECT_NAME} PRIVATE ${MY_SOURCE_FILES} "../include/Sta
 "../include/states/StartState.h" "../include/states/BaseState.h" "../include/states/PlayState.h"
 "../include/guis/Gui.h" "../include/world/TilesMap.h" "../include/utilities.h" "../include/PhysicsMove.h"
 "../include/states/FadeInState.h" "../include/states/FadeOutState.h" "../include/states/TransitionState.h" "../include/states/StartMenuState.h"
-"../include/guis/Button.h" "../include/Game.h" "../include/Stack.h" "../include/Utilities/StartMenuOptions.h")
+"../include/guis/Button.h" "../include/Game.h" "../include/Stack.h" "../include/Utilities/StartMenuOptions.h" "../include/Utilities/Fades.h")

@@ -89,8 +89,11 @@ public:
 private:
 	std::array<std::unique_ptr<Gui>, MENU_OPTIONS> m_menuSelection {};
 	std::optional<StartMenuOptions> m_hover{ NEW_GAME };
+
 	//FOR DEBUGGING DONT FORGOT TO DELETE WHEN FINISH PLAYSTATE WORKING
-	std::optional<StartMenuOptions> m_choice {NEW_GAME};
-	//std::optional<StartMenuOptions> m_choice {std::nullopt};
+	//std::optional<StartMenuOptions> m_choice {NEW_GAME};
+
+
+	std::optional<StartMenuOptions> m_choice {std::nullopt};
 	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
 };

@@ -18,7 +18,13 @@ public:
 	{
 		m_states.push_back(std::move(state));
 	}
-
+	void popStart()
+	{
+		if (!m_states.empty())
+		{
+			m_states.erase(m_states.begin());
+		}
+	}
 	void popState()
 	{
 		if (!m_states.empty())

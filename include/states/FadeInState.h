@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BaseState.h"
-
+#include "Utilities/Fades.h"
 
 class FadeInState : public BaseState
 {
@@ -19,20 +19,20 @@ public:
     void exit() override{}
     void update(sf::Time dt) override
     {
-        float increment = 255.0f /200.0f * dt.asSeconds(); // Adjust the fade-in speed as needed
+        float increment = MaxProgress / (FrameDuration * FramesPerSecond);
 
-        sf::Color shapeColor = m_fadeShape.getFillColor();
-        shapeColor.a -= (increment);
-        m_progress += increment;
-        std::cout << "inside FFF fadein ->update, alpha = " << static_cast<int>(shapeColor.a) << std::endl;
+        m_progress -= increment;
+        m_color.a = static_cast<sf::Uint8>(m_progress / 257.0f);
+        m_fadeShape.setFillColor(m_color);
+
+        std::cout << "inside FFF fadein ->update, alpha = " << static_cast<int>(m_color.a) << std::endl;
         std::cout << "inside FFF fadein ->update, m_progress = " << m_progress << std::endl;
-        if (m_progress>5)
+
+        if (m_progress <= 0.0f)
         {
-            shapeColor.a = 2;
+            m_color.a = 0;
             setStatus(false); // Set the status to false to indicate that the fade-in is complete
         }
-
-        m_fadeShape.setFillColor(shapeColor);
     }
 
 
@@ -47,6 +47,6 @@ public:
 private:
     sf::RectangleShape m_fadeShape;
     sf::Color m_color;
-  float m_progress{ 0 };
+  float m_progress{ 65535.0f };
   
 };

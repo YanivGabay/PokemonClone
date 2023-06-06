@@ -54,7 +54,7 @@ public:
 		{
 			m_choice = std::nullopt;
 			exit();
-			setStatus(false);
+			
 		}
 		
 	

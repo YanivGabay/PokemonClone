@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BaseState.h"
-
+#include "Utilities/Fades.h"
 
 class FadeOutState : public BaseState
 {
@@ -9,8 +9,9 @@ public:
     FadeOutState(Stack<BaseState>& states, sf::Color color)
         : BaseState(states), m_color(color)
     {
+        m_color.a = 0;
         m_fadeShape.setSize(sf::Vector2f(getWindowSize()));
-        m_fadeShape.setFillColor(sf::Color::Transparent);
+        m_fadeShape.setFillColor(m_color);
     }
 
     ~FadeOutState() = default;
@@ -19,21 +20,27 @@ public:
     void exit() override {}
     void update(sf::Time dt) override
     {
-        float increment = 255.0f / 200.0f * dt.asSeconds(); // Adjust the fade-in speed as needed
+        float increment = MaxProgress / (FrameDuration * FramesPerSecond);
         m_progress += increment;
-        sf::Color shapeColor = sf::Color::Transparent;
-        shapeColor.r = static_cast<sf::Uint8>(m_progress * m_color.r);
-        shapeColor.g = static_cast<sf::Uint8>(m_progress * m_color.g);
-        shapeColor.b = static_cast<sf::Uint8>(m_progress * m_color.b);
-        shapeColor.a = static_cast<sf::Uint8>(255.0f - m_progress * 255.0f);
-        if (m_progress > 5)
+
+        sf::Color shapeColor = m_fadeShape.getFillColor();
+
+        if (m_progress > 65535.0f)
         {
-            shapeColor = m_color;
+            m_progress = 65535.0f;
             setStatus(false); // Set the status to false to indicate that the fade-in is complete
         }
 
+        shapeColor.a = static_cast<sf::Uint8>(m_progress / 257.0f);
         m_fadeShape.setFillColor(shapeColor);
+
+        // Print out debug information
+        std::cout << "Alpha value: " << (int)shapeColor.a << std::endl;
+        std::cout << "Increment: " << increment << std::endl;
     }
+
+
+
 
     void handleEvents(sf::Event event) override {}
 
