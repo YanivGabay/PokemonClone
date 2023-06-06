@@ -1,6 +1,6 @@
 #pragma once
 #include "world/TilesMap.h"
-
+#include "utilities.h"
 class Level 
 {
 public:
@@ -17,6 +17,6 @@ public:
 	}
 private:
 	std::unique_ptr<TilesMap> m_map;
-	LevelID m_id;
+	LevelID m_id{ LevelID::START_TOWN };
 };
 
