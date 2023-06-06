@@ -28,8 +28,9 @@ public:
 
 	void entry()
 	{
-		m_states.get().pushState(std::move(std::make_unique<FadeInState>(m_states.get(), Resources::getInstance().getColor(BLACK))));
 		m_startMenu = std::move(std::make_unique<StartMenuState>(m_states));
+		m_states.get().pushQueueState(std::move(std::make_unique<FadeInState>(m_states.get(), Resources::getInstance().getColor(BLACK))));
+		
 	}
 	
 	void exit()
@@ -43,18 +44,18 @@ public:
 	void update(sf::Time dt)
 	{
 		m_startMenu->update(dt);
-		std::cout << "after startstatemenu->update" << std::endl;
+		//std::cout << "after startstatemenu->update" << std::endl;
 		if (m_startMenu->getChoice()==NEW_GAME)
 		{
 			m_choice = std::nullopt;
 			exit();
 		}
-		std::cout << "finished startstate->update" << std::endl;
+		//std::cout << "finished startstate->update" << std::endl;
 	}
 	
 	void handleEvents(sf::Event event)
 	{
-		std::cout << "inside startstate handlevents" << std::endl;
+		//std::cout << "inside startstate handlevents" << std::endl;
 		m_startMenu->handleEvents(event);
 	}
 	
