@@ -10,6 +10,7 @@
 #include "utilities.h"
 
 
+
 enum Colors
 {
 	RED,
@@ -63,6 +64,21 @@ public:
 
 		return *m_font;
 	}
+	void loadPlayerRects()
+	{
+		sf::Vector2i size = sf::Vector2i(22, 26);
+		sf::Vector2i position = sf::Vector2i(0, 0);
+		for (PlayerID id = PlayerID::UP_IDLE; id != PlayerID::END; id = static_cast<PlayerID>(static_cast<int>(id) + 1))
+		{
+			int row = static_cast<int>(id) / 3;  // Calculate the row index
+			int col = static_cast<int>(id) % 3;  // Calculate the column index
+
+			position.x = col * (22);   // Update the x position
+			position.y = row * (26);   // Update the y position
+
+			m_playerRects[id] = std::make_unique<sf::IntRect>(position.x, position.y, size.x, size.y);
+		}
+	}
 	void loadFrames()
 	{
 		
@@ -103,7 +119,16 @@ public:
 
 		return *m_tileSprites[mapId];
 	}
+	sf::Sprite& getTileSprite(PlayerID playerId)
+	{
+		if (m_playerSprites.find(playerId) == m_playerSprites.end())
+		{
+			std::cerr << "Tile sprite not found." << std::endl;
+			throw std::runtime_error("Tile sprite not found.");
+		}
 
+		return *m_playerSprites[playerId];
+	}
 	void loadFont(const std::string& filename)
 	{
 		if (m_font)
@@ -140,7 +165,8 @@ private:
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
 	std::unordered_map<MapID, std::unique_ptr<sf::IntRect>> m_mapIdRects;
 
-
+	std::unordered_map<PlayerID, std::unique_ptr<sf::Sprite>> m_playerSprites;
+	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
 	std::unique_ptr<sf::Font> m_font;
 	
 	//------
@@ -164,6 +190,8 @@ private:
 
 		loadTileSpriteSheet("resources/tileset.png", m_mapIdRects);
 		loadFrames();
+		loadPlayerRects();
+		loadTileSpriteSheet("resources/maleSpriteSheet.png", m_playerRects);
 		// std::cout << "after loading tileset.png" << std::endl;
 	};
 
@@ -197,6 +225,22 @@ private:
 
 			std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
 			m_frameSprites[tileId] = std::move(sprite);
+		}
+
+	}
+	void loadTileSpriteSheet(const std::string& filename,
+							 const std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>>& tileRects
+	)
+	{
+		sf::Texture& texture = getTexture(filename);
+
+		for (const auto& pair : tileRects)
+		{
+			PlayerID tileId = pair.first;
+			const sf::IntRect& rect = *(pair.second);  // Dereference the unique_ptr
+
+			std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
+			m_playerSprites[tileId] = std::move(sprite);
 		}
 
 	}

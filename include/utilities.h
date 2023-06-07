@@ -10,7 +10,23 @@ const unsigned int FPS = 60;
 
 // --------------------------------
 
-//if you add another, add it to Resourcses::TUPLE
+enum class PlayerID
+{
+	UP_IDLE,
+	UP_MOVE,
+	UP_MOVE_2,
+	DOWN_IDLE,
+	DOWN_MOVE,
+	DOWN_MOVE_2,
+	LEFT_IDLE,
+	LEFT_MOVE,
+	LEFT_MOVE_2,
+	RIGHT_IDLE,
+	RIGHT_MOVE,
+	RIGHT_MOVE_2,
+
+	END
+};
 enum class LevelID
 {
 	POKE_CENTER,

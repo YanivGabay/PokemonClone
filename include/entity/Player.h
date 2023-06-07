@@ -16,7 +16,8 @@ class Player
 {
 public:
     Player()
-        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE)), m_targetPixelPosition(gridToPixelPosition(m_targetPosition)), m_movingObj(15, 15)
+        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE)), m_targetPixelPosition(gridToPixelPosition(m_targetPosition))
+        , m_movingObj(15, 15) , m_sprite(Resources::getInstance().getTileSprite(PlayerID::UP_IDLE))
     {
         m_shape.setFillColor(sf::Color::Red);
     }
@@ -29,7 +30,7 @@ public:
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
                 m_movingObj.setMove(LEFT);
-
+               // setSprite(PlayerID::LEFT_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
 
@@ -38,7 +39,7 @@ public:
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
                 m_movingObj.setMove(RIGHT);
-
+               // setSprite(PlayerID::RIGHT_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
 
@@ -47,7 +48,7 @@ public:
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
             {
                 m_movingObj.setMove(UP);
-
+              //  setSprite(PlayerID::UP_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
 
@@ -56,7 +57,7 @@ public:
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
             {
                 m_movingObj.setMove(DOWN);
-
+               // setSprite(PlayerID::DOWN_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
 
@@ -76,6 +77,24 @@ public:
         {
             m_moveProgress += (m_moveSpeed * dt.asSeconds());
 
+            Side side = m_movingObj.getSide();
+
+            if (side == UP)
+                setSprite(PlayerID::UP_IDLE);
+            else if (side==DOWN)
+            {
+                setSprite(PlayerID::DOWN_IDLE);
+            }
+            else if (side == RIGHT)
+            {
+                setSprite(PlayerID::RIGHT_IDLE);
+            }
+            else if (side == LEFT)
+            {
+                setSprite(PlayerID::LEFT_IDLE);
+            }
+           
+           
             if (m_moveProgress >= 1.0f)
             {
                 m_position = m_targetPosition;
@@ -95,22 +114,27 @@ public:
             
             pixelPosition += ((targetPixelPosition - pixelPosition) * m_moveProgress);
         }
+        m_sprite.setPosition(pixelPosition);
 
-        m_shape.setPosition(pixelPosition);
-        m_shape.setRotation(m_movingObj.getAngle());
+       // m_shape.setPosition(pixelPosition);
+      //  m_shape.setRotation(m_movingObj.getAngle());
         
-        window.draw(m_shape);
+        window.draw(m_sprite);
     }
 
     sf::Vector2i getPosition()
     {
         return m_position;
     }
-
+    void setSprite(PlayerID desiredSprite)
+    {
+        std::cout << "setting this enum code sprite: " << static_cast<int>(desiredSprite) << std::endl;
+        m_sprite = Resources::getInstance().getTileSprite(desiredSprite);
+    }
 private:
     sf::Vector2i m_position;
     sf::Vector2i m_targetPosition;
-
+    sf::Sprite& m_sprite;
     sf::Vector2f m_targetPixelPosition;
 
     bool m_isMoving;

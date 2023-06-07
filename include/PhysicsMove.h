@@ -37,8 +37,11 @@ public:
     }
 	
     ~PhysicsMove() = default;
-
-    void setMove(enum Side newSide)
+    Side getSide()
+    {
+        return m_newSide;
+    }
+    void setMove(Side newSide)
     {
         // First, cause the world to be updated to the next step
         m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
@@ -48,8 +51,8 @@ public:
         
         // (box2d numbers are not in pixels, so we need some scaling here)
         // m_position *= 30.f;
-
-        switch (newSide)
+        m_newSide = newSide;
+        switch (m_newSide)
         {
         case UP:
             m_position.y -= moveForce;
@@ -83,6 +86,7 @@ public:
 
 private:
     sf::RenderWindow& m_window = Resources::getInstance().getWindow();
+     Side m_newSide = UP;
 
     b2Vec2 m_gravity;
     std::unique_ptr<b2World> m_world;
