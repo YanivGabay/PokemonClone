@@ -11,9 +11,10 @@ public:
 	PlayState(Stack<BaseState>& states) :BaseState(states), m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
 	,m_player(std::make_unique<Player>()),m_currentLevel(std::make_unique<Level>())
 	{
+		
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
-
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+		
 	}
 
 	~PlayState() = default;
@@ -30,6 +31,9 @@ public:
 	 }
 	 void draw(sf::RenderWindow& window){
 		 std::cout << "inside Playstate->draw" << std::endl;
+
+		
+
 		 m_currentLevel->draw(window);
 		 m_player->draw(window);
 		 window.setView(m_camera->getView());

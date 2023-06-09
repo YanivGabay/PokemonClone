@@ -9,6 +9,7 @@ public:
     FadeInState(Stack<BaseState>& states, sf::Color color)
         : BaseState(states),m_color(color)
     {
+       
         m_fadeShape.setSize(sf::Vector2f(getWindowSize()));
         m_fadeShape.setFillColor(color);
     }
