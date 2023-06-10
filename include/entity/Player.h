@@ -78,7 +78,7 @@ public:
             m_moveProgress += (m_moveSpeed * dt.asSeconds());
 
             Side side = m_movingObj.getSide();
-
+            //we are moving!!!!
             if (side == UP)
                 setSprite(PlayerID::UP_IDLE);
             else if (side==DOWN)
@@ -101,6 +101,11 @@ public:
                 m_isMoving = false;
                 m_moveProgress = 0.0f;
             }
+            
+        }
+        else
+        {
+            //we are not moving
         }
     }
 

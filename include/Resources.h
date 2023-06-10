@@ -159,13 +159,12 @@ private:
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
 
-	std::unordered_map<MapID, std::unique_ptr<sf::Sprite>> m_tileSprites;
-	std::unordered_map<FrameID, std::unique_ptr<sf::Sprite>> m_frameSprites;
+
 
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
 	std::unordered_map<MapID, std::unique_ptr<sf::IntRect>> m_mapIdRects;
 
-	std::unordered_map<PlayerID, std::unique_ptr<sf::Sprite>> m_playerSprites;
+	
 	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
 	std::unique_ptr<sf::Font> m_font;
 	
@@ -188,60 +187,13 @@ private:
 
 		m_mapIdRects[MapID::TALLGRASS] = std::move(std::make_unique<sf::IntRect>(startIndexs, size));
 
-		loadTileSpriteSheet("resources/tileset.png", m_mapIdRects);
+	
 		loadFrames();
 		loadPlayerRects();
-		loadTileSpriteSheet("resources/maleSpriteSheet.png", m_playerRects);
+		
 		// std::cout << "after loading tileset.png" << std::endl;
 	};
 
 	
-	void loadTileSpriteSheet(const std::string& filename,
-							 const std::unordered_map<MapID, std::unique_ptr<sf::IntRect>>& tileRects
-							 )
-	{
-		sf::Texture& texture = getTexture(filename);
 
-		for (const auto& pair : tileRects)
-		{
-			MapID tileId = pair.first;
-			const sf::IntRect& rect = *(pair.second);  // Dereference the unique_ptr
-
-			std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
-			m_tileSprites[tileId] = std::move(sprite);
-		}
-
-	}
-	void loadTileSpriteSheet(const std::string& filename,
-							 const std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>>& tileRects
-	)
-	{
-		sf::Texture& texture = getTexture(filename);
-
-		for (const auto& pair : tileRects)
-		{
-			FrameID tileId = pair.first;
-			const sf::IntRect& rect = *(pair.second);  // Dereference the unique_ptr
-
-			std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
-			m_frameSprites[tileId] = std::move(sprite);
-		}
-
-	}
-	void loadTileSpriteSheet(const std::string& filename,
-							 const std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>>& tileRects
-	)
-	{
-		sf::Texture& texture = getTexture(filename);
-
-		for (const auto& pair : tileRects)
-		{
-			PlayerID tileId = pair.first;
-			const sf::IntRect& rect = *(pair.second);  // Dereference the unique_ptr
-
-			std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>(texture, rect);
-			m_playerSprites[tileId] = std::move(sprite);
-		}
-
-	}
 };
