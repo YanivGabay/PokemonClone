@@ -16,10 +16,10 @@ class Player
 {
 public:
     Player()
-        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_shape(sf::Vector2f(TILE_SIZE, TILE_SIZE)), m_targetPixelPosition(gridToPixelPosition(m_targetPosition))
-        , m_movingObj(15, 15) , m_sprite(Resources::getInstance().getTileSprite(PlayerID::UP_IDLE))
+        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_targetPixelPosition(gridToPixelPosition(m_targetPosition))
+        , m_movingObj(15, 15) , m_sprite(Resources::getInstance().getTexture("maleSpriteSheet.png"),Resources::getInstance().getRect(PlayerID::UP_IDLE))
     {
-        m_shape.setFillColor(sf::Color::Red);
+       
     }
 
     void handleInput()
@@ -134,12 +134,12 @@ public:
     void setSprite(PlayerID desiredSprite)
     {
         std::cout << "setting this enum code sprite: " << static_cast<int>(desiredSprite) << std::endl;
-        m_sprite = Resources::getInstance().getTileSprite(desiredSprite);
+        m_sprite.setTextureRect(Resources::getInstance().getRect(desiredSprite));
     }
 private:
     sf::Vector2i m_position;
     sf::Vector2i m_targetPosition;
-    sf::Sprite& m_sprite;
+    sf::Sprite m_sprite;
     sf::Vector2f m_targetPixelPosition;
 
     bool m_isMoving;
@@ -148,5 +148,5 @@ private:
     Animation m_animation;
     PhysicsMove m_movingObj;
 
-    sf::RectangleShape m_shape;
+   
 };

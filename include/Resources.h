@@ -123,6 +123,18 @@ public:
 	{
 		return m_window;
 	}
+	sf::IntRect& getRect(PlayerID id)
+	{
+		if (m_playerRects.find(id) == m_playerRects.end())
+		{
+			
+				std::cerr << "Failed to load playerrect: " << std::endl;
+				throw std::runtime_error("Failed to load texture.");
+			
+		}
+
+		return *m_playerRects[id];
+	}
 
 private:
 	sf::RenderWindow m_window;
