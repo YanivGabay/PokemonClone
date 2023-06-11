@@ -7,7 +7,7 @@
 #include "world\TilesMap.h"
 #include "world\TilesMap.h"
 #include "PhysicsMove.h"
-
+#include "Animation.h"
 sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
 {
     return sf::Vector2f(gridPosition.x * TILE_SIZE, gridPosition.y * TILE_SIZE);
@@ -145,7 +145,7 @@ private:
     bool m_isMoving;
     float m_moveProgress;
     float m_moveSpeed;
-
+    Animation m_animation;
     PhysicsMove m_movingObj;
 
     sf::RectangleShape m_shape;

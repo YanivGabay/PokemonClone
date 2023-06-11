@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 #include <array>
-
+#include "tileson/tileson.hpp"
 #include "utilities.h"
 
 
@@ -98,37 +98,7 @@ public:
 		}
 
 	}
-	sf::Sprite& getTileSprite(FrameID frameId)
-	{
-		if (m_frameSprites.find(frameId) == m_frameSprites.end())
-		{
-			std::cerr << "Frame sprite not found." << std::endl;
-			throw std::runtime_error("Frame sprite not found.");
-		}
-
-		return *m_frameSprites[frameId];
-	}
-
-	sf::Sprite& getTileSprite(MapID mapId)
-	{
-		if (m_tileSprites.find(mapId) == m_tileSprites.end())
-		{
-			std::cerr << "Tile sprite not found." << std::endl;
-			throw std::runtime_error("Tile sprite not found.");
-		}
-
-		return *m_tileSprites[mapId];
-	}
-	sf::Sprite& getTileSprite(PlayerID playerId)
-	{
-		if (m_playerSprites.find(playerId) == m_playerSprites.end())
-		{
-			std::cerr << "Tile sprite not found." << std::endl;
-			throw std::runtime_error("Tile sprite not found.");
-		}
-
-		return *m_playerSprites[playerId];
-	}
+	
 	void loadFont(const std::string& filename)
 	{
 		if (m_font)
@@ -158,13 +128,9 @@ private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
-
-
-
-	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
-	std::unordered_map<MapID, std::unique_ptr<sf::IntRect>> m_mapIdRects;
-
 	
+	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
+		
 	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
 	std::unique_ptr<sf::Font> m_font;
 	
@@ -180,14 +146,8 @@ private:
 
 		sf::Vector2i startIndexs(3, 61);
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
-
-		m_mapIdRects[MapID::GRASS] = std::move(std::make_unique<sf::IntRect>(startIndexs, size));
-
-		startIndexs += sf::Vector2i(0, TILE_SIZE+1);
-
-		m_mapIdRects[MapID::TALLGRASS] = std::move(std::make_unique<sf::IntRect>(startIndexs, size));
-
-	
+		getTexture("spritesheet.png");
+			
 		loadFrames();
 		loadPlayerRects();
 		

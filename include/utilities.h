@@ -55,17 +55,7 @@ enum class LevelID
 
 		END
 	};
-	enum class MapID
-	{
-		ROCK,
-		FLOWER,
-		GRASS,
-		TALLGRASS,
-		//toadd
-
-		END
-
-	};
+	
 
 enum Side
 {
