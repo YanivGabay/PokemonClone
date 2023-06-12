@@ -23,6 +23,7 @@ public:
 	{
 		if (sequences.empty())
 			return;
+	
 		auto& sequence = sequences[animationType];
 		auto& frames = sequence.first;
 		float duration = sequence.second;

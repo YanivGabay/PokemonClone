@@ -28,6 +28,7 @@ public:
 		}
 		else
 		{
+			updateAnimation(1.0f/60.0f);
 			window.draw(m_mySprite);
 		}
 			

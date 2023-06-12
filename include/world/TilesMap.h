@@ -56,7 +56,7 @@ public:
 		m_mapXSize = myvector.x;
 		m_mapYSize = myvector.y;
 
-		tson::Tileset* tileset = map->getTileset("mysheet");
+		tson::Tileset* tileset = map->getTileset("spritesheet");
 		
 			for (auto& layer : map->getLayers())
 			{
@@ -89,22 +89,29 @@ public:
 							auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
 
 							tson::Animation animations = tile->getAnimation();
-							/*
+							
 							if (animations.any())
 							{
+								
 								std::vector<sf::IntRect> animationsRects;
 								for (int i = 0; i < animations.size(); i++)
 								{
 									std::vector<tson::Frame> frames = animations.getFrames();
+									
 									uint32_t id = frames[i].getTileId();
+									std::cout << "crash is after get frames" << std::endl;
+
+									//crashing here:
 									tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
+									
 									sf::IntRect spriteRect(currRect.x, currRect.y, currRect.width, currRect.height);
 									animationsRects.push_back(spriteRect);
 									
 								}
+								std::cout << "animationsRects size:" << animationsRects.size() << std::endl;
 								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
 							}
-							*/
+							
 							
 							int id = layer.getId();
 							if (id == static_cast<int>(LAYERS::LOWER))
