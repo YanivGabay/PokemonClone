@@ -20,7 +20,7 @@ public:
 	//need to make it more generic,or make a bank of maps
 	void loadLevel(const std::string& mapFile)
 	{
-		sf::Texture& spriteSheet = Resources::getInstance().getTexture("spritesheet.png");
+		sf::Texture& spriteSheet = Resources::getInstance().getTexture("resources/spritesheet.png");
 		tson::Tileson parser;
 		std::unique_ptr<tson::Map> map = parser.parse(mapFile);
 		if (!map)
@@ -28,10 +28,11 @@ public:
 			std::cout << "ERRORLOADINGMAP" << std::endl;
 			return;
 		}
-
+		
 		m_mapXSize = map.get()->getSize().x;
 		m_mapYSize = map.get()->getSize().y;
 
+		tson::Tileset* tileset = map->getTileset("mysheet");
 		
 			for (auto& layer : map->getLayers())
 			{
@@ -53,23 +54,46 @@ public:
 							sf::Sprite mySprite(spriteSheet, myRect);
 
 							tson::Vector2i myPosition = tile->getPositionInTileUnits({i,j});
-							std::string mytype = tile->getClassType();
+							sf::Vector2f actualPosition;
+							actualPosition.x = myPosition.x;
+							actualPosition.y = myPosition.y;
 
-							int id = layer.getId();
-							if (id == 1)
+
+							std::string mytype = tile->getClassType();
+							auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
+
+							tson::Animation animations = tile->getAnimation();
+							if (animations.any())
 							{
-								m_lowerTiles.push_back(std::move(std::make_unique<Tile>(mytype, mySprite, myPosition)));
+								std::vector<sf::IntRect> animationsRects;
+								for (int i = 0; i < animations.size(); i++)
+								{
+									std::vector<tson::Frame> frames = animations.getFrames();
+									uint32_t id = frames[i].getTileId();
+									tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
+									sf::IntRect spriteRect(currRect.x, currRect.y, currRect.width, currRect.height);
+									animationsRects.push_back(spriteRect);
+									
+								}
+								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
 							}
-							else if (id == 2)
+							
+							
+							int id = layer.getId();
+							if (id == static_cast<int>(LAYERS::LOWER))
 							{
-								m_mediumTiles.push_back(std::move(std::make_unique<Tile>(mytype, mySprite, myPosition)));
+								m_lowerTiles.push_back(std::move(gameTile));
+							}
+							else if (id == static_cast<int>(LAYERS::MEDIUM))
+							{
+								m_mediumTiles.push_back(std::move(gameTile));
 							}
 							else
 							{
-								m_upperTiles.push_back(std::move(std::make_unique<Tile>(mytype, mySprite, myPosition)));
+								m_upperTiles.push_back(std::move(gameTile));
 							}
 
-
+							
 
 						}
 					}
@@ -94,7 +118,17 @@ public:
 		for (auto& tile : m_upperTiles)
 			tile->draw(window);
 	}
+	void updateAnimations(float dt)
+	{
+		for (auto& tile : m_lowerTiles)
+			tile->updateAnimation(dt);
 
+		for (auto& tile : m_mediumTiles)
+			tile->updateAnimation(dt);
+
+		for (auto& tile : m_upperTiles)
+			tile->updateAnimation(dt);
+	}
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
 	std::vector<std::unique_ptr<Tile>> m_mediumTiles;

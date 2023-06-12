@@ -158,7 +158,7 @@ private:
 
 		sf::Vector2i startIndexs(3, 61);
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
-		getTexture("spritesheet.png");
+		getTexture("resources/spritesheet.png");
 			
 		loadFrames();
 		loadPlayerRects();

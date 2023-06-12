@@ -10,6 +10,13 @@ const unsigned int FPS = 60;
 
 // --------------------------------
 
+enum class LAYERS
+{
+	LOWER = 1,
+	MEDIUM = 2,
+	UPPER = 3
+};
+
 enum class PlayerID
 {
 	UP_IDLE,

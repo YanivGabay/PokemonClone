@@ -15,6 +15,10 @@ public:
 	{
 		m_map->draw(window);
 	}
+	void updateAnimations(float dt)
+	{
+		m_map->updateAnimations(dt);
+	}
 private:
 	std::unique_ptr<TilesMap> m_map;
 	LevelID m_id{ LevelID::START_TOWN };

@@ -2,7 +2,7 @@
 
 #include "Resources.h"
 #include "entity/Player.h"
-
+#include "Animation.h"
 
 class Tile
 {
@@ -27,11 +27,23 @@ public:
 			throw std::runtime_error("Failed! Tile sprite has no texture.");
 		}
 		else
+		{
 			window.draw(m_mySprite);
+		}
+			
 	}
-
+	void updateAnimation(float dt)
+	{
+		m_animation.playAnimation(m_myid, dt, m_mySprite);
+	}
+	void addAnimation(std::string animationType, const std::vector<sf::IntRect>& frames, float duration)
+	{
+		m_animation.addSequence(animationType, frames, duration);
+	}
 private:
 	std::string m_myid;
 	sf::Sprite m_mySprite;
 	sf::Vector2f m_position;
+
+	Animation<std::string> m_animation;
 };

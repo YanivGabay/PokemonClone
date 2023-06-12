@@ -223,13 +223,14 @@
  "tileheight":16,
  "tilesets":[
         {
+         "class":"sheet",
          "columns":100,
          "firstgid":1,
          "image":"spritesheetpokemon copy.png",
          "imageheight":1600,
          "imagewidth":1600,
          "margin":0,
-         "name":"spritesheetpokemon copy",
+         "name":"mysheet",
          "spacing":0,
          "tilecount":10000,
          "tileheight":16,

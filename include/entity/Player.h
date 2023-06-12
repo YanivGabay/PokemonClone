@@ -17,7 +17,7 @@ class Player
 public:
     Player()
         : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_targetPixelPosition(gridToPixelPosition(m_targetPosition))
-        , m_movingObj(15, 15) , m_sprite(Resources::getInstance().getTexture("maleSpriteSheet.png"),Resources::getInstance().getRect(PlayerID::UP_IDLE))
+        , m_movingObj(15, 15) , m_sprite(Resources::getInstance().getTexture("resources/maleSpriteSheet.png"),Resources::getInstance().getRect(PlayerID::UP_IDLE))
     {
        
     }
@@ -145,7 +145,7 @@ private:
     bool m_isMoving;
     float m_moveProgress;
     float m_moveSpeed;
-    Animation m_animation;
+   
     PhysicsMove m_movingObj;
 
    
