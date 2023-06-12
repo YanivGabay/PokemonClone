@@ -35,6 +35,8 @@ public:
 			sf::Time elapsedTime = clock.restart();
 			timeSinceLastUpdate += elapsedTime;
 			std::cout << "after handleevents,statemachine" << std::endl;
+
+
 			while (timeSinceLastUpdate > TimePerFrame)
 			{
 				timeSinceLastUpdate -= TimePerFrame;

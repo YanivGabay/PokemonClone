@@ -99,16 +99,16 @@ public:
 									std::vector<tson::Frame> frames = animations.getFrames();
 									
 									uint32_t id = frames[i].getTileId();
-									std::cout << "crash is after get frames" << std::endl;
+									
 
 									//crashing here:
 									tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
-									
-									sf::IntRect spriteRect(currRect.x, currRect.y, currRect.width, currRect.height);
+								//	std::cout << "animation rect is: currRect.x" << currAnimRect.x << "currAnimRect.y" << currAnimRect.y   <<"currAnimRect.width" << currAnimRect.width << "currAnimRect.height" << currAnimRect.height << std::endl;
+									sf::IntRect spriteRect(currAnimRect.x, currAnimRect.y, currAnimRect.width, currAnimRect.height);
 									animationsRects.push_back(spriteRect);
 									
 								}
-								std::cout << "animationsRects size:" << animationsRects.size() << std::endl;
+							//	std::cout << "animationsRects size:" << animationsRects.size() << std::endl;
 								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
 							}
 							
@@ -152,10 +152,9 @@ public:
 		for (auto& tile : m_upperTiles)
 			tile->draw(window);
 	}
-	void updateAnimations(float dt)
+	void updateAnimations(sf::Time dt)
 	{
-		for (auto& tile : m_lowerTiles)
-			tile->updateAnimation(dt);
+		
 
 		for (auto& tile : m_mediumTiles)
 			tile->updateAnimation(dt);

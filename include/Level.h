@@ -15,7 +15,7 @@ public:
 	{
 		m_map->draw(window);
 	}
-	void updateAnimations(float dt)
+	void updateAnimations(sf::Time dt)
 	{
 		m_map->updateAnimations(dt);
 	}

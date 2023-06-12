@@ -4,6 +4,9 @@
 #include "entity/Player.h"
 #include "Animation.h"
 
+
+const sf::Time TIME_PER_FRAME = sf::seconds(1.0f / 60.0f);
+
 class Tile
 {
 public:
@@ -28,12 +31,12 @@ public:
 		}
 		else
 		{
-			updateAnimation(1.0f/60.0f);
+			updateAnimation(TIME_PER_FRAME);
 			window.draw(m_mySprite);
 		}
 			
 	}
-	void updateAnimation(float dt)
+	void updateAnimation(sf::Time dt)
 	{
 		m_animation.playAnimation(m_myid, dt, m_mySprite);
 	}

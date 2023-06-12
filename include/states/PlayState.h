@@ -21,10 +21,12 @@ public:
 	 void entry(){}
 	 void exit(){}
 	 void update(sf::Time dt){
+
 		 m_player->update(dt);
 		 sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		 m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
-		 m_currentLevel->updateAnimations(dt.asSeconds());
+
+		 m_currentLevel->updateAnimations(dt);
 	 }
 	 void handleEvents(sf::Event event){
 		 m_player->handleInput();
