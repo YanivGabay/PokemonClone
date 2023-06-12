@@ -21,17 +21,40 @@ public:
 	void loadLevel(const std::string& mapFile)
 	{
 		sf::Texture& spriteSheet = Resources::getInstance().getTexture("resources/spritesheet.png");
+
 		tson::Tileson parser;
-		std::unique_ptr<tson::Map> map = parser.parse(mapFile);
-		if (!map)
+		std::unique_ptr<tson::Map> map = parser.parse(fs::path(mapFile));
+
+				
+		
+		if (map->getStatus() != tson::ParseStatus::OK)
 		{
-			std::cout << "ERRORLOADINGMAP" << std::endl;
+			tson::ParseStatus status = map->getStatus();
+			std::string errorMessage;
+
+			switch (status)
+			{
+				case tson::ParseStatus::FileNotFound:
+					errorMessage = "File not found";
+					break;
+				case tson::ParseStatus::ParseError:
+					errorMessage = "Parse error";
+					break;
+				case tson::ParseStatus::MissingData:
+					errorMessage = "Missing data";
+					break;
+				default:
+					errorMessage = "Unknown error";
+					break;
+			}
+			std::cerr << "Error loading map: " << errorMessage << std::endl;
 			exit(5);
 			return;
 		}
-		
-		m_mapXSize = map.get()->getSize().x;
-		m_mapYSize = map.get()->getSize().y;
+
+		tson::Vector2i myvector = map.get()->getSize();
+		m_mapXSize = myvector.x;
+		m_mapYSize = myvector.y;
 
 		tson::Tileset* tileset = map->getTileset("mysheet");
 		
@@ -55,7 +78,7 @@ public:
 							sf::IntRect myRect(currRect.x, currRect.y, currRect.width, currRect.height);
 							sf::Sprite mySprite(spriteSheet, myRect);
 
-							tson::Vector2i myPosition = tile->getPositionInTileUnits({i,j});
+							tson::Vector2f myPosition = tile->getPosition({i,j});
 							sf::Vector2f actualPosition;
 							actualPosition.x = myPosition.x;
 							actualPosition.y = myPosition.y;
@@ -66,6 +89,7 @@ public:
 							auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
 
 							tson::Animation animations = tile->getAnimation();
+							/*
 							if (animations.any())
 							{
 								std::vector<sf::IntRect> animationsRects;
@@ -80,7 +104,7 @@ public:
 								}
 								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
 							}
-							
+							*/
 							
 							int id = layer.getId();
 							if (id == static_cast<int>(LAYERS::LOWER))
