@@ -4,7 +4,7 @@
 class Level 
 {
 public:
-	Level() : m_map(std::make_unique<TilesMap>(""))
+	Level() : m_map(std::make_unique<TilesMap>("resources/firstTown.json"))
 	{
 	}
 

@@ -26,6 +26,7 @@ public:
 		if (!map)
 		{
 			std::cout << "ERRORLOADINGMAP" << std::endl;
+			exit(5);
 			return;
 		}
 		
@@ -39,6 +40,7 @@ public:
 				std::map<std::tuple<int, int>, tson::Tile*> tileData = layer.getTileData();
 				int x = layer.getSize().x;
 				int y = layer.getSize().y;
+				std::cout << "y: " << y << std::endl;
 					//Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
 					//Would be unnecessary otherwise.
 				for (int i = 0; i < x; i++)
@@ -60,6 +62,7 @@ public:
 
 
 							std::string mytype = tile->getClassType();
+							std::cout << "my type is: " << mytype << std::endl;
 							auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
 
 							tson::Animation animations = tile->getAnimation();
