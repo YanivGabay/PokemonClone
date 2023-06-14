@@ -1,7 +1,11 @@
 #pragma once
 #include "Resources.h"
 
-
+enum class AnimationMode
+{
+    SingleLoop,
+    Continuous
+};
 
 template <class T >
 class Animation
@@ -15,13 +19,33 @@ public:
 	~Animation()
 	{
 	}
+    void setAnimationMode(AnimationMode mode)
+    {
+        if (mode == AnimationMode::SingleLoop)
+        {
+            m_active = false;
+        }
+        m_mod = mode;
+    }
 	void addSequence(T animationType, const std::vector<sf::IntRect>& frames, float duration)
 	{
 		sequences[animationType] = std::make_pair(frames, duration);
 	}
+    const AnimationMode getMod()
+    {
+        return m_mod;
+    }
+    void setToActive()
+    {
+        m_active = true;
+   }
+    void setToNotActive()
+    {
+        m_active = false;
+    }
     void playAnimation(T animationType, sf::Time elapsedTime, sf::Sprite& sprite)
     {
-        if (sequences.empty())
+        if (sequences.empty() || !m_active)
             return;
 
         auto& sequence = sequences[animationType];
@@ -40,7 +64,14 @@ public:
            
             frameIndex++;
             if (frameIndex >= frames.size())
+            {
+                if (getMod() == AnimationMode::SingleLoop)
+                {
+                    setToNotActive();
+                }
                 frameIndex = 0;
+            }
+               
             
             if (frameIndex < frames.size())
             {
@@ -58,5 +89,7 @@ private:
 	std::unordered_map<T, std::pair<std::vector<sf::IntRect>, float>> sequences;
 	float m_total{ 0 };
 	size_t frameIndex{ 0 };
+    bool m_active{ true };
+    AnimationMode m_mod{ AnimationMode::Continuous };
 
 };

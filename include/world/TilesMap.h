@@ -94,11 +94,11 @@ public:
 							{
 								
 								std::vector<sf::IntRect> animationsRects;
-								for (int i = 0; i < animations.size(); i++)
+								for (int animation = 0; animation < animations.size(); animation++)
 								{
 									std::vector<tson::Frame> frames = animations.getFrames();
 									
-									uint32_t id = frames[i].getTileId();
+									uint32_t id = frames[animation].getTileId();
 									
 
 									//crashing here:
@@ -110,6 +110,10 @@ public:
 								}
 							//	std::cout << "animationsRects size:" << animationsRects.size() << std::endl;
 								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
+								if (mytype != "flowers")
+								{
+									gameTile->setAnimationMode(AnimationMode::SingleLoop);
+								}
 							}
 							
 							
@@ -157,10 +161,25 @@ public:
 		
 
 		for (auto& tile : m_mediumTiles)
-			tile->updateAnimation(dt);
-
+		{ 
+			
+			std::string myid = tile.get()->getId();
+			if (myid == "flowers")
+			{
+				tile->updateAnimation(dt);
+				
+			}
+			
+		}
 		for (auto& tile : m_upperTiles)
-			tile->updateAnimation(dt);
+		{
+			std::string myid = tile.get()->getId();
+			
+			if (myid == "flowers")
+			{
+				tile->updateAnimation(dt);
+			}
+		}
 	}
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
