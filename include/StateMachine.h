@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <memory>
 #include <vector>
 #include <queue>
@@ -38,13 +39,18 @@ public:
 			{
 				timeSinceLastUpdate -= TimePerFrame;
 				this->update(TimePerFrame);
+				
+				std::cout << " ===== in while ===== " << std::endl;
+				///  m_window.clear();
+				/// this->draw();
+				/// m_window.display();
 			}
-			
+
+			std::cout << " !!!!!! out of while !!!!!! " << std::endl;
 			m_window.clear();
 
 			this->draw();
 			
-			// window.draw(shape);
 			m_window.display();
 		}
 	}

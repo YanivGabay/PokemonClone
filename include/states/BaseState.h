@@ -19,6 +19,7 @@ public:
 	virtual void update(sf::Time dt) = 0;
 	virtual void handleEvents(sf::Event event) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
+
 	virtual ~BaseState() = default;
 	
 	std::reference_wrapper<Stack<BaseState>> getStateStack()

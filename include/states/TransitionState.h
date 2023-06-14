@@ -32,7 +32,6 @@ public:
         if (m_fadeOutState->getStatus())
         {
             m_fadeOutState->update(dt);
-          
         }
         else
         {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "Resources.h"
 #include "entity/Player.h"
 #include "../Tile.h"
@@ -20,11 +21,15 @@ public:
 	//need to make it more generic,or make a bank of maps
 	void loadLevel(const std::string& mapFile)
 	{
+		std::cout << "$$$$$$$$$$$$$ in load level $$$$$$$$$$$$$" << std::endl;
 		sf::Texture& spriteSheet = Resources::getInstance().getTexture("resources/spritesheet.png");
-
+		std::cout << "^^^^^^^^^ 1 ^^^^^^^^^^" << std::endl;
 		tson::Tileson parser;
+		
+		std::cout << "^^^^^^^^^ 2 ^^^^^^^^^^" << std::endl;
 		std::unique_ptr<tson::Map> map = parser.parse(fs::path(mapFile));
 		
+		std::cout << "$$$$$$$$$$$$$ 1 $$$$$$$$$$$$$" << std::endl;
 		if (map->getStatus() != tson::ParseStatus::OK)
 		{
 			tson::ParseStatus status = map->getStatus();
@@ -49,29 +54,33 @@ public:
 			exit(5);
 			return;
 		}
-
+		std::cout << "$$$$$$$$$$$$$ 2 $$$$$$$$$$$$$" << std::endl;
 		tson::Vector2i myvector = map.get()->getSize();
 		m_mapXSize = myvector.x;
 		m_mapYSize = myvector.y;
 
 		tson::Tileset* tileset = map->getTileset("spritesheet");
-		
+		std::cout << "$$$$$$$$$$$$$ 3 $$$$$$$$$$$$$" << std::endl;
 			for (auto& layer : map->getLayers())
 			{
+				std::cout << "$$$$$$$$$$$$$ 4 $$$$$$$$$$$$$" << std::endl;
 				std::map<std::tuple<int, int>, tson::Tile*> tileData = layer.getTileData();
 				int x = layer.getSize().x;
 				int y = layer.getSize().y;
 				
+				std::cout << "$$$$$$$$$$$$$ 5 $$$$$$$$$$$$$" << std::endl;
 				//Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
 				//Would be unnecessary otherwise.
 				for (int i = 0; i < x; i++)
 				{
+					std::cout << "$$$$$$$$$$$$$ 6 $$$$$$$$$$$$$" << std::endl;
 					for (int j = 0; j < y; j++)
 					{
+						std::cout << "$$$$$$$$$$$$$ 7 $$$$$$$$$$$$$" << std::endl;
 						tson::Tile* tile = layer.getTileData(i,j);
 						if (tile != nullptr)
 						{
-
+							std::cout << "$$$$$$$$$$$$$ 8 $$$$$$$$$$$$$" << std::endl;
 							tson::Rect currRect = tile->getDrawingRect();
 							sf::IntRect myRect(currRect.x, currRect.y, currRect.width, currRect.height);
 							sf::Sprite mySprite(spriteSheet, myRect);
@@ -87,12 +96,14 @@ public:
 
 							tson::Animation animations = tile->getAnimation();
 							
+							std::cout << "$$$$$$$$$$$$$ 9 $$$$$$$$$$$$$" << std::endl;
 							if (animations.any())
 							{
-								
+								std::cout << "$$$$$$$$$$$$$ 10 $$$$$$$$$$$$$" << std::endl;
 								std::vector<sf::IntRect> animationsRects;
 								for (int animation = 0; animation < animations.size(); animation++)
 								{
+									std::cout << "$$$$$$$$$$$$$ 11 $$$$$$$$$$$$$" << std::endl;
 									std::vector<tson::Frame> frames = animations.getFrames();
 									
 									uint32_t id = frames[animation].getTileId();
@@ -102,41 +113,44 @@ public:
 									tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
 									sf::IntRect spriteRect(currAnimRect.x, currAnimRect.y, currAnimRect.width, currAnimRect.height);
 									animationsRects.push_back(spriteRect);
-									
 								}
+
+								std::cout << "$$$$$$$$$$$$$ 12 $$$$$$$$$$$$$" << std::endl;
 								
 								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
+
+								std::cout << "$$$$$$$$$$$$$ 13 $$$$$$$$$$$$$" << std::endl;
 								if (mytype != "flowers")
 								{
+									std::cout << "$$$$$$$$$$$$$ 14 $$$$$$$$$$$$$" << std::endl;
 									gameTile->setAnimationMode(AnimationMode::SingleLoop);
 								}
+								std::cout << "$$$$$$$$$$$$$ 15 $$$$$$$$$$$$$" << std::endl;
 							}
 							
-							
+							std::cout << "$$$$$$$$$$$$$ 16 $$$$$$$$$$$$$" << std::endl;
 							int id = layer.getId();
 							if (id == static_cast<int>(LAYERS::LOWER))
 							{
+								std::cout << "$$$$$$$$$$$$$ 17 $$$$$$$$$$$$$" << std::endl;
 								m_lowerTiles.push_back(std::move(gameTile));
 							}
 							else if (id == static_cast<int>(LAYERS::MEDIUM))
 							{
+								std::cout << "$$$$$$$$$$$$$ 18 $$$$$$$$$$$$$" << std::endl;
 								m_mediumTiles.push_back(std::move(gameTile));
 							}
 							else
 							{
+								std::cout << "$$$$$$$$$$$$$ 19 $$$$$$$$$$$$$" << std::endl;
 								m_upperTiles.push_back(std::move(gameTile));
 							}
-
-							
-
+							std::cout << "$$$$$$$$$$$$$ 20 $$$$$$$$$$$$$" << std::endl;
 						}
 					}
 				}
-					
-						
-				
 			}
-		
+			std::cout << "$$$$$$$$$$$$$ 21 $$$$$$$$$$$$$" << std::endl;
 
 	}
 	
