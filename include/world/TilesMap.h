@@ -56,74 +56,90 @@ public:
 
 		tson::Tileset* tileset = map->getTileset("spritesheet");
 		
-		for (auto& layer : map->getLayers())
-		{
-			std::map<std::tuple<int, int>, tson::Tile*> tileData = layer.getTileData();
-			int x = layer.getSize().x;
-			int y = layer.getSize().y;
-			
-			//Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
-			//Would be unnecessary otherwise.
-			for (int i = 0; i < x; i++)
+			for (auto& layer : map->getLayers())
 			{
-				for (int j = 0; j < y; j++)
+				std::map<std::tuple<int, int>, tson::Tile*> tileData = layer.getTileData();
+				int x = layer.getSize().x;
+				int y = layer.getSize().y;
+				std::cout << "y: " << y << std::endl;
+					//Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
+					//Would be unnecessary otherwise.
+				for (int i = 0; i < x; i++)
 				{
-					tson::Tile* tile = layer.getTileData(i,j);
-					if (tile != nullptr)
+					for (int j = 0; j < y; j++)
 					{
-						tson::Rect currRect = tile->getDrawingRect();
-						
-						sf::IntRect myRect(currRect.x, currRect.y, currRect.width, currRect.height);
-						
-						sf::Sprite mySprite(spriteSheet, myRect);
-						
-						tson::Vector2f myPosition = tile->getPosition({i,j});
-						sf::Vector2f actualPosition;
-						actualPosition.x = myPosition.x;
-						actualPosition.y = myPosition.y;
-						
-						std::string mytype = tile->getClassType();
-						auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
-						
-						tson::Animation animations = tile->getAnimation();
-						
-						if (animations.any())
+						tson::Tile* tile = layer.getTileData(i,j);
+						if (tile != nullptr)
 						{
-							std::vector<sf::IntRect> animationsRects;
-							for (int i = 0; i < animations.size(); i++)
+
+							tson::Rect currRect = tile->getDrawingRect();
+							sf::IntRect myRect(currRect.x, currRect.y, currRect.width, currRect.height);
+							sf::Sprite mySprite(spriteSheet, myRect);
+
+							tson::Vector2f myPosition = tile->getPosition({i,j});
+							sf::Vector2f actualPosition;
+							actualPosition.x = myPosition.x;
+							actualPosition.y = myPosition.y;
+
+
+							std::string mytype = tile->getClassType();
+							std::cout << "my type is: " << mytype << std::endl;
+							auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
+
+							tson::Animation animations = tile->getAnimation();
+							
+							if (animations.any())
 							{
-								std::vector<tson::Frame> frames = animations.getFrames();
-								uint32_t id = frames[i].getTileId();
 								
-								//crashing here:
-								tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
-								
-								sf::IntRect spriteRect(currAnimRect.x, currAnimRect.y, currAnimRect.width, currAnimRect.height);
-								
-								animationsRects.push_back(spriteRect);
+								std::vector<sf::IntRect> animationsRects;
+								for (int animation = 0; animation < animations.size(); animation++)
+								{
+									std::vector<tson::Frame> frames = animations.getFrames();
+									
+									uint32_t id = frames[animation].getTileId();
+									
+
+									//crashing here:
+									tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
+								//	std::cout << "animation rect is: currRect.x" << currAnimRect.x << "currAnimRect.y" << currAnimRect.y   <<"currAnimRect.width" << currAnimRect.width << "currAnimRect.height" << currAnimRect.height << std::endl;
+									sf::IntRect spriteRect(currAnimRect.x, currAnimRect.y, currAnimRect.width, currAnimRect.height);
+									animationsRects.push_back(spriteRect);
+									
+								}
+							//	std::cout << "animationsRects size:" << animationsRects.size() << std::endl;
+								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
+								if (mytype != "flowers")
+								{
+									gameTile->setAnimationMode(AnimationMode::SingleLoop);
+								}
 							}
 							
-							gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
-						}
-						
-						int id = layer.getId();
-						
-						if (id == static_cast<int>(LAYERS::LOWER))
-						{
-							m_lowerTiles.push_back(std::move(gameTile));
-						}
-						else if (id == static_cast<int>(LAYERS::MEDIUM))
-						{
-							m_mediumTiles.push_back(std::move(gameTile));
-						}
-						else
-						{
-							m_upperTiles.push_back(std::move(gameTile));
+							
+							int id = layer.getId();
+							if (id == static_cast<int>(LAYERS::LOWER))
+							{
+								m_lowerTiles.push_back(std::move(gameTile));
+							}
+							else if (id == static_cast<int>(LAYERS::MEDIUM))
+							{
+								m_mediumTiles.push_back(std::move(gameTile));
+							}
+							else
+							{
+								m_upperTiles.push_back(std::move(gameTile));
+							}
+
+							
+
 						}
 					}
 				}
+					
+						
+				
 			}
-		}
+		
+
 	}
 	
 	void draw(sf::RenderWindow& window)
@@ -141,12 +157,26 @@ public:
 	void updateAnimations(sf::Time dt)
 	{
 		for (auto& tile : m_mediumTiles)
-			tile->updateAnimation(dt);
-
+		{ 
+			
+			std::string myid = tile.get()->getId();
+			if (myid == "flowers")
+			{
+				tile->updateAnimation(dt);
+				
+			}
+			
+		}
 		for (auto& tile : m_upperTiles)
-			tile->updateAnimation(dt);
+		{
+			std::string myid = tile.get()->getId();
+			
+			if (myid == "flowers")
+			{
+				tile->updateAnimation(dt);
+			}
+		}
 	}
-
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
 	std::vector<std::unique_ptr<Tile>> m_mediumTiles;

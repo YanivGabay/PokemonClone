@@ -35,11 +35,21 @@ public:
 		}
 		else
 		{
-			updateAnimation(TIME_PER_FRAME);
+			//updateAnimation(TIME_PER_FRAME);
 			window.draw(m_mySprite);
 		}
+			
 	}
-	
+	const std::string getId() const
+	{
+		return m_myid;
+	}
+	void playAnimation(sf::Time dt)
+	{
+		m_animation.setToActive();
+		updateAnimation(dt);
+
+	}
 	void updateAnimation(sf::Time dt)
 	{
 		m_animation.playAnimation(m_myid, dt, m_mySprite);
@@ -49,7 +59,10 @@ public:
 	{
 		m_animation.addSequence(animationType, frames, duration);
 	}
-
+	void setAnimationMode(AnimationMode mode)
+	{
+		m_animation.setAnimationMode(mode);
+	}
 private:
 	std::string m_myid;
 	sf::Sprite m_mySprite;

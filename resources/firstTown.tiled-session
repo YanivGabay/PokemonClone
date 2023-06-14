@@ -3,10 +3,24 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "firstTown.tmj",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
+        "firstTown.tmj": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 412,
+                "y": 443
+            }
+        },
+        "firstTown.tmj#spritesheet": {
+            "scaleInDock": 1
+        }
     },
     "last.imagePath": "D:/CODING/github_repos/ShaharAshe/oop-Project-Pokemon/resources",
     "map.height": 60,
@@ -15,9 +29,11 @@
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
+        "firstTown.tmj"
     ],
     "project": "firstTown.tiled-project",
     "recentFiles": [
+        "firstTown.tmj"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
