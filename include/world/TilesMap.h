@@ -61,9 +61,9 @@ public:
 				std::map<std::tuple<int, int>, tson::Tile*> tileData = layer.getTileData();
 				int x = layer.getSize().x;
 				int y = layer.getSize().y;
-				std::cout << "y: " << y << std::endl;
-					//Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
-					//Would be unnecessary otherwise.
+				
+				//Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
+				//Would be unnecessary otherwise.
 				for (int i = 0; i < x; i++)
 				{
 					for (int j = 0; j < y; j++)
@@ -83,7 +83,6 @@ public:
 
 
 							std::string mytype = tile->getClassType();
-							std::cout << "my type is: " << mytype << std::endl;
 							auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
 
 							tson::Animation animations = tile->getAnimation();
@@ -101,12 +100,11 @@ public:
 
 									//crashing here:
 									tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
-								//	std::cout << "animation rect is: currRect.x" << currAnimRect.x << "currAnimRect.y" << currAnimRect.y   <<"currAnimRect.width" << currAnimRect.width << "currAnimRect.height" << currAnimRect.height << std::endl;
 									sf::IntRect spriteRect(currAnimRect.x, currAnimRect.y, currAnimRect.width, currAnimRect.height);
 									animationsRects.push_back(spriteRect);
 									
 								}
-							//	std::cout << "animationsRects size:" << animationsRects.size() << std::endl;
+								
 								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
 								if (mytype != "flowers")
 								{
