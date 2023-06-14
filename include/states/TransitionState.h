@@ -36,10 +36,7 @@ public:
         }
         else
         {
-            m_states.get().popStart();
-            m_states.get().pushQueueState(getNextState());
-            m_states.get().pushQueueState(getFadeIn());
-            setStatus(false);
+           
             exit();
         }
     }
@@ -50,7 +47,12 @@ public:
     }
     
     void entry() override {}
-    void exit()override {}
+    void exit()override {
+        m_states.get().popStart();
+        m_states.get().pushQueueState(getNextState());
+        m_states.get().pushQueueState(getFadeIn());
+        setStatus(false);
+    }
     
     void handleEvents(sf::Event event) override {}
 
