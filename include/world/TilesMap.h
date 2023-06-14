@@ -80,13 +80,13 @@ public:
 							sf::Vector2f actualPosition;
 							actualPosition.x = myPosition.x;
 							actualPosition.y = myPosition.y;
-
-
+							std::cout << "actualPosition: " << actualPosition.x << std::endl;
+							std::cout << "actualPosition.y: " << actualPosition.y << std::endl;
 							std::string mytype = tile->getClassType();
 							auto gameTile = std::make_unique<Tile>(mytype, mySprite, actualPosition);
 
 							tson::Animation animations = tile->getAnimation();
-							
+						
 							if (animations.any())
 							{
 								
@@ -105,7 +105,7 @@ public:
 									
 								}
 								
-								gameTile->addAnimation(mytype, std::move(animationsRects), 1.0f);
+								gameTile->addAnimation(mytype, std::move(animationsRects),0.5f);
 								if (mytype != "flowers")
 								{
 									gameTile->setAnimationMode(AnimationMode::SingleLoop);
@@ -139,7 +139,17 @@ public:
 		
 
 	}
-	
+	void activeAnim()
+	{
+		for (auto& tile : m_mediumTiles)
+		{
+			if (tile.get()->getPosition()==sf::Vector2f(320,320))
+			{
+				std::cout <<" inside active anim 200 200" << std::endl;
+				tile->playAnimation(sf::Time(sf::seconds(1.0f/60.0f)));
+			}
+		}
+	}
 	void draw(sf::RenderWindow& window)
 	{
 		for (auto& tile	: m_lowerTiles)
@@ -157,8 +167,8 @@ public:
 		for (auto& tile : m_mediumTiles)
 		{ 
 			
-			std::string myid = tile.get()->getId();
-			if (myid == "flowers")
+			
+			if (tile->getAnimationStatus())
 			{
 				tile->updateAnimation(dt);
 				
@@ -167,11 +177,11 @@ public:
 		}
 		for (auto& tile : m_upperTiles)
 		{
-			std::string myid = tile.get()->getId();
-			
-			if (myid == "flowers")
+						
+			if (tile->getAnimationStatus())
 			{
 				tile->updateAnimation(dt);
+
 			}
 		}
 	}

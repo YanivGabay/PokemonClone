@@ -29,8 +29,12 @@ public:
 		m_player->update(dt);
 
 		sf::Vector2i curr = m_player.get()->getPosition();
-
-	
+		std::cout << "player x is:" << curr.x << "player y is:" << curr.y << std::endl;
+		if (curr.x == 20)
+		{
+			m_currentLevel->activeTile();
+		}
+		// test to check play animation
 		 sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		 m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 

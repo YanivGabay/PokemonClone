@@ -47,7 +47,7 @@ public:
 	void playAnimation(sf::Time dt)
 	{
 		m_animation.setToActive();
-		updateAnimation(dt);
+		
 
 	}
 	void updateAnimation(sf::Time dt)
@@ -62,6 +62,14 @@ public:
 	void setAnimationMode(AnimationMode mode)
 	{
 		m_animation.setAnimationMode(mode);
+	}
+	sf::Vector2f getPosition()
+	{
+		return m_position;
+	}
+	bool getAnimationStatus()
+	{
+		return m_animation.getActiveState();
 	}
 private:
 	std::string m_myid;

@@ -21,7 +21,10 @@ public:
 	{
 		m_map->updateAnimations(dt);
 	}
-
+	void activeTile()
+	{
+		m_map->activeAnim();
+	}
 private:
 	std::unique_ptr<TilesMap> m_map;
 	LevelID m_id{ LevelID::START_TOWN };

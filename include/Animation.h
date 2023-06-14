@@ -79,6 +79,10 @@ public:
             m_total -= duration;
         }
     }
+    bool getActiveState()
+    {
+        return m_active;
+    }
 
 private:
 	// <class of animations, pairs of squares for spritesheet, and a float for that animation time
