@@ -8,38 +8,40 @@
 #include "world\TilesMap.h"
 #include "PhysicsMove.h"
 #include "Animation.h"
+
+
 sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
 {
     return sf::Vector2f(gridPosition.x * TILE_SIZE, gridPosition.y * TILE_SIZE);
 }
+
 class Player
 {
 public:
     Player()
-        : m_isMoving(false), m_moveProgress(0.0f), m_moveSpeed(15.0f), m_position(15, 15), m_targetPixelPosition(gridToPixelPosition(m_targetPosition))
-        , m_movingObj(15, 15) , m_sprite(Resources::getInstance().getTexture("resources/maleSpriteSheet.png"),Resources::getInstance().getRect(PlayerID::UP_IDLE))
-    {
-       
-    }
-
+        : m_isMoving(false),
+          m_moveProgress(0.0f),
+          m_moveSpeed(15.0f),
+          m_position(15, 15),
+          m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
+          m_movingObj(15, 15),
+          m_sprite(Resources::getInstance().getTexture("resources/maleSpriteSheet.png"), Resources::getInstance().getRect(PlayerID::UP_IDLE)) {}
+    
     void handleInput()
     {
-        
         if (!m_isMoving)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
                 m_movingObj.setMove(LEFT);
-               // setSprite(PlayerID::LEFT_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
-
+                
                 m_targetPosition = sf::Vector2i(m_position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
                 m_movingObj.setMove(RIGHT);
-               // setSprite(PlayerID::RIGHT_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
 
@@ -48,39 +50,37 @@ public:
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
             {
                 m_movingObj.setMove(UP);
-              //  setSprite(PlayerID::UP_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
-
+                
                 m_targetPosition = sf::Vector2i(m_position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
             {
                 m_movingObj.setMove(DOWN);
-               // setSprite(PlayerID::DOWN_IDLE);
                 m_position.x = m_movingObj.getPos().x;
                 m_position.y = m_movingObj.getPos().y;
-
+                
                 m_targetPosition = sf::Vector2i(m_position);
             }
             else
                 return;
-
+            
             m_isMoving = true;
         }
     }
-
+    
     void update(sf::Time dt)
     {
-        std::cout << "player->update" << std::endl;
         if (m_isMoving)
         {
             m_moveProgress += (m_moveSpeed * dt.asSeconds());
-
+            
             Side side = m_movingObj.getSide();
-            //we are moving!!!!
             if (side == UP)
+            {
                 setSprite(PlayerID::UP_IDLE);
+            }
             else if (side==DOWN)
             {
                 setSprite(PlayerID::DOWN_IDLE);
@@ -93,19 +93,17 @@ public:
             {
                 setSprite(PlayerID::LEFT_IDLE);
             }
-           
-           
+            
             if (m_moveProgress >= 1.0f)
             {
                 m_position = m_targetPosition;
                 m_isMoving = false;
                 m_moveProgress = 0.0f;
             }
-            
         }
         else
         {
-            //we are not moving
+            ;  //we are not moving
         }
     }
 
@@ -126,16 +124,17 @@ public:
         
         window.draw(m_sprite);
     }
-
+    
     sf::Vector2i getPosition()
     {
         return m_position;
     }
+    
     void setSprite(PlayerID desiredSprite)
     {
-        std::cout << "setting this enum code sprite: " << static_cast<int>(desiredSprite) << std::endl;
         m_sprite.setTextureRect(Resources::getInstance().getRect(desiredSprite));
     }
+
 private:
     sf::Vector2i m_position;
     sf::Vector2i m_targetPosition;
@@ -147,6 +146,4 @@ private:
     float m_moveSpeed;
    
     PhysicsMove m_movingObj;
-
-   
 };

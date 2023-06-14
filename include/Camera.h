@@ -10,8 +10,7 @@ class Camera
 {
 public:
     Camera(float x, float y, float width, float height)
-        : m_view(sf::FloatRect(x, y, width, height))
-    {}
+        : m_view(sf::FloatRect(x, y, width, height)) {}
     
     void update(float playerX, float playerY)
     {

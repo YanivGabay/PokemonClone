@@ -1,25 +1,25 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Resources.h"
 #include <functional>
+
+#include "Resources.h"
 #include "Stack.h"
 
 
-
-
-class BaseState 
+class BaseState
 {
 public:
+	BaseState(Stack<BaseState>& states)
+		: m_states(states)
+	{}
+
 	virtual void entry() = 0;
 	virtual void exit() = 0;
 	virtual void update(sf::Time dt) = 0;
 	virtual void handleEvents(sf::Event event) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual ~BaseState() = default;
-	BaseState(Stack<BaseState>& states)
-		: m_states(states)
-	{}
 	
 	std::reference_wrapper<Stack<BaseState>> getStateStack()
 	{

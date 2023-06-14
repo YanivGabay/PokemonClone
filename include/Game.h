@@ -1,5 +1,10 @@
 #pragma once
+
 #include <iostream>
+#include <memory>
+#include <vector>
+
+#include "SFML/Graphics.hpp"
 
 // Disable MSVC analysis warnings for the box2d include
 #pragma warning(push)
@@ -7,31 +12,21 @@
 #include "box2d/box2d.h"
 #pragma warning(pop)
 
-#include <memory>
-#include <vector>
 #include "StateMachine.h"
 #include "world/TilesMap.h"
-#include "SFML/Graphics.hpp"
-#include <iostream>
 
 
 class Game
 {
 public:
-	Game()
-	{
-		
-	}
+	Game() = default;
 
-	~Game()
-	{
-	}
+	~Game() = default;
+	
 	void runGame()
 	{
         auto stateMachine = std::make_unique<StateMachine>();
         stateMachine->runGame();
-       
-        
 	}
 
 private:

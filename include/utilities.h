@@ -34,6 +34,7 @@ enum class PlayerID
 
 	END
 };
+
 enum class LevelID
 {
 	POKE_CENTER,
@@ -47,22 +48,20 @@ enum class LevelID
 	END
 };
 
-	enum class FrameID
-	{
-		LEFT_UP_CORNER,
-		UP_HORIZ,
-		RIGHT_UP_CORNER,
-		LEFT_VERTICAL,
-		MIDDLE,
-		RIGHT_VERTICAL,
-		LEFT_DOWN_CORNER,
-		DOWN_HORIZ,
-		RIGHT_DOWN_CORNER,
+enum class FrameID
+{
+	LEFT_UP_CORNER,
+	UP_HORIZ,
+	RIGHT_UP_CORNER,
+	LEFT_VERTICAL,
+	MIDDLE,
+	RIGHT_VERTICAL,
+	LEFT_DOWN_CORNER,
+	DOWN_HORIZ,
+	RIGHT_DOWN_CORNER,
 		//toadd
-
-		END
-	};
-	
+	END
+};
 
 enum Side
 {

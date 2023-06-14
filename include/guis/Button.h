@@ -1,15 +1,19 @@
 #pragma once
+
 #include "Resources.h"
 
 
 class Button
 {
 public:
-	Button(sf::Vector2f guiSize,sf::Vector2f position):m_frameBoxRects(Resources::getInstance().getFrameCord()),
-													m_size(guiSize), m_startPosition(position),m_texture(Resources::getInstance().getTexture("resources/framesSpritesheet.png"))
-	{
+    Button(sf::Vector2f guiSize,sf::Vector2f position)
+        : m_frameBoxRects(Resources::getInstance().getFrameCord()),
+          m_size(guiSize), m_startPosition(position),
+          m_texture(Resources::getInstance().getTexture("resources/framesSpritesheet.png"))
+    {
 		init();
 	}
+
     void init()
     {
         auto sizeVector = sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2);
@@ -62,10 +66,9 @@ public:
         }
     }
 
-	~Button()
-	{
-	}
-	void draw(sf::RenderWindow& window)
+    ~Button() = default;
+    
+    void draw(sf::RenderWindow& window)
 	{
 		for (const auto& shape : m_shapes)
 		{
@@ -74,18 +77,16 @@ public:
 	}
 
 private:
-	std::unique_ptr<sf::Sprite> createSprite(FrameID frameID)
-	{
-		auto rect = *m_frameBoxRects[frameID];
-		auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
-		return sprite;
-	}
-	sf::Texture& m_texture;
-	
-
-	std::vector<std::unique_ptr<sf::Sprite>> m_shapes;
+    sf::Texture& m_texture;
+    std::vector<std::unique_ptr<sf::Sprite>> m_shapes;
 	sf::Vector2f m_startPosition;
 	sf::Vector2f m_size;
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>>& m_frameBoxRects;
-	
+
+    std::unique_ptr<sf::Sprite> createSprite(FrameID frameID)
+    {
+        auto rect = *m_frameBoxRects[frameID];
+        auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
+        return sprite;
+    }
 };

@@ -1,10 +1,12 @@
 #pragma once
 
+#include <optional>
+
 #include "BaseState.h"
 #include "guis/Gui.h"
-#include <optional>
 #include "StartState.h"
 #include "Utilities/StartMenuOptions.h"
+
 
 class StartMenuState : public BaseState
 {
@@ -14,12 +16,11 @@ public:
 	{
 		entry();
 	}
-
+	
 	~StartMenuState() = default;
 	
-	void entry()
+	void entry() override
 	{
-		
 		sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 4, m_windowSize.y / 4);
 		float x = m_windowSize.x / 2 - (buttonSize.x / 2);
 		
@@ -27,26 +28,28 @@ public:
 		{
 			m_menuSelection[i] = std::move(std::make_unique<Gui>(Resources::getInstance().getFont() , buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
 		}
+		
 		m_menuSelection[NEW_GAME]->setText("New Game");
 		m_menuSelection[LOAD_GAME]->setText("Load Game");
 		m_menuSelection[QUIT]->setText("Quit");
 	}
 	
-	void exit() {}
+	void exit() override {}
 	
-	void update(sf::Time dt)
+	void update(sf::Time dt) override
 	{
-		std::cout << "inside startmenustate->update" << std::endl;
 		StartMenuOptions option = m_hover.value();
+		
 		for (int i = 0; i < MENU_OPTIONS; i++)
 		{
-			std::cout << "inside for loop ->startmenustate->update" << std::endl;
 			if (i == option)
 			{
 				m_menuSelection[i]->setHoverColor();
 			}
 			else
+			{
 				m_menuSelection[i]->setResetColor();
+			}
 		}
 		if (m_choice != std::nullopt)
 		{
@@ -54,7 +57,7 @@ public:
 		}
 	}
 	
-	void handleEvents(sf::Event event)
+	void handleEvents(sf::Event event) override
 	{
 		if (event.type == sf::Event::KeyReleased)
 		{
@@ -73,7 +76,7 @@ public:
 		}
 	}
 	
-	void draw(sf::RenderWindow& window)
+	void draw(sf::RenderWindow& window) override
 	{
 		for (auto& gui : m_menuSelection)
 		{
@@ -89,11 +92,7 @@ public:
 private:
 	std::array<std::unique_ptr<Gui>, MENU_OPTIONS> m_menuSelection {};
 	std::optional<StartMenuOptions> m_hover{ NEW_GAME };
-
-	//FOR DEBUGGING DONT FORGOT TO DELETE WHEN FINISH PLAYSTATE WORKING
-	//std::optional<StartMenuOptions> m_choice {NEW_GAME};
-
-
+	
 	std::optional<StartMenuOptions> m_choice {std::nullopt};
 	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
 };

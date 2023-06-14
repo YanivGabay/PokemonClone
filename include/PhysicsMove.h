@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-
 #include <SFML/Graphics.hpp>
 
 // Disable MSVC analysis warnings for the box2d include
@@ -17,8 +16,16 @@ const float moveForce = 1.0f;
 
 class PhysicsMove {
 public:
-	PhysicsMove(int startPosX, int startPosY)
-        : m_gravity(0.0f, 9.8f), m_world(std::make_unique<b2World>(m_gravity)), m_groundBody(m_world->CreateBody(&m_groundBodyDef)), m_body(m_world->CreateBody(&m_bodyDef)), m_timeStep(1.0f / 60.0f), m_velocityIterations(6), m_positionIterations(2),m_position(startPosX, startPosY), m_angle(m_body->GetAngle())
+    PhysicsMove(int startPosX, int startPosY)
+        : m_gravity(0.0f, 9.8f),
+          m_world(std::make_unique<b2World>(m_gravity)),
+          m_groundBody(m_world->CreateBody(&m_groundBodyDef)),
+          m_body(m_world->CreateBody(&m_bodyDef)),
+          m_timeStep(1.0f / 60.0f),
+          m_velocityIterations(6),
+          m_positionIterations(2),
+          m_position(startPosX, startPosY),
+          m_angle(m_body->GetAngle())
     {
         m_groundBodyDef.position.Set(startPosX, startPosY);
         m_groundBox.SetAsBox(50.0f, 10.0f);
@@ -35,12 +42,14 @@ public:
         m_body->CreateFixture(&m_fixtureDef);
         m_body->SetTransform(m_position, m_angle);
     }
-	
+    
     ~PhysicsMove() = default;
+    
     Side getSide()
     {
         return m_newSide;
     }
+    
     void setMove(Side newSide)
     {
         // First, cause the world to be updated to the next step
@@ -51,6 +60,7 @@ public:
         
         // (box2d numbers are not in pixels, so we need some scaling here)
         // m_position *= 30.f;
+        
         m_newSide = newSide;
         switch (m_newSide)
         {
@@ -69,6 +79,7 @@ public:
         default:
             break;
         }
+        
         m_body->SetTransform(m_position ,m_angle);
         m_angle = m_body->GetAngle();
     }
@@ -86,7 +97,8 @@ public:
 
 private:
     sf::RenderWindow& m_window = Resources::getInstance().getWindow();
-     Side m_newSide = UP;
+    
+    Side m_newSide = UP;
 
     b2Vec2 m_gravity;
     std::unique_ptr<b2World> m_world;

@@ -3,64 +3,52 @@
 #include <memory>
 #include <vector>
 #include <queue>
+
 #include "Resources.h"
 #include "states/StartState.h"
 #include "Camera.h"
 #include "Stack.h"
 
+
 class StateMachine 
 {
 public:
-
 	StateMachine()
-		: m_window(Resources::getInstance().getWindow())
-	{}
+		: m_window(Resources::getInstance().getWindow()) {}
 	
 	~StateMachine() = default;
-
+	
 	void runGame()
 	{
-		std::cout << "inside rungame of statemachine" << std::endl;
 		const sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 fps
 		sf::Time timeSinceLastUpdate = sf::Time::Zero;
 		sf::Clock clock; // Start a clock for frame timing
 	
 		m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
 		m_stateStack.pushState(std::move(std::make_unique<FadeInState>(getStateStack(), Resources::getInstance().getColor(BLACK))));
-		std::cout << "afterpushing" << std::endl;
+		
 		while (m_window.isOpen())
 		{
 			this->handleEvents();
 			
 			sf::Time elapsedTime = clock.restart();
 			timeSinceLastUpdate += elapsedTime;
-			std::cout << "after handleevents,statemachine" << std::endl;
-
-
+			
 			while (timeSinceLastUpdate > TimePerFrame)
 			{
 				timeSinceLastUpdate -= TimePerFrame;
-				this->update(TimePerFrame);		
-				std::cout << "afterupdate,inside whiletime,statemachine" << std::endl;
+				this->update(TimePerFrame);
 			}
-
-			//sf::Vector2f playerPixelPosition = gridToPixelPosition(myPlayer.getPosition());
-
-			//camera.update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);  // Center camera around the player's center
-
 			
 			m_window.clear();
 
 			this->draw();
-			std::cout << "after draw,statemachine" << std::endl;
-			std::cout << "totalstates:" << m_stateStack.size() <<std::endl;
+			
 			// window.draw(shape);
 			m_window.display();
 		}
 	}
 	
-	
-
 	void handleEvents()
 	{
 		m_stateStack.handleEvents();
@@ -97,12 +85,13 @@ public:
 	}
 
 
-	bool empty() {
+	bool empty()
+	{
 		return m_stateStack.empty();
 	}
 
 private:
-	Stack<BaseState> m_stateStack;
-	
 	sf::RenderWindow& m_window;
+	
+	Stack<BaseState> m_stateStack;
 };

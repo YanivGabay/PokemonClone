@@ -1,7 +1,10 @@
 #pragma once
+
 #include <optional>
 
+
 const int MENU_OPTIONS = 3;
+
 enum StartMenuOptions
 {
 	NEW_GAME,
@@ -15,8 +18,10 @@ std::optional<StartMenuOptions> operator++(std::optional<StartMenuOptions> optio
 	{
 		*option = static_cast<StartMenuOptions>((static_cast<int>(*option) + 1) % MENU_OPTIONS);
 	}
+	
 	return option;
 }
+
 std::optional<StartMenuOptions> operator--(std::optional<StartMenuOptions> option)
 {
 	if (option)

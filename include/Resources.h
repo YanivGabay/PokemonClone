@@ -6,9 +6,9 @@
 #include <memory>
 #include <iostream>
 #include <array>
+
 #include "tileson/tileson.hpp"
 #include "utilities.h"
-
 
 
 enum Colors
@@ -19,6 +19,7 @@ enum Colors
 	WHITE
 };
 
+
 class Resources
 {
 public:
@@ -27,6 +28,7 @@ public:
 		static Resources instance;
 		return instance;
 	}
+	
 	sf::Color getColor(Colors color)
 	{
 		static std::unordered_map<Colors, sf::Color> colorMap = {
@@ -36,9 +38,9 @@ public:
 			{Colors::WHITE, sf::Color::White}
 		};
 		
-
 		return colorMap[color];
 	}
+	
 	sf::Texture& getTexture(const std::string& filename)
 	{
 		if (m_textures.find(filename) == m_textures.end())
@@ -64,6 +66,7 @@ public:
 
 		return *m_font;
 	}
+	
 	void loadPlayerRects()
 	{
 		sf::Vector2i size = sf::Vector2i(22, 26);
@@ -79,9 +82,9 @@ public:
 			m_playerRects[id] = std::make_unique<sf::IntRect>(position.x, position.y, size.x, size.y);
 		}
 	}
+	
 	void loadFrames()
 	{
-		
 		sf::Vector2i size = sf::Vector2i(TILE_SIZE/2, TILE_SIZE / 2);
 		sf::Vector2i position = sf::Vector2i(0, 0);
 		loadFont("resources/fonts/Pokemon.ttf");
@@ -90,13 +93,12 @@ public:
 		{
 			int row = static_cast<int>(id) / 3;  // Calculate the row index
 			int col = static_cast<int>(id) % 3;  // Calculate the column index
-
+			
 			position.x = col * (TILE_SIZE / 2);   // Update the x position
 			position.y = row * (TILE_SIZE / 2);   // Update the y position
-
+			
 			m_frameBoxRects[id] = std::make_unique<sf::IntRect>(position.x,position.y, size.x,size.y);
 		}
-
 	}
 	
 	void loadFont(const std::string& filename)
@@ -115,24 +117,25 @@ public:
 			throw std::runtime_error("Failed to load font.");
 		}
 	}
+	
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>>& getFrameCord()
 	{
 		return m_frameBoxRects;
 	}
+	
 	sf::RenderWindow& getWindow()
 	{
 		return m_window;
 	}
+	
 	sf::IntRect& getRect(PlayerID id)
 	{
 		if (m_playerRects.find(id) == m_playerRects.end())
 		{
-			
-				std::cerr << "Failed to load playerrect: " << std::endl;
-				throw std::runtime_error("Failed to load texture.");
-			
+			std::cerr << "Failed to load playerrect: " << std::endl;
+			throw std::runtime_error("Failed to load texture.");
 		}
-
+		
 		return *m_playerRects[id];
 	}
 
@@ -140,9 +143,7 @@ private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
-	
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
-		
 	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
 	std::unique_ptr<sf::Font> m_font;
 	
@@ -155,17 +156,14 @@ private:
 		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
 	{
 		m_window.setFramerateLimit(FPS);
-
+		
 		sf::Vector2i startIndexs(3, 61);
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 		getTexture("resources/spritesheet.png");
-			
+		
 		loadFrames();
 		loadPlayerRects();
 		
 		// std::cout << "after loading tileset.png" << std::endl;
 	};
-
-	
-
 };

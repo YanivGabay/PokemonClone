@@ -1,22 +1,22 @@
 #pragma once
 
 #include "BaseState.h"
-
 #include "FadeInState.h"
 #include "FadeOutState.h"
 #include "Stack.h"
 
+
 class TransitionState : public BaseState
 {
 public:
-    TransitionState(Stack<BaseState>& states, std::unique_ptr<BaseState> nextState,
-                    sf::Color color)
+    TransitionState(Stack<BaseState>& states, std::unique_ptr<BaseState> nextState, sf::Color color)
         : BaseState(states),
           m_nextState(std::move(nextState)),
           m_fadeOutState(std::make_unique<FadeOutState>(states,color)),
-          m_fadeInState(std::make_unique<FadeInState>(states,color))
-    {}
+          m_fadeInState(std::make_unique<FadeInState>(states,color)) {}
+    
     ~TransitionState() = default;
+    
     std::unique_ptr<BaseState> getNextState()
     {
         return std::move(m_nextState);
@@ -27,8 +27,8 @@ public:
         return std::move(m_fadeInState);
     }
     
-    void update (sf::Time dt)override
-    {   	std::cout << " Transitionstate->update" << std::endl;
+    void update (sf::Time dt) override
+    {
         if (m_fadeOutState->getStatus())
         {
             m_fadeOutState->update(dt);
@@ -44,25 +44,15 @@ public:
         }
     }
     
-    void draw (sf::RenderWindow& window)override
+    void draw (sf::RenderWindow& window) override
     {
-        std::cout << " Transitionstate->draw" << std::endl;
         m_fadeOutState->draw(window);
     }
-    void entry()override
-    {
-
-     }
-    void exit()override
-    {
-
-     }
-  
-     void handleEvents(sf::Event event)override
-    {
-         
-    }
-   
+    
+    void entry() override {}
+    void exit()override {}
+    
+    void handleEvents(sf::Event event) override {}
 
 private:
     std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
