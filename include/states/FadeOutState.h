@@ -5,7 +5,6 @@
 #include "BaseState.h"
 #include "Utilities/Fades.h"
 
-
 class FadeOutState : public BaseState
 {
 public:
