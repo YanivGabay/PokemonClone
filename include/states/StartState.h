@@ -8,7 +8,7 @@
 #include "StartMenuState.h"
 #include "TransitionState.h"
 #include "PlayState.h"
-
+#include <future>
 
 class StartState : public BaseState
 {
@@ -28,9 +28,11 @@ public:
 	
 	void exit() override
 	{
-		auto playstate = std::make_unique<PlayState>(m_states.get());
-		auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
-		m_states.get().pushQueueState(std::move(transition));
+		m_loadingFuture = std::async(std::launch::async, [this]() {
+			auto playstate = std::make_unique<PlayState>(m_states.get());
+			auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
+			m_states.get().pushQueueState(std::move(transition));
+									 });
 	}
 	
 	void update(sf::Time dt) override
@@ -64,4 +66,6 @@ private:
 	std::optional<StartMenuOptions> m_choice{ std::nullopt };
 	std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
 	std::unique_ptr<StartMenuState> m_startMenu;
+
+	std::future<void> m_loadingFuture;
 };

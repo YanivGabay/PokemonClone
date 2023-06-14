@@ -33,7 +33,7 @@ public:
 			
 			sf::Time elapsedTime = clock.restart();
 			timeSinceLastUpdate += elapsedTime;
-			
+		
 			while (timeSinceLastUpdate > TimePerFrame)
 			{
 				timeSinceLastUpdate -= TimePerFrame;
