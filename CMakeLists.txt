@@ -10,7 +10,7 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitiz
 target_link_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
 
 add_subdirectory (include)
-add_subdirectory (src)
+add_subdirectory (src) 
 add_subdirectory (resources)
 add_subdirectory (external/box2d/src)
 
