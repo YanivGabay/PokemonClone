@@ -61,7 +61,6 @@ public:
 			std::map<std::tuple<int, int>, tson::Tile*> tileData = layer.getTileData();
 			int x = layer.getSize().x;
 			int y = layer.getSize().y;
-			std::cout << "y: " << y << std::endl;
 			
 			//Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
 			//Would be unnecessary otherwise.

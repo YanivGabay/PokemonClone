@@ -163,7 +163,5 @@ private:
 		
 		loadFrames();
 		loadPlayerRects();
-		
-		// std::cout << "after loading tileset.png" << std::endl;
 	};
 };
