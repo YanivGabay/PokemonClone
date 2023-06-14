@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <iostream>
 
 #include "BaseState.h"
 #include "FadeInState.h"
@@ -9,6 +10,7 @@
 #include "TransitionState.h"
 #include "PlayState.h"
 #include <future>
+
 
 class StartState : public BaseState
 {
@@ -28,11 +30,12 @@ public:
 	
 	void exit() override
 	{
-		m_loadingFuture = std::async(std::launch::async, [this]() {
+		m_loadingFuture = std::async(std::launch::async, [this](){
 			auto playstate = std::make_unique<PlayState>(m_states.get());
+			
 			auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
 			m_states.get().pushQueueState(std::move(transition));
-									 });
+			});
 	}
 	
 	void update(sf::Time dt) override
@@ -59,6 +62,7 @@ public:
 	
 	void draw(sf::RenderWindow& window) override
 	{
+		std::cout << "555 yaniv 555" << std::endl;
 		m_startMenu->draw(window);
 	}
 
