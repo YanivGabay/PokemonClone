@@ -29,9 +29,7 @@ public:
 			m_menuSelection[i] = std::move(std::make_unique<Gui>(Resources::getInstance().getFont() , buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
 		}
 		
-		m_menuSelection[NEW_GAME]->setText("New Game");
-		m_menuSelection[LOAD_GAME]->setText("Load Game");
-		m_menuSelection[QUIT]->setText("Quit");
+		resetText();
 	}
 	
 	void exit() override {}
@@ -55,6 +53,8 @@ public:
 		{
 			setStatus(false);
 		}
+
+		
 	}
 	
 	void handleEvents(sf::Event event) override
@@ -88,7 +88,18 @@ public:
 	{
 		return m_choice;
 	}
-
+	void setLoadingText()
+	{
+		m_menuSelection[NEW_GAME]->setText("Loading...");
+		m_menuSelection[LOAD_GAME]->setText("Loading..");
+		m_menuSelection[QUIT]->setText("Loading.");
+	}
+	void resetText()
+	{
+		m_menuSelection[NEW_GAME]->setText("New Game");
+		m_menuSelection[LOAD_GAME]->setText("Load Game");
+		m_menuSelection[QUIT]->setText("Quit");
+	}
 private:
 	std::array<std::unique_ptr<Gui>, MENU_OPTIONS> m_menuSelection {};
 	std::optional<StartMenuOptions> m_hover{ NEW_GAME };

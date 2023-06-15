@@ -34,7 +34,8 @@ public:
             auto playstate = std::make_unique<PlayState>(m_states.get());
             auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
             m_states.get().pushQueueState(std::move(transition));
-		
+			m_startMenu->resetText();
+			m_loadingStarted = false;
         
 	}
 	
@@ -53,7 +54,9 @@ public:
 			m_choice = std::nullopt;
 			m_loadingStarted = true;
 			m_loadingFuture = std::async(std::launch::async, &StartState::exit, this);
+			m_startMenu->setLoadingText();
 		}
+		
 		
 	}
 
