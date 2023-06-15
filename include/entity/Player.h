@@ -31,37 +31,38 @@ public:
     {
         if (!m_isMoving)
         {
+            sf::Vector2i position;
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
                 m_movingObj.setMove(LEFT);
-                m_position.x = m_movingObj.getPos().x;
-                m_position.y = m_movingObj.getPos().y;
+                position.x = m_movingObj.getPos().x;
+                position.y = m_movingObj.getPos().y;
                 
-                m_targetPosition = sf::Vector2i(m_position);
+                m_targetPosition = sf::Vector2i(position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
                 m_movingObj.setMove(RIGHT);
-                m_position.x = m_movingObj.getPos().x;
-                m_position.y = m_movingObj.getPos().y;
+                position.x = m_movingObj.getPos().x;
+                position.y = m_movingObj.getPos().y;
 
-                m_targetPosition = sf::Vector2i(m_position);
+                m_targetPosition = sf::Vector2i(position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
             {
                 m_movingObj.setMove(UP);
-                m_position.x = m_movingObj.getPos().x;
-                m_position.y = m_movingObj.getPos().y;
+                position.x = m_movingObj.getPos().x;
+                position.y = m_movingObj.getPos().y;
                 
-                m_targetPosition = sf::Vector2i(m_position);
+                m_targetPosition = sf::Vector2i(position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
             {
                 m_movingObj.setMove(DOWN);
-                m_position.x = m_movingObj.getPos().x;
-                m_position.y = m_movingObj.getPos().y;
+                position.x = m_movingObj.getPos().x;
+                position.y = m_movingObj.getPos().y;
                 
-                m_targetPosition = sf::Vector2i(m_position);
+                m_targetPosition = sf::Vector2i(position);
             }
             else
                 return;
