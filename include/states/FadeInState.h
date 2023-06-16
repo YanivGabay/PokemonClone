@@ -14,7 +14,7 @@ public:
     {
         std::cout << "FadeInState c-tor" << std::endl;
 
-        m_fadeShape.setSize(sf::Vector2f(getWindowSize()));
+        m_fadeShape.setSize(sf::Vector2f(getWindowSize().x*3,getWindowSize().y*3));
         m_fadeShape.setFillColor(color);
     }
 
