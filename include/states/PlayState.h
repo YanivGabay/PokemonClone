@@ -24,23 +24,48 @@ public:
 	void entry() override {}
 	void exit() override {}
 	
+	std::array<sf::Vector2i, SIDES> getOptions(sf::Vector2i position)
+	{
+		std::array<sf::Vector2i, SIDES> neighbors {};
+		neighbors[RIGHT] = sf::Vector2i(position.x + 1, position.y);
+		neighbors[UP] = sf::Vector2i(position.x , position.y-1) ;
+		neighbors[DOWN] = sf::Vector2i(position.x , position.y+1) ;
+		neighbors[LEFT] = sf::Vector2i(position.x-1 , position.y) ;
+
+		return neighbors;
+	}
 	void update(sf::Time dt) override
 	{
-		m_player->update(dt);
+		sf::Vector2i currPos = m_player.get()->getPosition();
 
-		sf::Vector2i curr = m_player.get()->getPosition();
-		std::cout << "player x is:" << curr.x << "player y is:" << curr.y << std::endl;
-		if (curr.x == 20)
-		{
-			m_currentLevel->activeTile();
-		}
+		std::array<sf::Vector2i, SIDES> tilesOptions = getOptions(currPos);
+		std::map <Side, bool> directionMap;
+		directionMap[RIGHT] = m_currentLevel->checkCollisionUpper(tilesOptions[RIGHT]*TILE_SIZE);
+		directionMap[LEFT] = m_currentLevel->checkCollisionUpper(tilesOptions[LEFT] * TILE_SIZE);
+		directionMap[UP] = m_currentLevel->checkCollisionUpper(tilesOptions[UP] * TILE_SIZE);
+		directionMap[DOWN] = m_currentLevel->checkCollisionUpper(tilesOptions[DOWN] * TILE_SIZE);
+
+
+		m_player->update(dt, directionMap);
+		//if we are here, the player is after collision check
+
+
+		sf::Vector2i updatedPos = m_player.get()->getPosition();
+		//if on grass rool a dice
+		// if certain push battlestate and other states
+
+
+
 		// test to check play animation
 		 sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		 m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 
 		 m_currentLevel->updateAnimations(dt);
 	 }
-	
+	void checkCollision()
+	{
+
+	}
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();

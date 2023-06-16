@@ -22,9 +22,9 @@ public:
         : m_isMoving(false),
           m_moveProgress(0.0f),
           m_moveSpeed(15.0f),
-          m_position(15, 15),
+          m_position(24, 37),
           m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
-          m_movingObj(15, 15),
+          m_movingObj(24,37),
           m_sprite(Resources::getInstance().getTexture("resources/maleSpriteSheet.png"), Resources::getInstance().getRect(PlayerID::UP_IDLE)) {}
     
     void handleInput()
@@ -70,8 +70,11 @@ public:
             m_isMoving = true;
         }
     }
-    
-    void update(sf::Time dt)
+    bool checkUppers(const std::map<Side, bool>& directionMap,Side side)
+    {
+        return directionMap.at(side);
+    }
+    void update(sf::Time dt, const std::map<Side, bool>& directionMap)
     {
         if (m_isMoving)
         {
@@ -97,7 +100,16 @@ public:
             
             if (m_moveProgress >= 1.0f)
             {
-                m_position = m_targetPosition;
+                //check upper level and npc for collisions
+                if (!checkUppers(directionMap, side))
+                {
+                    m_position = m_targetPosition;
+                   
+                }
+                else m_targetPosition = m_position;
+
+              
+                m_movingObj.setPosition(m_position);
                 m_isMoving = false;
                 m_moveProgress = 0.0f;
             }

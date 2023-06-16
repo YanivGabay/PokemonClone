@@ -25,6 +25,10 @@ public:
 	{
 		m_map->activeAnim();
 	}
+	bool checkCollisionUpper(sf::Vector2i target)
+	{
+		return m_map->checkCollisionUpper(target);
+	}
 private:
 	std::unique_ptr<TilesMap> m_map;
 	LevelID m_id{ LevelID::START_TOWN };

@@ -141,6 +141,7 @@ public:
 							{
 								std::cout << "$$$$$$$$$$$$$ 19 $$$$$$$$$$$$$" << std::endl;
 								m_upperTiles.push_back(std::move(gameTile));
+								m_upperMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_upperTiles.back().get());
 							}
 							std::cout << "$$$$$$$$$$$$$ 20 $$$$$$$$$$$$$" << std::endl;
 						}
@@ -152,14 +153,7 @@ public:
 	}
 	void activeAnim()
 	{
-		for (auto& tile : m_mediumTiles)
-		{
-			if (tile.get()->getPosition()==sf::Vector2f(320,320))
-			{
-				std::cout <<" inside active anim 200 200" << std::endl;
-				tile->playAnimation(sf::Time(sf::seconds(1.0f/60.0f)));
-			}
-		}
+		
 	}
 	void draw(sf::RenderWindow& window)
 	{
@@ -196,12 +190,29 @@ public:
 			}
 		}
 	}
+	bool checkCollisionUpper(sf::Vector2i target)
+	{
+		//if its equal, we didnt find so we return false
+		return m_upperMap.find(std::make_pair(target.x, target.y)) != m_upperMap.end();
+	}
+	struct PairHash
+	{
+		template <class T1, class T2>
+		std::size_t operator () (const std::pair<T1, T2>& p) const
+		{
+			auto h1 = std::hash<T1>{}(p.first);
+			auto h2 = std::hash<T2>{}(p.second);
+			return h1 ^ h2; // or use a better combining function
+		}
+	};
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
 	std::vector<std::unique_ptr<Tile>> m_mediumTiles;
 	std::vector<std::unique_ptr<Tile>> m_upperTiles;
 	std::vector<std::unique_ptr<Tile>> m_exits;
 	
+	std::unordered_map<std::pair<int, int>, Tile*, PairHash> m_upperMap;
+
 	int m_mapXSize;
 	int m_mapYSize;
 };

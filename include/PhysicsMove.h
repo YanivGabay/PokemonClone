@@ -93,7 +93,11 @@ public:
     {
         return m_angle;
     }
-
+    void setPosition(sf::Vector2i position)
+    {
+        m_position.x = position.x;
+        m_position.y = position.y;
+    }
 
 private:
     sf::RenderWindow& m_window = Resources::getInstance().getWindow();

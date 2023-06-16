@@ -22,7 +22,7 @@ public:
 	void entry() override
 	{
 		sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 4, m_windowSize.y / 4);
-		float x = m_windowSize.x / 2 - (buttonSize.x / 2);
+		float x = (static_cast<float>(m_windowSize.x / 2) - (buttonSize.x / 2));
 		
 		for (size_t i = 0; i < MENU_OPTIONS; i++)
 		{
