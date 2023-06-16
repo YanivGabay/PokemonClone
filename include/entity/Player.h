@@ -22,10 +22,14 @@ public:
         : m_isMoving(false),
           m_moveProgress(0.0f),
           m_moveSpeed(15.0f),
-          m_position(24, 37),
+          m_position(11, 48),
           m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
-          m_movingObj(24,37),
-          m_sprite(Resources::getInstance().getTexture("resources/maleSpriteSheet.png"), Resources::getInstance().getRect(PlayerID::UP_IDLE)) {}
+          m_movingObj(11,48),
+          m_sprite(Resources::getInstance().getTexture("resources/maleSpriteSheet.png"), Resources::getInstance().getRect(PlayerID::UP_IDLE)) {
+
+       
+        m_sprite.setOrigin(0, m_sprite.getTextureRect().height/2);
+    }
     
     void handleInput()
     {
@@ -124,8 +128,7 @@ public:
     void draw(sf::RenderWindow& window)
     {
         sf::Vector2f pixelPosition = gridToPixelPosition(m_position);
-        
-        
+      
         m_sprite.setPosition(pixelPosition);
 
        // m_shape.setPosition(pixelPosition);
