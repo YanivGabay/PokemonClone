@@ -4,7 +4,7 @@
 #include "world/TilesMap.h"
 #include "Level.h"
 #include "entity/Player.h"
-
+#include <random>
 
 class PlayState : public BaseState
 {
@@ -47,6 +47,41 @@ public:
 
 		return directionMap;
 	}
+	bool checkGrassBattle(sf::Vector2i updatedPos)
+	{
+		
+		Tile* tile = m_currentLevel->getActiveTile(updatedPos.x, updatedPos.y);
+
+		
+		if (tile)
+		{
+			if (tile->getId() == "tallgrass")
+			{
+				tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
+				
+				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
+				{
+					return true;
+				}
+			}
+		}
+	
+
+		return false;
+	}
+	int generateRandomNumber(int min, int max)
+	{
+		std::random_device rd;  
+		std::mt19937 eng(rd()); 
+
+		std::uniform_int_distribution<int> distribution(min, max); 
+
+		return distribution(eng);
+	}
+	void triggerBattleEncounter(LevelID levelId)
+	{
+		std::cout << "battle should trigger" << std::endl;
+	}
 	void update(sf::Time dt) override
 	{
 		
@@ -56,6 +91,11 @@ public:
 
 
 		sf::Vector2i updatedPos = m_player.get()->getPosition();
+		
+		if (checkGrassBattle(updatedPos))
+		{
+			triggerBattleEncounter(m_currentLevel->getLevelId());
+		}
 		//if on grass rool a dice
 		// if certain push battlestate and other states
 
@@ -88,4 +128,6 @@ private:
 	std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<Camera> m_camera;
+
+	
 };

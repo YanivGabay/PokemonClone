@@ -136,6 +136,7 @@ public:
 							{
 								std::cout << "$$$$$$$$$$$$$ 18 $$$$$$$$$$$$$" << std::endl;
 								m_mediumTiles.push_back(std::move(gameTile));
+								m_mediumMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_mediumTiles.back().get());
 							}
 							else
 							{
@@ -151,10 +152,7 @@ public:
 			std::cout << "$$$$$$$$$$$$$ 21 $$$$$$$$$$$$$" << std::endl;
 
 	}
-	void activeAnim()
-	{
-		
-	}
+
 	void draw(sf::RenderWindow& window)
 	{
 		for (auto& tile	: m_lowerTiles)
@@ -205,12 +203,27 @@ public:
 			return h1 ^ h2; // or use a better combining function
 		}
 	};
+	Tile* getTile(int x, int y)
+	{
+		auto iterator = m_mediumMap.find(std::make_pair(x * TILE_SIZE, y * TILE_SIZE));
+
+		if (iterator != m_mediumMap.end())
+		{
+			// Tile exists at the specified coordinates
+			return iterator->second;
+		}
+
+		// Tile does not exist
+		return nullptr;
+		
+	}
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
 	std::vector<std::unique_ptr<Tile>> m_mediumTiles;
 	std::vector<std::unique_ptr<Tile>> m_upperTiles;
 	std::vector<std::unique_ptr<Tile>> m_exits;
 	
+	std::unordered_map<std::pair<int, int>, Tile*, PairHash> m_mediumMap;
 	std::unordered_map<std::pair<int, int>, Tile*, PairHash> m_upperMap;
 
 	int m_mapXSize;

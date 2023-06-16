@@ -21,15 +21,24 @@ public:
 	{
 		m_map->updateAnimations(dt);
 	}
-	void activeTile()
+	Tile* getActiveTile(int x,int y)
 	{
-		m_map->activeAnim();
+		return m_map->getTile(x, y);
 	}
 	bool checkCollisionUpper(sf::Vector2i target)
 	{
 		return m_map->checkCollisionUpper(target);
 	}
+	const int getEncounterRate()
+	{
+		return m_encounterRate;
+	}
+	const LevelID getLevelId()
+	{
+		return m_id;
+	}
 private:
 	std::unique_ptr<TilesMap> m_map;
 	LevelID m_id{ LevelID::START_TOWN };
+	int m_encounterRate{ 2 };
 };

@@ -108,9 +108,7 @@ public:
                     m_targetPosition = m_position;
                     m_movingObj.setPosition(m_position);
                 }
-                std::cout << " m_targetPosition.x" << m_targetPosition.x << " m_targetPosition.y" << m_targetPosition.y << std::endl;
-                std::cout << " m_movingObj.getPos().x" << m_movingObj.getPos().x << " m_movingObj.getPos().y" << m_movingObj.getPos().y << std::endl;
-                std::cout << "m_position.x" << m_position.x << "m_position.y" << m_position.y << std::endl;
+               
                 
                 m_isMoving = false;
                 m_moveProgress = 0.0f;
@@ -118,9 +116,7 @@ public:
         }
         else
         {
-            std::cout << " m_targetPosition.x" << m_targetPosition.x << " m_targetPosition.y" << m_targetPosition.y << std::endl;
-            std::cout << " m_movingObj.getPos().x" << m_movingObj.getPos().x << " m_movingObj.getPos().y" << m_movingObj.getPos().y << std::endl;
-            std::cout << "m_position.x" << m_position.x << "m_position.y" << m_position.y << std::endl;
+           
             //we are not moving
         }
     }
