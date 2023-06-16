@@ -40,13 +40,13 @@ public:
 				timeSinceLastUpdate -= TimePerFrame;
 				this->update(TimePerFrame);
 				
-				std::cout << " ===== in while ===== " << std::endl;
+				//std::cout << " ===== in while ===== " << std::endl;
 				///  m_window.clear();
 				/// this->draw();
 				/// m_window.display();
 			}
 
-			std::cout << " !!!!!! out of while !!!!!! " << std::endl;
+			//std::cout << " !!!!!! out of while !!!!!! " << std::endl;
 			m_window.clear();
 
 			this->draw();

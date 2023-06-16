@@ -31,42 +31,30 @@ public:
     {
         if (!m_isMoving)
         {
-            sf::Vector2i position;
+          
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
                 m_movingObj.setMove(LEFT);
-                position.x = m_movingObj.getPos().x;
-                position.y = m_movingObj.getPos().y;
-                
-                m_targetPosition = sf::Vector2i(position);
+               
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
                 m_movingObj.setMove(RIGHT);
-                position.x = m_movingObj.getPos().x;
-                position.y = m_movingObj.getPos().y;
-
-                m_targetPosition = sf::Vector2i(position);
+               
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
             {
                 m_movingObj.setMove(UP);
-                position.x = m_movingObj.getPos().x;
-                position.y = m_movingObj.getPos().y;
                 
-                m_targetPosition = sf::Vector2i(position);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
             {
                 m_movingObj.setMove(DOWN);
-                position.x = m_movingObj.getPos().x;
-                position.y = m_movingObj.getPos().y;
-                
-                m_targetPosition = sf::Vector2i(position);
+               
             }
             else
                 return;
-            
+          
             m_isMoving = true;
         }
     }
@@ -101,22 +89,35 @@ public:
             if (m_moveProgress >= 1.0f)
             {
                 //check upper level and npc for collisions
-                if (!checkUppers(directionMap, side))
+                bool isValidPosition = !checkUppers(directionMap, side);
+                if (isValidPosition)
                 {
+                    std::cout << "valid position" << std::endl;
+                    b2Vec2 newPos = m_movingObj.getPos();
+                    m_targetPosition = sf::Vector2i(newPos.x, newPos.y);
                     m_position = m_targetPosition;
                    
                 }
-                else m_targetPosition = m_position;
-
-              
-                m_movingObj.setPosition(m_position);
+                else
+                {
+                    std::cout << "not valid position" << std::endl;
+                    m_targetPosition = m_position;
+                    m_movingObj.setPosition(m_position);
+                }
+                std::cout << " m_targetPosition.x" << m_targetPosition.x << " m_targetPosition.y" << m_targetPosition.y << std::endl;
+                std::cout << " m_movingObj.getPos().x" << m_movingObj.getPos().x << " m_movingObj.getPos().y" << m_movingObj.getPos().y << std::endl;
+                std::cout << "m_position.x" << m_position.x << "m_position.y" << m_position.y << std::endl;
+                
                 m_isMoving = false;
                 m_moveProgress = 0.0f;
             }
         }
         else
         {
-            ;  //we are not moving
+            std::cout << " m_targetPosition.x" << m_targetPosition.x << " m_targetPosition.y" << m_targetPosition.y << std::endl;
+            std::cout << " m_movingObj.getPos().x" << m_movingObj.getPos().x << " m_movingObj.getPos().y" << m_movingObj.getPos().y << std::endl;
+            std::cout << "m_position.x" << m_position.x << "m_position.y" << m_position.y << std::endl;
+            //we are not moving
         }
     }
 
@@ -124,12 +125,7 @@ public:
     {
         sf::Vector2f pixelPosition = gridToPixelPosition(m_position);
         
-        if (m_isMoving)
-        {
-            sf::Vector2f targetPixelPosition = gridToPixelPosition(m_targetPosition);
-            
-            pixelPosition += ((targetPixelPosition - pixelPosition) * m_moveProgress);
-        }
+        
         m_sprite.setPosition(pixelPosition);
 
        // m_shape.setPosition(pixelPosition);

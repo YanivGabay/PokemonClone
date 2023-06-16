@@ -79,7 +79,7 @@ public:
         default:
             break;
         }
-        
+        std::cout << "m_positionofPhysicsMove.x" << m_position.x << "m_positionofPhysicsMove.y" << m_position.y << std::endl;
         m_body->SetTransform(m_position ,m_angle);
         m_angle = m_body->GetAngle();
     }
@@ -95,8 +95,11 @@ public:
     }
     void setPosition(sf::Vector2i position)
     {
+        
         m_position.x = position.x;
         m_position.y = position.y;
+        m_bodyDef.position.Set(m_position.x,m_position.y);
+        m_body->SetTransform(m_position, m_angle);
     }
 
 private:
