@@ -8,7 +8,7 @@
 #include "world\TilesMap.h"
 #include "PhysicsMove.h"
 #include "Animation.h"
-
+#include "Pokemon/Party.h"
 
 sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
 {
@@ -154,4 +154,6 @@ private:
     float m_moveSpeed;
    
     PhysicsMove m_movingObj;
+
+   // Party m_pokemons;
 };
