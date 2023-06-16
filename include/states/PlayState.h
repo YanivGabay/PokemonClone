@@ -34,19 +34,24 @@ public:
 
 		return neighbors;
 	}
-	void update(sf::Time dt) override
+	const std::map<Side, bool> getMovesMap()
 	{
 		sf::Vector2i currPos = m_player.get()->getPosition();
 
 		std::array<sf::Vector2i, SIDES> tilesOptions = getOptions(currPos);
 		std::map <Side, bool> directionMap;
-		directionMap[RIGHT] = m_currentLevel->checkCollisionUpper(tilesOptions[RIGHT]*TILE_SIZE);
+		directionMap[RIGHT] = m_currentLevel->checkCollisionUpper(tilesOptions[RIGHT] * TILE_SIZE);
 		directionMap[LEFT] = m_currentLevel->checkCollisionUpper(tilesOptions[LEFT] * TILE_SIZE);
 		directionMap[UP] = m_currentLevel->checkCollisionUpper(tilesOptions[UP] * TILE_SIZE);
 		directionMap[DOWN] = m_currentLevel->checkCollisionUpper(tilesOptions[DOWN] * TILE_SIZE);
 
-
-		m_player->update(dt, directionMap);
+		return directionMap;
+	}
+	void update(sf::Time dt) override
+	{
+		
+		
+		m_player->update(dt, getMovesMap());
 		//if we are here, the player is after collision check
 
 
