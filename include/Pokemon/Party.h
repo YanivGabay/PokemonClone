@@ -7,13 +7,14 @@ class Party
 public:
 	Party()
 	{
+		//error is here 
 		//m_pokemons.fill(nullptr);
 	}
 
 	~Party()
 	{
 	}
-	/*
+	
 	void addPokemon(std::unique_ptr<Pokemon> pokemon)
 	{
 		// Find an empty slot in the party and add the Pokemon
@@ -25,7 +26,7 @@ public:
 				break;
 			}
 		}
-	}*/
+	}
 private:
 	std::array <std::unique_ptr< Pokemon > , PARTY_SIZE > m_pokemons;
 };
