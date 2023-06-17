@@ -7,8 +7,10 @@ class Party
 public:
 	Party()
 	{
-		//error is here 
-		//m_pokemons.fill(nullptr);
+		for (auto& slot : m_pokemons)
+		{
+			slot = nullptr;
+		}
 	}
 
 	~Party()
