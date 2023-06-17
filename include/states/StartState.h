@@ -68,7 +68,6 @@ public:
 	
 	void draw(sf::RenderWindow& window) override
 	{
-		std::cout << "555 yaniv 555" << std::endl;
 		m_startMenu->draw(window);
 	}
 

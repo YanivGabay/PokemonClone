@@ -12,8 +12,6 @@ public:
     FadeInState(Stack<BaseState>& states, sf::Color color)
         : BaseState(states),m_color(color)
     {
-        std::cout << "FadeInState c-tor" << std::endl;
-
         m_fadeShape.setSize(sf::Vector2f(getWindowSize().x*3,getWindowSize().y*3));
         m_fadeShape.setFillColor(color);
     }
@@ -25,8 +23,6 @@ public:
     
     void update(sf::Time dt) override
     {
-        std::cout << "FadeInState update" << std::endl;
-
         float increment = MaxProgress / (FrameDuration * FramesPerSecond);
 
         m_progress -= increment;
@@ -44,7 +40,6 @@ public:
     
     void draw(sf::RenderWindow& window) override
     {
-        std::cout << "FadeInState draw" << std::endl;
         window.draw(m_fadeShape);
     }
 
