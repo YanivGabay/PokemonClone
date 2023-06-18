@@ -5,8 +5,8 @@
 class EncounterBattleState : public BaseState
 {
 public:
-	EncounterBattleState(Stack<BaseState>& states,Player& player)
-		: BaseState(states)
+	EncounterBattleState(Stack<BaseState>& states, Player& player)
+		: BaseState(states), m_player(std::ref(player))
 	{
 	}
 
