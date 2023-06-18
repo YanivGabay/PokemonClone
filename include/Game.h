@@ -15,6 +15,7 @@
 #include "StateMachine.h"
 #include "world/TilesMap.h"
 #include "SoundTon.h"
+#include "utilities.h"
 
 
 class Game
@@ -22,8 +23,8 @@ class Game
 public:
 	Game()
 	{
-		SoundTon::getInstance().playSound("OPEN");
-		SoundTon::getInstance().stopSound("OPEN");
+		SoundTon::getInstance().playSound(soundNames::OPEN);
+		SoundTon::getInstance().stopSound(soundNames::OPEN);
 	};
 
 	~Game() = default;

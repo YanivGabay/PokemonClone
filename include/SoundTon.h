@@ -3,6 +3,76 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System/Vector2.hpp>
+// #include <unordered_map>
+#include <vector>
+#include <memory>
+#include <iostream>
+#include <array>
+#include <string>
+
+#include "tileson/tileson.hpp"
+#include "utilities.h"
+
+
+
+
+class SoundTon
+{
+public:
+	static SoundTon& getInstance()
+	{
+		static SoundTon instance;
+		return instance;
+	}
+
+	void playSound(soundNames soundName)
+	{
+		m_sound[int(soundName)].play();
+	}
+
+	void stopSound(soundNames soundName)
+	{
+		m_sound[int(soundName)].stop();
+	}
+
+private:
+	std::vector<sf::SoundBuffer> m_soundBuffer;
+	std::vector<sf::Sound> m_sound;
+
+	//------
+
+	SoundTon(const SoundTon&) = delete;
+	SoundTon& operator=(const SoundTon&) = delete;
+
+	SoundTon()
+	{
+		loadSound();
+	}
+
+	void loadSound()
+	{
+		for (size_t i = 0; i < sound_files.size(); i++)
+		{
+			m_soundBuffer.emplace_back(sf::SoundBuffer());
+			m_soundBuffer.back().loadFromFile(sound_files[i]);
+			
+			// ------------
+			
+			m_sound.emplace_back(sf::Sound());
+			m_sound.back().setBuffer(m_soundBuffer.back());
+
+			m_sound.back().setVolume(100);
+		}
+	}
+};
+
+
+/*
+#pragma once
+
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <unordered_map>
 #include <memory>
 #include <iostream>
@@ -62,3 +132,4 @@ private:
 		m_sound["OPEN"].setLoop(true);
 	}
 };
+*/
