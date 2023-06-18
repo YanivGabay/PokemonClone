@@ -35,7 +35,6 @@ public:
 		m_states.get().pushQueueState(std::move(transition));
 		m_startMenu->resetText();
 		m_loadingStarted = false;
-
 	}
 	
 	void update(sf::Time dt) override

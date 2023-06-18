@@ -11,6 +11,7 @@
 #include "Pokemon/Party.h"
 
 #include "entity\Entity.h"
+#include "SoundTon.h"
 
 
 class Player : public Entity
@@ -19,7 +20,8 @@ public:
     Player()
         : Entity("resources/maleSpriteSheet.png"),
           m_isMoving(false)
-    {}
+    {
+    }
     
     virtual ~Player() = default;
     
