@@ -22,8 +22,7 @@ public:
 			static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y
 			
 		);
-		m_enemyPokemon();
-		m_playerPokemonInfo();
+		
 		m_adviceActionInfo();
 	};
 	~Battle() {};
@@ -37,6 +36,9 @@ private:
 	Gui m_enemyPokemonInfo;
 	Gui m_adviceActionInfo;
 	const sf::Vector2u m_windowSize{ Resources::getInstance().getWindow().getSize() };
+	
+	sf::Vector2i m_playerPokemon;
+	sf::Vector2i m_enemyPokemon;
 
 };
 
