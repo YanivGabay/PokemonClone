@@ -95,7 +95,6 @@ public:
     }
     void setPosition(sf::Vector2i position)
     {
-        
         m_position.x = position.x;
         m_position.y = position.y;
         m_bodyDef.position.Set(m_position.x,m_position.y);
