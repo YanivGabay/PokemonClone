@@ -1,16 +1,16 @@
 #pragma once
 #include "BaseState.h"
-
-class BattleState : public BaseState
+#include "../entity/Player.h"
+#include "../Battle.h"
+class EncounterBattleState : public BaseState
 {
 public:
-	BattleState : 
+	EncounterBattleState(Stack<BaseState>& states,Player& player)
+		: BaseState(states)
 	{
 	}
 
-	~BattleState : 
-	{
-	}
+	~EncounterBattleState() = default;
 
 	 void entry() override {
 	 }
@@ -25,4 +25,6 @@ public:
 
 private:
 	std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
+	Battle m_battle;
+	std::reference_wrapper<Player> m_player;
 };

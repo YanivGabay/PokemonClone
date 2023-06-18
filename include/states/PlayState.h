@@ -6,7 +6,7 @@
 #include "entity/Player.h"
 #include <random>
 #include "Pokemon/PokemonFactory.h"
-
+#include "EncounterBattleState.h"
 class PlayState : public BaseState
 {
 public:
@@ -76,7 +76,7 @@ public:
 	{
 		std::cout << "battle should trigger" << std::endl;
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(m_currentLevel->getLevelId());
-		
+		//std::unique_ptr<EncounterBattleState>
 		
 	}
 	void update(sf::Time dt) override
