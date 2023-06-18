@@ -20,9 +20,10 @@ public:
 
 		m_backGround.setScale(
 			static_cast<float>(m_windowSize.x) / m_backGround.getTexture()->getSize().x,
-			static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y);
-		m_enemyPokemon();
-		m_playerPokemonInfo();
+			static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y
+			
+		);
+		
 		m_adviceActionInfo();
 	};
 	~Battle() {};
@@ -36,6 +37,9 @@ private:
 	Gui m_enemyPokemonInfo;
 	Gui m_adviceActionInfo;
 	const sf::Vector2u m_windowSize{ Resources::getInstance().getWindow().getSize() };
+	
+	sf::Vector2i m_playerPokemon;
+	sf::Vector2i m_enemyPokemon;
 
 };
 
