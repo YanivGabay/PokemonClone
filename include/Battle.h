@@ -1,8 +1,9 @@
 #pragma once
+
 #include "Resources.h"
 #include "guis/Gui.h"
 
-
+/*
 enum class SpritesElements
 {
 	Background,
@@ -19,9 +20,7 @@ public:
 
 		m_backGround.setScale(
 			static_cast<float>(m_windowSize.x) / m_backGround.getTexture()->getSize().x,
-			static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y
-			
-		);
+			static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y);
 		m_enemyPokemon();
 		m_playerPokemonInfo();
 		m_adviceActionInfo();
@@ -40,3 +39,4 @@ private:
 
 };
 
+*/
