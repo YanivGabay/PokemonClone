@@ -72,6 +72,7 @@ enum class FrameID
 	END
 };
 const int SIDES = 4;
+
 enum Side
 {
 	UP,

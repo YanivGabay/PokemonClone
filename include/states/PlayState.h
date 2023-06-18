@@ -4,6 +4,8 @@
 #include "world/TilesMap.h"
 #include "Level.h"
 #include "entity/Player.h"
+#include "entity\Entity.h"
+#include "entity\NPC.h"
 #include <random>
 #include "Pokemon/PokemonFactory.h"
 #include "EncounterBattleState.h"
@@ -14,6 +16,7 @@ public:
 		: BaseState(states),
 		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
 		  m_player(std::make_unique<Player>()),
+		  m_NPC(std::make_unique<NPC>()),
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
@@ -81,6 +84,8 @@ public:
 	void update(sf::Time dt) override
 	{
 		m_player->update(dt, getMovesMap());
+		m_NPC->update(dt, getMovesMap());
+		
 		//if we are here, the player is after collision check
 		
 		sf::Vector2i updatedPos = m_player.get()->getPosition();
@@ -100,18 +105,19 @@ public:
 	}
 	
 	void checkCollision()
-	{
-	}
+	{}
 	
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();
+		m_NPC->AIMoving();
 	}
 	
 	void draw(sf::RenderWindow& window) override
 	{
 		m_currentLevel->draw(window);
 		m_player->draw(window);
+		m_NPC->draw(window);
 		window.setView(m_camera->getView());
 	}
 
@@ -119,6 +125,7 @@ private:
 	std::unique_ptr<Level> m_currentLevel;
 	std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
 	std::unique_ptr<Player> m_player;
+	std::unique_ptr<NPC> m_NPC;
 	std::unique_ptr<Camera> m_camera;
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;

@@ -1,8 +1,9 @@
 #pragma once
+
 #include "Resources.h"
 #include "guis/Gui.h"
 
-
+/*
 enum class SpritesElements
 {
 	Background,
@@ -42,3 +43,4 @@ private:
 
 };
 
+*/

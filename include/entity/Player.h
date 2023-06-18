@@ -21,6 +21,8 @@ public:
           m_isMoving(false)
     {}
     
+    virtual ~Player() = default;
+    
     void handleInput()
     {
         if (!m_isMoving)
