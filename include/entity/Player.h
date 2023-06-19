@@ -130,5 +130,5 @@ public:
 private:
     bool m_isMoving;
 
-   // Party m_pokemons;
+    std::unique_ptr<Party> m_pokemons;
 };

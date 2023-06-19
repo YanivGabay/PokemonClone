@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "guis/Gui.h"
 
-/*
+
 enum class SpritesElements
 {
 	Background,
@@ -23,8 +23,12 @@ public:
 			static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y
 			
 		);
-		
-		m_adviceActionInfo();
+		m_playerPokemonInfo(Resources::getInstance().getFont(), buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
+
+		m_enemyPokemonInfo(Resources::getInstance().getFont(), buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
+
+		m_adviceActionInfo(Resources::getInstance().getFont(), buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
+		//m_adviceActionInfo();
 	};
 	~Battle() {};
 
@@ -43,4 +47,3 @@ private:
 
 };
 
-*/
