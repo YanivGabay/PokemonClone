@@ -18,24 +18,26 @@ public:
 		: m_playerPokemon(playerPokemon),
 		  m_enemyPokemon(enemyPokemon)
 	{
-
-		m_backGround.setScale( static_cast<float>(m_windowSize.x) / m_backGround.getTexture()->getSize().x,
-							   static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y );
-		
-		sf::Font& font = Resources::getInstance().getFont();
-		
-		m_playerPokemonInfo = std::move(std::make_unique<Gui>(font,sf::Vector2f(200,200),sf::Vector2f(m_backGround.getPosition().x+500,m_backGround.getPosition().y+100)));
-		
-		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(font, sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y-500)));
-
-		m_adviceActionInfo = std::move(std::make_unique<Gui>(font, sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y)));
-		
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
-		
 		m_backGround.setTexture(texture);
 		m_backGround.setTextureRect(m_battlePosition);
-	};
+
+		float scaleX = static_cast<float>(m_windowSize.x) / m_backGround.getTextureRect().width;
+		float scaleY = static_cast<float>(m_windowSize.y) / m_backGround.getTextureRect().height;
+		m_backGround.setScale(scaleX, scaleY);
+			
+		
 	
+		m_playerPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),sf::Vector2f(200,200),sf::Vector2f(m_backGround.getPosition().x+500,m_backGround.getPosition().y+100)));
+
+		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y-500)));
+
+		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y)));
+		
+		
+
+
+	};
 	~Battle() {};
 	
 	void draw(sf::RenderWindow& window)
