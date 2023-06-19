@@ -25,6 +25,7 @@ public:
 
 	void playSound(soundNames soundName)
 	{
+
 		m_sound[int(soundName)].play();
 	}
 
@@ -43,23 +44,23 @@ private:
 	SoundTon& operator=(const SoundTon&) = delete;
 
 	SoundTon()
+		: m_soundBuffer(sound_files.size()),
+		m_sound(sound_files.size())
 	{
 		loadSound();
 	}
 
 	void loadSound()
 	{
-		for (size_t i = 0; i < sound_files.size(); i++)
+		for (size_t i = 0; i < sound_files.size(); ++i)
 		{
-			m_soundBuffer.emplace_back(sf::SoundBuffer());
-			m_soundBuffer.back().loadFromFile(sound_files[i]);
+			m_soundBuffer[i].loadFromFile(sound_files[i]);
 			
 			// ------------
 			
-			m_sound.emplace_back(sf::Sound());
-			m_sound.back().setBuffer(m_soundBuffer.back());
+			m_sound[i].setBuffer(m_soundBuffer[i]);
 
-			m_sound.back().setVolume(100);
+			m_sound[i].setVolume(100);
 		}
 	}
 };
