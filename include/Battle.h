@@ -22,7 +22,7 @@ public:
 		m_backGround.setTexture(texture);
 		m_backGround.setTextureRect(m_battlePosition);
 		float scaleX = static_cast<float>(m_windowSize.x) / m_backGround.getTextureRect().width;
-		float scaleY = static_cast<float>(m_windowSize.y) / m_backGround.getTextureRect().height;
+		float scaleY = 450.0f / m_backGround.getTextureRect().height;
 
 		// Set the scale
 		m_backGround.setScale(scaleX, scaleY);
@@ -30,14 +30,15 @@ public:
 		//float scaleX = static_cast<float>(m_windowSize.x) / texture.getSize().x;
 		//float scaleY = static_cast<float>(m_windowSize.y) / texture.getSize().y;
 	//	m_backGround.setScale(scaleX, scaleY);
-			
+		
+
 		
 	
-		m_playerPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),sf::Vector2f(200,200),sf::Vector2f(m_backGround.getPosition().x+500,m_backGround.getPosition().y+100)));
+		m_playerPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),sf::Vector2f(250,100),sf::Vector2f(SCREEN_WIDTH-350,SCREEN_HEIGHT-270)));
 
-		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y-500)));
+		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(250, 100), sf::Vector2f(SCREEN_WIDTH-750,SCREEN_HEIGHT-520)));
 
-		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y)));
+		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(800, 150), sf::Vector2f(0,452.0f )));
 		
 		
 
@@ -48,7 +49,7 @@ public:
 	void draw(sf::RenderWindow& window)
 	{
 		
-
+		window.clear(sf::Color::White);
 		window.draw(m_backGround);
 		m_playerPokemonInfo->draw(window);
 		m_enemyPokemonInfo->draw(window);
@@ -56,7 +57,7 @@ public:
 		
 	}
 private:
-	sf::IntRect m_battlePosition{ 249,6,241,112 };
+	sf::IntRect m_battlePosition{ 249,6,240,112 };
 
 	sf::Sprite m_backGround;
 	Pokemon& m_playerPokemon;
