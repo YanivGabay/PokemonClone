@@ -53,6 +53,7 @@ public:
 
 		return *m_pokemons[index];
 	}
+
 private:
 	std::array <std::unique_ptr< Pokemon > , PARTY_SIZE > m_pokemons;
 };
