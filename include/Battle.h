@@ -21,6 +21,11 @@ public:
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);
 		m_backGround.setTextureRect(m_battlePosition);
+		float scaleX = static_cast<float>(m_windowSize.x) / m_backGround.getTextureRect().width;
+		float scaleY = static_cast<float>(m_windowSize.y) / m_backGround.getTextureRect().height;
+
+		// Set the scale
+		m_backGround.setScale(scaleX, scaleY);
 		//m_backGround.setPosition(sf::Vector2f(0, 0));
 		//float scaleX = static_cast<float>(m_windowSize.x) / texture.getSize().x;
 		//float scaleY = static_cast<float>(m_windowSize.y) / texture.getSize().y;
@@ -42,6 +47,8 @@ public:
 	
 	void draw(sf::RenderWindow& window)
 	{
+		
+
 		window.draw(m_backGround);
 		m_playerPokemonInfo->draw(window);
 		m_enemyPokemonInfo->draw(window);
@@ -54,6 +61,7 @@ private:
 	sf::Sprite m_backGround;
 	Pokemon& m_playerPokemon;
 	Pokemon& m_enemyPokemon;
+
 
 
 	std::unique_ptr<Gui> m_playerPokemonInfo;
