@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <unordered_map>
-
+#include "ProgressBar.h"
 #include "Resources.h"
 #include "Button.h"
 
@@ -50,16 +50,33 @@ public:
         m_position.y = y;
         m_text.setPosition(x, y);
     }
-
+    void setTextSize(unsigned int value)
+    {
+        m_text.setCharacterSize(value);
+    }
+    void addProgressBar(float x, float y, float width, float height,
+        sf::Color backgroundColor, sf::Color barColor)
+    {
+        m_progressBar = std::make_unique<ProgressBar>(x, y, width, height, backgroundColor, barColor);
+        m_hasProgressBar = true;
+    }
     void draw(sf::RenderWindow& window)
     {
         m_button->draw(window);
         window.draw(m_text);
+
+        if (m_hasProgressBar) {
+            m_progressBar->draw(window);
+        }
     }
 
 private:
     sf::Color m_color;
     sf::Text m_text;
+
+    //progress bar
+    std::unique_ptr<ProgressBar> m_progressBar;
+    bool m_hasProgressBar{ false };
 
     std::unique_ptr<Button> m_button;
     sf::Vector2f m_position;
