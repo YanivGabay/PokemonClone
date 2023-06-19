@@ -9,13 +9,15 @@
 #include "states/StartState.h"
 #include "Camera.h"
 #include "Stack.h"
+#include "SoundTon.h"
 
 
 class StateMachine 
 {
 public:
 	StateMachine()
-		: m_window(Resources::getInstance().getWindow()) {}
+		: m_window(Resources::getInstance().getWindow())
+	{}
 	
 	~StateMachine() = default;
 	

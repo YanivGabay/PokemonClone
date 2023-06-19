@@ -9,6 +9,9 @@
 #include <random>
 #include "Pokemon/PokemonFactory.h"
 #include "EncounterBattleState.h"
+#include "SoundTon.h"
+
+
 class PlayState : public BaseState
 {
 public:
@@ -22,6 +25,8 @@ public:
 	{
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+
+		
 	}
 	
 	~PlayState() = default;

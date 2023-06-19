@@ -1,11 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <unordered_map>
 #include <memory>
 #include <iostream>
 #include <array>
+#include <string>
 
 #include "tileson/tileson.hpp"
 #include "utilities.h"
@@ -146,6 +148,10 @@ private:
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
 	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
 	std::unique_ptr<sf::Font> m_font;
+
+	std::unordered_map<std::string, sf::SoundBuffer> m_soundBuffer;
+	std::unordered_map<std::string, sf::Sound> m_sound;
+
 	
 	//------
 	
@@ -153,8 +159,15 @@ private:
 	Resources& operator=(const Resources&) = delete;
 
 	Resources()
-		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
+		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game"),
+		m_soundBuffer{ {"OPEN", sf::SoundBuffer()}},
+		m_sound{ {"OPEN", sf::Sound()} }
 	{
+		m_soundBuffer["OPEN"].loadFromFile("resources/pokemonOpening.ogg");
+		m_sound["OPEN"].setBuffer(m_soundBuffer["OPEN"]);
+		m_sound["OPEN"].play();
+
+
 		m_window.setFramerateLimit(FPS);
 		
 		sf::Vector2i startIndexs(3, 61);

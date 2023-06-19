@@ -80,3 +80,6 @@ enum Side
 	LEFT,
 	RIGHT
 };
+
+enum soundNames { OPEN };
+std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg" };
