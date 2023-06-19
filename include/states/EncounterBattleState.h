@@ -18,6 +18,14 @@ public:
 	 void update(sf::Time dt)override {
 	 }
 	 void handleEvents(sf::Event event)override {
+		 if (event.type == sf::Event::KeyReleased)
+		 {
+			 if (event.key.code == sf::Keyboard::Enter)
+			 {
+				 setStatus(false);
+			 }
+			
+		 }
 	 }
 	 void draw(sf::RenderWindow& window)override {
 		 m_battle->draw(window);

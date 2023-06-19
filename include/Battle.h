@@ -20,10 +20,10 @@ public:
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);
 		m_backGround.setTextureRect(m_battlePosition);
-
-		float scaleX = static_cast<float>(m_windowSize.x) / m_backGround.getTextureRect().width;
-		float scaleY = static_cast<float>(m_windowSize.y) / m_backGround.getTextureRect().height;
-		m_backGround.setScale(scaleX, scaleY);
+		//m_backGround.setPosition(sf::Vector2f(0, 0));
+		//float scaleX = static_cast<float>(m_windowSize.x) / texture.getSize().x;
+		//float scaleY = static_cast<float>(m_windowSize.y) / texture.getSize().y;
+	//	m_backGround.setScale(scaleX, scaleY);
 			
 		
 	
