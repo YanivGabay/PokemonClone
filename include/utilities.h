@@ -8,6 +8,7 @@ const int TILE_SIZE = 16;
 
 const unsigned int FPS = 60;
 
+
 // --------------------------------
 int generateRandomNumber(int min, int max)
 {

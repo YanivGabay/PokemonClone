@@ -8,7 +8,7 @@
 #include <iostream>
 #include <array>
 #include <string>
-
+#include "Utilities/PokemonIndex.h"
 #include "tileson/tileson.hpp"
 #include "utilities.h"
 
@@ -140,7 +140,45 @@ public:
 		
 		return *m_playerRects[id];
 	}
+	std::pair<sf::Sprite, sf::Sprite> getPokemonSprites(enum PokemonIndex name)
+	{
+		if (m_pokemonSprite.find(name) == m_pokemonSprite.end())
+		{
+			std::cerr << "Failed to load getPokemonSprites: " << std::endl;
+			throw std::runtime_error("Failed to load texture.");
+		}
 
+		return m_pokemonSprite[name];
+	}
+	void loadPokemonSprites()
+	{
+		const std::string frontFolderPath = "resources/pokemonSpritesSheet/";
+		const std::string backFolderPath = "resources/pokemonSpritesSheet/back/";
+
+		for (int i = 0; i < pokemonFiles.size(); ++i)
+		{
+			enum PokemonIndex name;
+			const std::string spriteLabel = pokemonFiles[i];
+
+			name = static_cast<PokemonIndex>(stoi(spriteLabel));
+			// Load the front sprite
+			
+			std::string frontSpriteFilename = frontFolderPath + spriteLabel + ".png";
+			sf::Texture frontTexture = getTexture(frontSpriteFilename);
+			sf::Sprite frontSprite(frontTexture);
+			// Set positions, scales, or other properties as needed
+
+			// Load the back sprite
+			
+			std::string backSpriteFilename = backFolderPath + spriteLabel + ".png";
+			sf::Texture backTexture = getTexture(backSpriteFilename);
+			sf::Sprite backSprite(backTexture);
+			// Set positions, scales, or other properties as needed
+
+			m_pokemonSprite[name] = std::make_pair(frontSprite, backSprite);
+		}
+
+	}
 private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
@@ -149,8 +187,7 @@ private:
 	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
 	std::unique_ptr<sf::Font> m_font;
 
-	std::unordered_map<std::string, sf::SoundBuffer> m_soundBuffer;
-	std::unordered_map<std::string, sf::Sound> m_sound;
+	std::unordered_map<enum PokemonIndex, std::pair<sf::Sprite, sf::Sprite>> m_pokemonSprite;
 
 	
 	//------
@@ -159,13 +196,10 @@ private:
 	Resources& operator=(const Resources&) = delete;
 
 	Resources()
-		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game"),
-		m_soundBuffer{ {"OPEN", sf::SoundBuffer()}},
-		m_sound{ {"OPEN", sf::Sound()} }
+		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
+		
 	{
-		m_soundBuffer["OPEN"].loadFromFile("resources/pokemonOpening.ogg");
-		m_sound["OPEN"].setBuffer(m_soundBuffer["OPEN"]);
-		m_sound["OPEN"].play();
+		
 
 
 		m_window.setFramerateLimit(FPS);
@@ -173,8 +207,9 @@ private:
 		sf::Vector2i startIndexs(3, 61);
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 		getTexture("resources/spritesheet.png");
-		
+		getTexture("resources/battlegroundSprites.png");
 		loadFrames();
 		loadPlayerRects();
+		loadPokemonSprites();
 	};
 };

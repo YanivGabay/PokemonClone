@@ -2,7 +2,7 @@
 
 #include "Resources.h"
 #include "guis/Gui.h"
-
+#include "Pokemon/Pokemon.h"
 
 enum class SpritesElements
 {
@@ -23,23 +23,40 @@ public:
 			static_cast<float>(m_windowSize.y)*0.75 / m_backGround.getTexture()->getSize().y
 			
 		);
-		m_playerPokemonInfo(Resources::getInstance().getFont(), buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
+		sf::Font& font = Resources::getInstance().getFont();
+		m_playerPokemonInfo = std::move(std::make_unique<Gui>(font,sf::Vector2f(200,200),sf::Vector2f(m_backGround.getPosition().x+500,m_backGround.getPosition().y+100)));
 
-		m_enemyPokemonInfo(Resources::getInstance().getFont(), buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
+		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(font, sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y-500)));
 
-		m_adviceActionInfo(Resources::getInstance().getFont(), buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
-		//m_adviceActionInfo();
+		m_adviceActionInfo = std::move(std::make_unique<Gui>(font, sf::Vector2f(200, 200), sf::Vector2f(m_backGround.getPosition().x + 50, m_backGround.getPosition().y)));
+		
+		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
+		m_backGround.setTexture(texture);
+		m_backGround.setTextureRect(m_battlePosition);
+
+
 	};
 	~Battle() {};
-
+	
+	void draw(sf::RenderWindow& window)
+	{
+		window.draw(m_backGround);
+		m_playerPokemonInfo->draw(window);
+		m_enemyPokemonInfo->draw(window);
+		m_adviceActionInfo->draw(window);
+		
+	}
 private:
-	sf::Sprite& m_backGround;
+	sf::IntRect m_battlePosition{ 249,6,241,112 };
+
+	sf::Sprite m_backGround;
 	Pokemon& m_playerPokemon;
 	Pokemon& m_enemyPokemon;
 
-	Gui m_playerPokemonInfo;
-	Gui m_enemyPokemonInfo;
-	Gui m_adviceActionInfo;
+
+	std::unique_ptr<Gui> m_playerPokemonInfo;
+	std::unique_ptr<Gui> m_enemyPokemonInfo;
+	std::unique_ptr<Gui> m_adviceActionInfo;
 	const sf::Vector2u m_windowSize{ Resources::getInstance().getWindow().getSize() };
 	
 	sf::Vector2i m_playerPokemon;

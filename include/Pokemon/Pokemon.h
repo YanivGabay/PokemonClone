@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <random>
-
+#include "Resources.h"
 
 class Pokemon
 {
@@ -67,7 +67,7 @@ public:
     }
 
     //gets:
-    std::string getName() const
+    enum PokemonIndex getName() const
     {
         return m_name;
     }
@@ -151,7 +151,7 @@ public:
         return m_currentHP;
     }
     //sets::
-    void setName(const std::string& name)
+    void setName(const  enum PokemonIndex& name)
     {
         m_name = name;
     }
@@ -235,10 +235,16 @@ public:
     {
         m_currentHP = currentHP;
     }
+    void setSprites()
+    {
+        std::pair<sf::Sprite,sf::Sprite> spritePair = Resources::getInstance().getPokemonSprites(m_name);
+        m_battleSpriteFront = spritePair.first;
+        m_battleSpriteBack = spritePair.second;
+    }
 private:
-    std::string m_name;
-    std::string m_battleSpriteFront;
-    std::string m_battleSpriteBack;
+    enum PokemonIndex m_name;
+    sf::Sprite m_battleSpriteFront;
+    sf::Sprite m_battleSpriteBack;
 
     int m_baseHP{ 0 };;
     int m_baseAttack{ 0 };;

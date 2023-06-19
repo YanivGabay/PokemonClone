@@ -2,6 +2,10 @@
 #include "Pokemon.h"
 #include "utilities.h"
 
+
+
+
+
 class PokemonFactory
 {
 public:
@@ -50,7 +54,7 @@ public:
 
           return pokemon;
     }
-    std::unique_ptr<Pokemon> createPokemon(std::string name)
+    std::unique_ptr<Pokemon> createPokemon(enum PokemonIndex name)
     {
         std::unique_ptr<Pokemon> pokemon = std::make_unique<Pokemon>();
         // Set the base attributes
@@ -73,6 +77,9 @@ public:
         // Set other attributes of the Pokemon as needed
 
         pokemon->levelUp(); // Level up the Pokemon to level 1
+
+        pokemon->setName(name);
+        pokemon->setSprites();
     }
 private:
 
