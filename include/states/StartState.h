@@ -30,13 +30,11 @@ public:
 	
 	void exit() override
 	{
-		
-            auto playstate = std::make_unique<PlayState>(m_states.get());
-            auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
-            m_states.get().pushQueueState(std::move(transition));
-			m_startMenu->resetText();
-			m_loadingStarted = false;
-        
+		auto playstate = std::make_unique<PlayState>(m_states.get());
+		auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
+		m_states.get().pushQueueState(std::move(transition));
+		m_startMenu->resetText();
+		m_loadingStarted = false;
 	}
 	
 	void update(sf::Time dt) override
@@ -68,7 +66,6 @@ public:
 	
 	void draw(sf::RenderWindow& window) override
 	{
-		std::cout << "555 yaniv 555" << std::endl;
 		m_startMenu->draw(window);
 	}
 

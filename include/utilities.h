@@ -72,6 +72,7 @@ enum class FrameID
 	END
 };
 const int SIDES = 4;
+
 enum Side
 {
 	UP,
@@ -79,3 +80,6 @@ enum Side
 	LEFT,
 	RIGHT
 };
+
+enum soundNames { OPEN };
+std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg" };

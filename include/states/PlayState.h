@@ -4,21 +4,29 @@
 #include "world/TilesMap.h"
 #include "Level.h"
 #include "entity/Player.h"
+#include "entity\Entity.h"
+#include "entity\NPC.h"
 #include <random>
 #include "Pokemon/PokemonFactory.h"
+#include "EncounterBattleState.h"
+#include "SoundTon.h"
+
 
 class PlayState : public BaseState
 {
 public:
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
-		m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
-		m_player(std::make_unique<Player>()),
-		m_currentLevel(std::make_unique<Level>()),
-		m_pokemonFactory(std::make_unique<PokemonFactory>())
+		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
+		  m_player(std::make_unique<Player>()),
+		  m_NPC(std::make_unique<NPC>()),
+		  m_currentLevel(std::make_unique<Level>()),
+		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+
+		
 	}
 	
 	~PlayState() = default;
@@ -30,12 +38,13 @@ public:
 	{
 		std::array<sf::Vector2i, SIDES> neighbors {};
 		neighbors[RIGHT] = sf::Vector2i(position.x + 1, position.y);
-		neighbors[UP] = sf::Vector2i(position.x , position.y-1) ;
-		neighbors[DOWN] = sf::Vector2i(position.x , position.y+1) ;
-		neighbors[LEFT] = sf::Vector2i(position.x-1 , position.y) ;
+		neighbors[UP] = sf::Vector2i(position.x , position.y-1);
+		neighbors[DOWN] = sf::Vector2i(position.x , position.y+1);
+		neighbors[LEFT] = sf::Vector2i(position.x-1 , position.y);
 
 		return neighbors;
 	}
+	
 	const std::map<Side, bool> getMovesMap()
 	{
 		sf::Vector2i currPos = m_player.get()->getPosition();
@@ -49,11 +58,10 @@ public:
 
 		return directionMap;
 	}
+	
 	bool checkGrassBattle(sf::Vector2i updatedPos)
 	{
-		
 		Tile* tile = m_currentLevel->getActiveTile(updatedPos.x, updatedPos.y);
-
 		
 		if (tile)
 		{
@@ -67,8 +75,7 @@ public:
 				}
 			}
 		}
-	
-
+		
 		return false;
 	}
 	
@@ -76,17 +83,16 @@ public:
 	{
 		std::cout << "battle should trigger" << std::endl;
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(m_currentLevel->getLevelId());
-		
+		//std::unique_ptr<EncounterBattleState>
 		
 	}
 	void update(sf::Time dt) override
 	{
-		
-		
 		m_player->update(dt, getMovesMap());
+		m_NPC->update(dt, getMovesMap());
+		
 		//if we are here, the player is after collision check
-
-
+		
 		sf::Vector2i updatedPos = m_player.get()->getPosition();
 		
 		if (checkGrassBattle(updatedPos))
@@ -95,28 +101,28 @@ public:
 		}
 		//if on grass rool a dice
 		// if certain push battlestate and other states
-
-
-
+		
 		// test to check play animation
-		 sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
-		 m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
-
-		 m_currentLevel->updateAnimations(dt);
-	 }
-	void checkCollision()
-	{
-
+		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
+		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+		
+		m_currentLevel->updateAnimations(dt);
 	}
+	
+	void checkCollision()
+	{}
+	
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();
+		m_NPC->AIMoving();
 	}
 	
 	void draw(sf::RenderWindow& window) override
 	{
 		m_currentLevel->draw(window);
 		m_player->draw(window);
+		m_NPC->draw(window);
 		window.setView(m_camera->getView());
 	}
 
@@ -124,8 +130,8 @@ private:
 	std::unique_ptr<Level> m_currentLevel;
 	std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
 	std::unique_ptr<Player> m_player;
+	std::unique_ptr<NPC> m_NPC;
 	std::unique_ptr<Camera> m_camera;
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;
-	
 };

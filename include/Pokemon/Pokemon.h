@@ -17,7 +17,7 @@ public:
     std::vector<int> levelUp()
     {
         m_level++;
-        m_expToLevel = m_level * m_level * 5 * 0.75;
+        m_expToLevel = m_level * m_level * 5 * 0.75f;
         return statsLevelUp();
     }
     //will return a vector to display to the player
