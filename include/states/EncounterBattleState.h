@@ -6,9 +6,9 @@ class EncounterBattleState : public BaseState
 {
 public:
 	EncounterBattleState(Stack<BaseState>& states, Player& player,Pokemon& enemy)
-		: BaseState(states), m_player(std::ref(player))
+		: BaseState(states), m_player(player)
 	{
-		m_battle = std::move(std::make_unique<Battle>())
+		m_battle = std::move(std::make_unique<Battle>(player.getPokemon(1), enemy));
 	}
 
 	~EncounterBattleState() = default;
@@ -20,6 +20,7 @@ public:
 	 void handleEvents(sf::Event event)override {
 	 }
 	 void draw(sf::RenderWindow& window)override {
+		 m_battle->draw(window);
 	 }
 
 private:

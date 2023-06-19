@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 std::vector<std::string> pokemonFiles {"1", "4", "6", "7", "17", "25", "56", "69", "88"};
-enum class Pokemons
+enum class PokemonIndex
 {
 
 	BULBASOR = 1,
