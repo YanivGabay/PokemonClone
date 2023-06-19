@@ -70,8 +70,6 @@ public:
 		{
 			if (tile->getId() == "tallgrass")
 			{
-				SoundTon::getInstance().playSound(soundNames::BUSH);
-
 				tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
 				
 				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
@@ -88,8 +86,8 @@ public:
 	{
 		std::cout << "battle should trigger" << std::endl;
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(m_currentLevel->getLevelId());
-		m_states.get().pushQueueState(std::move(std::make_unique<EncounterBattleState>(m_states.get(),* m_player.get(), *wildPokemon.get())));
 		
+		m_states.get().pushQueueState(std::move(std::make_unique<EncounterBattleState>(m_states.get(),* m_player.get(), *wildPokemon.get())));
 	}
 
 	void update(sf::Time dt) override

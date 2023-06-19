@@ -84,4 +84,4 @@ enum Side
 
 enum soundNames { OPEN, BUSH };
 std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg",
-										 "bush_step.ogg" };
+										 "resources/bush_step.ogg" };

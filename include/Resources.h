@@ -199,9 +199,6 @@ private:
 		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
 		
 	{
-		
-
-
 		m_window.setFramerateLimit(FPS);
 		
 		sf::Vector2i startIndexs(3, 61);
