@@ -21,6 +21,7 @@ public:
 	{
 		m_map->updateAnimations(dt);
 	}
+
 	Tile* getActiveTile(int x,int y)
 	{
 		return m_map->getTile(x, y);

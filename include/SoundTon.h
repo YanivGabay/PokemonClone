@@ -14,8 +14,6 @@
 #include "utilities.h"
 
 
-
-
 class SoundTon
 {
 public:

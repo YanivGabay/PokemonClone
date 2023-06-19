@@ -29,3 +29,4 @@ configure_file("pokemonSpritesSheet/back/69.png" ${CMAKE_BINARY_DIR}/resources/p
 configure_file("pokemonSpritesSheet/back/88.png" ${CMAKE_BINARY_DIR}/resources/pokemonSpritesSheet/back COPYONLY)
 
 configure_file("pokemonOpening.ogg" ${CMAKE_BINARY_DIR}/resources COPYONLY)
+configure_file("bush_step.ogg" ${CMAKE_BINARY_DIR}/resources COPYONLY)
