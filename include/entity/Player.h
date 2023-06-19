@@ -127,7 +127,10 @@ public:
         
         window.draw(m_sprite);
     }
-
+    Pokemon& getPokemon(int index)
+    {
+        return m_pokemons->getPokemon(index);
+    }
 private:
     bool m_isMoving;
 

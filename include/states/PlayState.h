@@ -85,7 +85,7 @@ public:
 	{
 		std::cout << "battle should trigger" << std::endl;
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(m_currentLevel->getLevelId());
-		//std::unique_ptr<EncounterBattleState>
+		m_states.get().pushQueueState(std::move(std::make_unique<EncounterBattleState>(m_states.get(),* m_player.get(), *wildPokemon.get())));
 		
 	}
 
