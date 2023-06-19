@@ -56,7 +56,7 @@ public:
 		
 	}
 private:
-	sf::IntRect m_battlePosition{ 249,6,241,112 };
+	sf::IntRect m_battlePosition{ 249,6,240,112 };
 
 	sf::Sprite m_backGround;
 	Pokemon& m_playerPokemon;

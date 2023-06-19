@@ -8,7 +8,8 @@ class Button
 public:
     Button(sf::Vector2f guiSize,sf::Vector2f position)
         : m_frameBoxRects(Resources::getInstance().getFrameCord()),
-          m_size(guiSize), m_startPosition(position),
+          m_size(guiSize),
+          m_startPosition(position),
           m_texture(Resources::getInstance().getTexture("resources/framesSpritesheet.png"))
     {
 		init();
@@ -17,8 +18,8 @@ public:
     void init()
     {
         auto sizeVector = sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2);
-
         auto middle = createSprite(FrameID::MIDDLE);
+        
         middle->setPosition(m_startPosition);
         m_shapes.push_back(std::move(middle));
 
@@ -30,10 +31,9 @@ public:
         };
 
         // Calculate the position of each part of the frame based on m_startPosition and m_size
-
         const float startX = m_startPosition.x + sizeVector.x;
         const float startY = m_startPosition.y + sizeVector.y;
-        const float endX = m_startPosition.x + m_size.x - sizeVector.x;
+        const float endX = m_startPosition.x + m_size.x - sizeVector.x-2;
         const float endY = m_startPosition.y + m_size.y - sizeVector.y;
 
         // Corners
@@ -48,14 +48,14 @@ public:
             createSprite(FrameID::UP_HORIZ, sf::Vector2f(x, m_startPosition.y));
             createSprite(FrameID::DOWN_HORIZ, sf::Vector2f(x, endY));
         }
-
+        
         // Vertical lines
         for (float y = startY; y < endY; y += sizeVector.y)
         {
             createSprite(FrameID::LEFT_VERTICAL, sf::Vector2f(m_startPosition.x, y));
             createSprite(FrameID::RIGHT_VERTICAL, sf::Vector2f(endX, y));
         }
-
+        
         // Fill between the lines
         for (float x = startX; x < endX; x += sizeVector.x)
         {
