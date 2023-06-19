@@ -40,8 +40,8 @@ public:
 
 		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(800, 150), sf::Vector2f(0,452.0f )));
 		
-		
-
+		m_playerBackPokemon.setPosition(m_playerPokemonPos);
+		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);
 
 	};
 	~Battle() {};
@@ -54,6 +54,8 @@ public:
 		m_playerPokemonInfo->draw(window);
 		m_enemyPokemonInfo->draw(window);
 		m_adviceActionInfo->draw(window);
+		window.draw(m_playerBackPokemon);
+		window.draw(m_enemyFrontPokemon);
 		
 	}
 private:
@@ -63,15 +65,16 @@ private:
 	Pokemon& m_playerPokemon;
 	Pokemon& m_enemyPokemon;
 
-
+	sf::Sprite& m_playerBackPokemon {m_playerPokemon.getBackSprite()};
+	sf::Sprite& m_enemyFrontPokemon {m_enemyPokemon.getFrontSprite()};
 
 	std::unique_ptr<Gui> m_playerPokemonInfo;
 	std::unique_ptr<Gui> m_enemyPokemonInfo;
 	std::unique_ptr<Gui> m_adviceActionInfo;
 	const sf::Vector2u m_windowSize{ Resources::getInstance().getWindow().getSize() };
 	
-	//sf::Vector2i m_playerPokemon;
-	//sf::Vector2i m_enemyPokemon;
+	sf::Vector2f m_playerPokemonPos {100,250};
+	sf::Vector2f m_enemyPokemonPos {500,60};
 
 };
 

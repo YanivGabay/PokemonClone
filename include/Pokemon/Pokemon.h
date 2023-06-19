@@ -241,6 +241,18 @@ public:
         m_battleSpriteFront = spritePair.first;
         m_battleSpriteBack = spritePair.second;
     }
+    std::pair<sf::Sprite, sf::Sprite> getSprites()
+    {
+        return std::make_pair(m_battleSpriteFront, m_battleSpriteFront);
+    }
+    sf::Sprite& getBackSprite()
+    {
+        return m_battleSpriteBack;
+    }
+    sf::Sprite& getFrontSprite()
+    {
+        return m_battleSpriteFront;
+    }
 private:
     enum PokemonIndex m_name;
     sf::Sprite m_battleSpriteFront;
