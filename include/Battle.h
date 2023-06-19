@@ -14,8 +14,9 @@ enum class SpritesElements
 class Battle
 {
 public:
-	Battle(Pokemon& playerPokemon,Pokemon& enemyPokemon):
-		m_playerPokemon(playerPokemon),m_enemyPokemon(enemyPokemon)
+	Battle(Pokemon& playerPokemon,Pokemon& enemyPokemon)
+		: m_playerPokemon(playerPokemon),
+		  m_enemyPokemon(enemyPokemon)
 	{
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);
