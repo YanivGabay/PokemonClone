@@ -60,7 +60,7 @@ private:
 			
 			m_sound[i].setBuffer(m_soundBuffer[i]);
 
-			m_sound[i].setVolume(100);
+			m_sound[i].setVolume(10);
 		}
 	}
 };
