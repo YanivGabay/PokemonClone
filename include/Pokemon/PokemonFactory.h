@@ -36,9 +36,9 @@ public:
 
           pokemon->levelUp(); // Level up the Pokemon to level 1
           switch (level)
-          {
+          { //attach the string and sprite for pool of this level
               case LevelID::START_TOWN:
-                  //attach the string and sprite for pool of this level
+                  
                   break;
              
               default:

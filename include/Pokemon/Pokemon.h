@@ -20,6 +20,7 @@ public:
         m_expToLevel = m_level * m_level * 5 * 0.75;
         return statsLevelUp();
     }
+    //will return a vector to display to the player
     std::vector<int> statsLevelUp()
     {
         int HPIncrease = 0;
@@ -239,22 +240,22 @@ private:
     std::string m_battleSpriteFront;
     std::string m_battleSpriteBack;
 
-    int m_baseHP;
-    int m_baseAttack;
-    int m_baseDefense;
-    int m_baseSpeed;
-    int m_HPIV;
-    int m_attackIV;
-    int m_defenseIV;
-    int m_speedIV;
+    int m_baseHP{ 0 };;
+    int m_baseAttack{ 0 };;
+    int m_baseDefense{ 0 };;
+    int m_baseSpeed{ 0 };;
+    int m_HPIV{ 0 };;
+    int m_attackIV{ 0 };;
+    int m_defenseIV{ 0 };;
+    int m_speedIV{ 0 };;
 
-    int m_HP;
-    int m_attack;
-    int m_defense;
-    int m_speed;
+    int m_HP{ 0 };;
+    int m_attack{ 0 };;
+    int m_defense{ 0 };;
+    int m_speed{ 0 };;
 
     int m_level{ 0 };
     int m_currentExp{ 0 };
-    float m_expToLevel;
-    int m_currentHP;
+    float m_expToLevel{ 0 };;
+    int m_currentHP{ 0 };;
 };
