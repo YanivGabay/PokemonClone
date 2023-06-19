@@ -20,7 +20,9 @@ public:
     Player()
         : Entity("resources/maleSpriteSheet.png"),
           m_isMoving(false)
-    {}
+    {
+        
+    }
     
     virtual ~Player() = default;
     
@@ -130,6 +132,11 @@ public:
     Pokemon& getPokemon(int index)
     {
         return m_pokemons->getPokemon(index);
+    }
+    void addPokemon(std::unique_ptr<Pokemon> pokemon)
+    {
+        std::cout << "before add pokemon in player" << std::endl;
+        m_pokemons->addPokemon(std::move(pokemon));
     }
 private:
     bool m_isMoving;

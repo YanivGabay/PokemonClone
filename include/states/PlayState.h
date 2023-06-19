@@ -26,7 +26,9 @@ public:
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 
-		SoundTon::getInstance().stopSound(soundNames::OPEN);
+		//temporary
+		std::cout << "before add pokemon in playstate" << std::endl;
+		m_player->addPokemon(m_pokemonFactory->createPokemon(PokemonIndex::CHARIZARD));
 	}
 	
 	~PlayState() = default;
