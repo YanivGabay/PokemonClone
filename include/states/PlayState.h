@@ -28,7 +28,8 @@ public:
 
 		//temporary
 		std::cout << "before add pokemon in playstate" << std::endl;
-		m_player->addPokemon(m_pokemonFactory->createPokemon(PokemonIndex::CHARIZARD));
+		std::unique_ptr<Pokemon> firstpokemon = m_pokemonFactory->createPokemon(PokemonIndex::CHARIZARD);
+		m_player->addPokemon(std::move(firstpokemon));
 	}
 	
 	~PlayState() = default;

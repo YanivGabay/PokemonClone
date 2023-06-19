@@ -8,10 +8,7 @@ class Party
 public:
 	Party()
 	{
-		for (auto& slot : m_pokemons)
-		{
-			slot = nullptr;
-		}
+	
 	}
 
 	~Party()
@@ -20,28 +17,32 @@ public:
 	
 	void addPokemon(std::unique_ptr<Pokemon> pokemon)
 	{
-		std::cout << "before add pokemon in party" << std::endl;
-		// Find an empty slot in the party and add the Pokemon
+		std::cout << "Entering addPokemon method." << std::endl;
+
+		// Check if the pokemon unique_ptr is null
+		if (!pokemon)
+		{
+			std::cout << "Passed pokemon unique_ptr is null." << std::endl;
+			return;
+		}
+
+		std::cout << "Before loop in addPokemon." << std::endl;
 
 		for (int pokemonIndex = 0; pokemonIndex < PARTY_SIZE; pokemonIndex++)
 		{
-			if (m_pokemons[pokemonIndex] == nullptr)
-				m_pokemons[pokemonIndex] = std::move(pokemon);
-		}
-		std::cout << "after add pokemon in party" << std::endl;
-		/*
-		for (auto& slot : m_pokemons)
-		{
-			if (!slot)
+			std::cout << "Inside the loop in addPokemon, index: " << pokemonIndex << std::endl;
+
+			// Check if the current slot in m_pokemons is null before checking its value
+			if (!m_pokemons[pokemonIndex])
 			{
-				std::cout << "Slot is empty, adding pokemon: " << std::endl;
-				slot = std::move(pokemon);
-				std::cout << "Pokemon added, slot: " << std::endl;
-				break;
+				std::cout << "Found empty slot at index: " << pokemonIndex << std::endl;
+				m_pokemons[pokemonIndex] = std::move(pokemon);
+				std::cout << "Pokemon added to party." << std::endl;
+				return;
 			}
 		}
-		std::cout << "after add pokemon in party" << std::endl;
-		*/
+		std::cout << "Party is full. Cannot add more Pokemon." << std::endl;
+		
 	}
 	Pokemon& getPokemon(int index)
 	{
@@ -55,5 +56,5 @@ public:
 	}
 
 private:
-	std::array <std::unique_ptr< Pokemon > , PARTY_SIZE > m_pokemons;
+	std::array <std::unique_ptr< Pokemon >, PARTY_SIZE > m_pokemons {{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr}};
 };

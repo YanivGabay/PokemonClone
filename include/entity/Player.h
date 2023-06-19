@@ -19,7 +19,7 @@ class Player : public Entity
 public:
     Player()
         : Entity("resources/maleSpriteSheet.png"),
-          m_isMoving(false)
+          m_isMoving(false),m_pokemons(std::move(std::make_unique<Party>()))
     {
         
     }
