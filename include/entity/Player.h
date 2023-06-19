@@ -20,8 +20,7 @@ public:
     Player()
         : Entity("resources/maleSpriteSheet.png"),
           m_isMoving(false)
-    {
-    }
+    {}
     
     virtual ~Player() = default;
     

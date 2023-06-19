@@ -26,7 +26,7 @@ public:
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 
-		
+		SoundTon::getInstance().stopSound(soundNames::OPEN);
 	}
 	
 	~PlayState() = default;
@@ -67,6 +67,8 @@ public:
 		{
 			if (tile->getId() == "tallgrass")
 			{
+				SoundTon::getInstance().playSound(soundNames::BUSH);
+
 				tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
 				
 				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
@@ -86,6 +88,7 @@ public:
 		//std::unique_ptr<EncounterBattleState>
 		
 	}
+
 	void update(sf::Time dt) override
 	{
 		m_player->update(dt, getMovesMap());

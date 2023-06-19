@@ -151,7 +151,6 @@ public:
 			if (tile->getAnimationStatus())
 			{
 				tile->updateAnimation(dt);
-				
 			}
 		}
 		

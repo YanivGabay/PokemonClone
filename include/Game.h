@@ -24,7 +24,6 @@ public:
 	Game()
 	{
 		SoundTon::getInstance().playSound(soundNames::OPEN);
-		SoundTon::getInstance().stopSound(soundNames::OPEN);
 	};
 
 	~Game() = default;
