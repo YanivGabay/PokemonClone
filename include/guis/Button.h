@@ -34,7 +34,7 @@ public:
         const float startX = m_startPosition.x + sizeVector.x;
         const float startY = m_startPosition.y + sizeVector.y;
         const float endX = m_startPosition.x + m_size.x - sizeVector.x-2;
-        const float endY = m_startPosition.y + m_size.y - sizeVector.y;
+        const float endY = m_startPosition.y + m_size.y - sizeVector.y+2;
 
         // Corners
         createSprite(FrameID::LEFT_UP_CORNER, sf::Vector2f(m_startPosition.x, m_startPosition.y));
