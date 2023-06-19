@@ -80,6 +80,8 @@ public:
 
         pokemon->setName(name);
         pokemon->setSprites();
+        std::cout << "before returning pokemon from factory" << std::endl;
+        return pokemon;
     }
 private:
 
