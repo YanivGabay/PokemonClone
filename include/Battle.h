@@ -41,7 +41,7 @@ public:
 		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(800, 150), sf::Vector2f(0,452.0f )));
 		
 		m_playerBackPokemon.setPosition(m_playerPokemonPos);
-		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);
+		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);   /// ---- writing error ----
 
 	};
 	~Battle() {};
