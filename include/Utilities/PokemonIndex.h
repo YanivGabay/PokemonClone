@@ -19,7 +19,3 @@ enum class PokemonIndex
 	END
 
 };
-enum class PokemonStrings
-{
-
-};

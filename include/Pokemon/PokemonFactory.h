@@ -20,6 +20,7 @@ public:
     {
           std::unique_ptr<Pokemon> pokemon = std::make_unique<Pokemon>();
           // Set the base attributes
+        
           pokemon->setBaseHP(generateRandomNumber(5, 12));
           pokemon->setBaseAttack(generateRandomNumber(5, 12));
           pokemon->setBaseDefense(generateRandomNumber(5, 12));
@@ -39,6 +40,7 @@ public:
           // Set other attributes of the Pokemon as needed
 
           pokemon->levelUp(); // Level up the Pokemon to level 1
+          enum PokemonIndex name = PokemonIndex::END;
           switch (level)
           { //attach the string and sprite for pool of this level
               case LevelID::START_TOWN:
@@ -50,7 +52,9 @@ public:
                   break;
           }
 
-       
+          pokemon->setName(name);
+          pokemon->setSprites();
+          std::cout << "before returning pokemon from factory" << std::endl;
 
           return pokemon;
     }
