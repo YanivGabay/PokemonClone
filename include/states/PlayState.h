@@ -77,6 +77,7 @@ public:
 				
 				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
 				{
+					SoundTon::getInstance().stopSound(soundNames::BUSH);
 					return true;
 				}
 			}
