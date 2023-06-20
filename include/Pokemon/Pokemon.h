@@ -151,7 +151,7 @@ public:
         return m_currentHP;
     }
     //sets::
-    void setName(const  enum PokemonIndex& name)
+    void setName(const  enum PokemonIndex name)
     {
         m_name = name;
     }
