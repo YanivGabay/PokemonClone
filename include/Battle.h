@@ -39,7 +39,9 @@ public:
 		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(250, 100), sf::Vector2f(SCREEN_WIDTH-750,SCREEN_HEIGHT-520)));
 
 		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(800, 150), sf::Vector2f(0,452.0f )));
-		
+		 m_playerPokemonPos = { 100,250 };
+		 m_enemyPokemonPos = { 500,60 };
+
 		m_playerBackPokemon.setPosition(m_playerPokemonPos);
 		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);   /// ---- writing error ----
 
