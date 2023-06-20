@@ -54,7 +54,7 @@ public:
 		m_playerPokemonInfo->draw(window);
 		m_enemyPokemonInfo->draw(window);
 		m_adviceActionInfo->draw(window);
-		//window.draw(m_playerBackPokemon);
+		window.draw(m_playerBackPokemon);
 		//window.draw(m_enemyFrontPokemon);
 		
 	}
