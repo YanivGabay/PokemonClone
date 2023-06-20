@@ -75,7 +75,7 @@ private:
 	std::unique_ptr<Gui> m_adviceActionInfo;
 	const sf::Vector2u m_windowSize{ Resources::getInstance().getWindow().getSize() };
 	
-	sf::Vector2f m_playerPokemonPos {100,300};
+	sf::Vector2f m_playerPokemonPos {100,295};
 	sf::Vector2f m_enemyPokemonPos {500,100};
 
 };
