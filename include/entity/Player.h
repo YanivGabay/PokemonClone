@@ -138,6 +138,10 @@ public:
         std::cout << "before add pokemon in player" << std::endl;
         m_pokemons->addPokemon(std::move(pokemon));
     }
+    bool getIsMoving()
+    {
+        return m_isMoving;
+    }
 private:
     bool m_isMoving;
 

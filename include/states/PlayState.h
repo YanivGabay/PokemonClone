@@ -103,7 +103,7 @@ public:
 		
 		sf::Vector2i updatedPos = m_player.get()->getPosition();
 		
-		if (checkGrassBattle(updatedPos))
+		if (checkGrassBattle(updatedPos)&&m_player->getIsMoving())
 		{
 			triggerBattleEncounter(m_currentLevel->getLevelId());
 		}
