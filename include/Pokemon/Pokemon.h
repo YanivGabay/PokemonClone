@@ -244,6 +244,8 @@ public:
         {
             std::cout << "no texture of pokemon" << "enum value:" << static_cast<int> (m_name) << std::endl;
         }
+        m_battleSpriteFront.setScale(2.0f, 2.0f);
+        m_battleSpriteBack.setScale(2.0f, 2.0f);
     }
     std::pair<sf::Sprite, sf::Sprite> getSprites()
     {
