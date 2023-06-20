@@ -72,6 +72,7 @@ public:
 		{
 			if (tile->getId() == "tallgrass")
 			{
+				SoundTon::getInstance().playSound(soundNames::BUSH);
 				tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
 				
 				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))

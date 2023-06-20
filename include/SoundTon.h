@@ -60,8 +60,10 @@ private:
 			
 			m_sound[i].setBuffer(m_soundBuffer[i]);
 
-			m_sound[i].setVolume(1);
+			m_sound[i].setVolume(100);
 		}
+
+		m_sound[soundNames::OPEN].setVolume(1);
 	}
 };
 
