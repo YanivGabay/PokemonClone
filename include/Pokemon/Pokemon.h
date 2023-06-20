@@ -240,6 +240,10 @@ public:
         std::pair<sf::Sprite,sf::Sprite> spritePair = Resources::getInstance().getPokemonSprites(m_name);
         m_battleSpriteFront = spritePair.first;
         m_battleSpriteBack = spritePair.second;
+        if (!m_battleSpriteFront.getTexture()||!m_battleSpriteBack.getTexture())
+        {
+            std::cout << "no texture of pokemon" << "enum value:" << static_cast<int> (m_name) << std::endl;
+        }
     }
     std::pair<sf::Sprite, sf::Sprite> getSprites()
     {

@@ -91,7 +91,7 @@ public:
 		
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createPokemon(PokemonIndex::CHARIZARD);
 
-		m_states.get().pushQueueState(std::move(std::make_unique<EncounterBattleState>(m_states.get(),* m_player.get(), *wildPokemon.get())));
+		m_states.get().pushQueueState(std::move(std::make_unique<EncounterBattleState>(m_states.get(),* m_player.get(),std::move(wildPokemon ))));
 	}
 
 	void update(sf::Time dt) override

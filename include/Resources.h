@@ -164,14 +164,14 @@ public:
 			// Load the front sprite
 			
 			std::string frontSpriteFilename = frontFolderPath + spriteLabel + ".png";
-			sf::Texture frontTexture = getTexture(frontSpriteFilename);
+			sf::Texture& frontTexture = getTexture(frontSpriteFilename);
 			sf::Sprite frontSprite(frontTexture);
 			// Set positions, scales, or other properties as needed
 
 			// Load the back sprite
 			
 			std::string backSpriteFilename = backFolderPath + spriteLabel + ".png";
-			sf::Texture backTexture = getTexture(backSpriteFilename);
+			sf::Texture& backTexture = getTexture(backSpriteFilename);
 			sf::Sprite backSprite(backTexture);
 			// Set positions, scales, or other properties as needed
 

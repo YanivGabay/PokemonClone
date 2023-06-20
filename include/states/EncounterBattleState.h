@@ -5,8 +5,8 @@
 class EncounterBattleState : public BaseState
 {
 public:
-	EncounterBattleState(Stack<BaseState>& states, Player& player,Pokemon& enemy)
-		: BaseState(states), m_player(player),m_battle(std::move(std::make_unique<Battle>(player.getPokemon(0), enemy)))
+	EncounterBattleState(Stack<BaseState>& states, Player& player, std::unique_ptr<Pokemon> wildPokemon)
+		: BaseState(states), m_player(player),m_battle(std::move(std::make_unique<Battle>(player.getPokemon(0),std::move( wildPokemon))))
 	{
 		entry();
 	}

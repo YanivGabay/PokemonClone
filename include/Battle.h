@@ -14,9 +14,9 @@ enum class SpritesElements
 class Battle
 {
 public:
-	Battle(Pokemon& playerPokemon,Pokemon& enemyPokemon)
+	Battle(Pokemon& playerPokemon, std::unique_ptr<Pokemon> enemyPokemon)
 		: m_playerPokemon(playerPokemon),
-		  m_enemyPokemon(enemyPokemon)
+		m_enemyPokemon(std::move(enemyPokemon))
 	{
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);
@@ -57,7 +57,7 @@ public:
 		m_enemyPokemonInfo->draw(window);
 		m_adviceActionInfo->draw(window);
 		window.draw(m_playerBackPokemon);
-		//window.draw(m_enemyFrontPokemon);
+		window.draw(m_enemyFrontPokemon);
 		
 	}
 private:
@@ -65,10 +65,10 @@ private:
 
 	sf::Sprite m_backGround;
 	Pokemon& m_playerPokemon;
-	Pokemon& m_enemyPokemon;
+	std::unique_ptr<Pokemon> m_enemyPokemon;
 
 	sf::Sprite& m_playerBackPokemon {m_playerPokemon.getBackSprite()};
-	sf::Sprite& m_enemyFrontPokemon {m_enemyPokemon.getFrontSprite()};
+	sf::Sprite& m_enemyFrontPokemon {m_enemyPokemon->getFrontSprite()};
 
 	std::unique_ptr<Gui> m_playerPokemonInfo;
 	std::unique_ptr<Gui> m_enemyPokemonInfo;
