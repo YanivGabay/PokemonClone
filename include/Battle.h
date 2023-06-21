@@ -31,17 +31,28 @@ public:
 		//float scaleY = static_cast<float>(m_windowSize.y) / texture.getSize().y;
 	//	m_backGround.setScale(scaleX, scaleY);
 		
-
+		
 		
 	
-		m_playerPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),sf::Vector2f(250,100),sf::Vector2f(SCREEN_WIDTH-350,SCREEN_HEIGHT-270)));
+		m_playerPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),
+			sf::Vector2f(250,100),sf::Vector2f(SCREEN_WIDTH-350,SCREEN_HEIGHT-270)));
 
-		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(250, 100), sf::Vector2f(SCREEN_WIDTH-750,SCREEN_HEIGHT-520)));
+		m_enemyPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),
+			sf::Vector2f(250, 100), sf::Vector2f(SCREEN_WIDTH-750,SCREEN_HEIGHT-520)));
 
-		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), sf::Vector2f(800, 150), sf::Vector2f(0,452.0f )));
-		// m_playerPokemonPos = { 100,250 };
-		 //m_enemyPokemonPos = { 500,60 };
+		m_adviceActionInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),
+			sf::Vector2f(800, 150), sf::Vector2f(0,452.0f )));
+		
 
+		m_playerPokemonInfo->addProgressBar(m_playerPokemonInfo->getPosition().x + 10,
+			m_playerPokemonInfo->getPosition().y + 20, m_playerPokemonInfo->getSize().x/3, m_playerPokemonInfo->getSize().y/6,
+			sf::Color::Black, sf::Color::Green,m_playerPokemon.getHpPercent());
+		m_playerPokemonInfo->setText(PokemonNames.at(m_playerPokemon.getName()));
+		// need to check here if we dont get the map.end
+		m_playerPokemonInfo->setResetColor();
+		m_playerPokemonInfo->setPosition(m_playerPokemonInfo->getPosition().x + 2, m_playerPokemonInfo->getPosition().y + 2);
+
+		std::cout << "after add progress bar" << std::endl;
 		m_playerBackPokemon.setPosition(m_playerPokemonPos);
 		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);   /// ---- writing error ----
 

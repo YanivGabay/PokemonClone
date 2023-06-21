@@ -55,10 +55,11 @@ public:
         m_text.setCharacterSize(value);
     }
     void addProgressBar(float x, float y, float width, float height,
-        sf::Color backgroundColor, sf::Color barColor)
+        sf::Color backgroundColor, sf::Color barColor,float progressValue)
     {
         m_progressBar = std::make_unique<ProgressBar>(x, y, width, height, backgroundColor, barColor);
         m_hasProgressBar = true;
+        m_progressBar->setProgress(progressValue);
     }
     void draw(sf::RenderWindow& window)
     {
@@ -69,7 +70,14 @@ public:
             m_progressBar->draw(window);
         }
     }
-
+    sf::Vector2f getSize()
+    {
+       return m_button->getSize();
+    }
+    sf::Vector2f getPosition()
+    {
+        return m_position;
+    }
 private:
     sf::Color m_color;
     sf::Text m_text;
