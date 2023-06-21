@@ -10,7 +10,7 @@
 #include "Pokemon/PokemonFactory.h"
 #include "EncounterBattleState.h"
 #include "SoundTon.h"
-
+#include "TransitionState.h"
 
 class PlayState : public BaseState
 {
@@ -23,6 +23,7 @@ public:
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
+		
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 
@@ -32,12 +33,15 @@ public:
 		m_player->addPokemon(std::move(firstpokemon));
 
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
+		
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
 	
 	~PlayState() = default;
 	
-	void entry() override {}
+	void entry() override {
+		m_states.get().popStart();
+	}
 	void exit() override {}
 	
 	std::array<sf::Vector2i, SIDES> getOptions(sf::Vector2i position)
@@ -90,15 +94,26 @@ public:
 	void triggerBattleEncounter(LevelID levelId)
 	{
 		std::cout << "battle should trigger" << std::endl;
-		//std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(m_currentLevel->getLevelId());
 		
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(LevelID::START_TOWN);
+		auto encounterBattle = std::make_unique<EncounterBattleState>(m_states.get(), *m_player.get(), std::move(wildPokemon));
+		auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(encounterBattle), Resources::getInstance().getColor(BLACK));
+		m_states.get().pushQueueState(std::move(transition));
+		
 
-		m_states.get().pushQueueState(std::move(std::make_unique<EncounterBattleState>(m_states.get(),* m_player.get(),std::move(wildPokemon ))));
+		
 	}
 
 	void update(sf::Time dt) override
 	{
+		static bool firstUpdate = false;
+		if (!firstUpdate)
+		{
+			entry();
+			firstUpdate = true;
+		}
+
+
 		m_player->update(dt, getMovesMap());
 		m_NPC->update(dt, getMovesMap());
 		

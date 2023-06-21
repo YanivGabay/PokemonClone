@@ -104,6 +104,14 @@ public:
 
 		return m_states.size();
 	}
+	void printTypeOf()
+	{
+		for (std::size_t i = 0; i < m_states.size(); ++i)
+		{
+			std::cout << "Item at position " << i << ": ";
+			std::cout << typeid(*m_states[i]).name() << std::endl;
+		}
+	}
 
 private:
 	std::vector <std::unique_ptr<T>> m_states;
