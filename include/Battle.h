@@ -1,5 +1,7 @@
 #pragma once
 
+#include <thread> 
+
 #include "Resources.h"
 #include "guis/Gui.h"
 #include "Pokemon/Pokemon.h"
@@ -30,6 +32,7 @@ public:
 		sf::Time totalTime = sf::Time::Zero;
 		sf::Time fadeDuration = sf::seconds(3);
 
+		std::thread volumeThread([&]() {
 		while (totalTime < fadeDuration)
 		{
 			float fadeRatio = totalTime / fadeDuration;
@@ -42,6 +45,11 @@ public:
 			totalTime += fadeTime;
 		}
 		SoundTon::getInstance().setVolume(soundNames::BATTLE, 30);
+			});
+
+		// Detach the thread so it runs independently
+		volumeThread.detach();
+		
 
 
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
