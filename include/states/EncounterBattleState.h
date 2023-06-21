@@ -11,8 +11,8 @@ public:
 						 std::shared_ptr<Player> player,
 						 std::shared_ptr<Pokemon> wildPokemon)
 		: BaseState(states),
-		  m_player(std::move(player)),m_wildPokemon(std::move(wildPokemon)),
-		  m_battle(std::move(std::make_unique<Battle>(std::move(player), std::move( wildPokemon))))
+		  m_player(player),m_wildPokemon(wildPokemon),
+		  m_battle(std::move(std::make_unique<Battle>(m_player, m_wildPokemon)))
 	{
 		entry();
 	}

@@ -21,7 +21,7 @@ class Battle
 public:
 	Battle(std::shared_ptr<Player> playerPokemon, std::shared_ptr<Pokemon> enemyPokemon)
 		: m_player(playerPokemon),
-		  m_enemyPokemon(std::move(enemyPokemon))
+		  m_enemyPokemon(enemyPokemon)
 	{
 		SoundTon::getInstance().stopSound(soundNames::CITY);
 		SoundTon::getInstance().playSound(soundNames::BATTLE);
