@@ -26,14 +26,18 @@ public:
 	void playSound(soundNames soundName)
 	{
 
-		m_sound[int(soundName)].play();
+		m_sound[soundName].play();
 	}
 
 	void stopSound(soundNames soundName)
 	{
-		m_sound[int(soundName)].stop();
+		m_sound[soundName].stop();
 	}
 
+	void setVolume(soundNames soundName, float vol)
+	{
+		m_sound[soundName].setVolume(vol);
+	}
 private:
 	std::vector<sf::SoundBuffer> m_soundBuffer;
 	std::vector<sf::Sound> m_sound;
@@ -60,7 +64,7 @@ private:
 			
 			m_sound[i].setBuffer(m_soundBuffer[i]);
 
-			m_sound[i].setVolume(30);
+			m_sound[i].setVolume(SOUND_VOLUME);
 		}
 
 		//m_sound[soundNames::OPEN].setVolume(1);
