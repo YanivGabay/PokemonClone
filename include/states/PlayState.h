@@ -34,6 +34,7 @@ public:
 
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
 		
+		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
 	
 	~PlayState() = default;
@@ -76,12 +77,12 @@ public:
 		{
 			if (tile->getId() == "tallgrass")
 			{
-				SoundTon::getInstance().playSound(soundNames::BUSH);
+				// SoundTon::getInstance().playSound(soundNames::BUSH);
 				tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
 				
 				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
 				{
-					SoundTon::getInstance().stopSound(soundNames::BUSH);
+					// SoundTon::getInstance().playSound(soundNames::BUSH);
 					return true;
 				}
 			}
