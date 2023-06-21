@@ -8,11 +8,11 @@ class EncounterBattleState : public BaseState
 {
 public:
 	EncounterBattleState(Stack<BaseState>& states,
-						 Player& player,
+						 std::shared_ptr<Player> player,
 						 std::shared_ptr<Pokemon> wildPokemon)
 		: BaseState(states),
-		  m_player(player),m_wildPokemon(std::move(wildPokemon)),
-		  m_battle(std::move(std::make_unique<Battle>(player.getPokemon(0), std::move( wildPokemon))))
+		  m_player(std::move(player)),m_wildPokemon(std::move(wildPokemon)),
+		  m_battle(std::move(std::make_unique<Battle>(std::move(player), std::move( wildPokemon))))
 	{
 		entry();
 	}
@@ -49,5 +49,5 @@ private:
 
 	std::shared_ptr<Pokemon> m_wildPokemon;
 
-	std::reference_wrapper<Player> m_player;
+	std::shared_ptr<Player> m_player;
 };

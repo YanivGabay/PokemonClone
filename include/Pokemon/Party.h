@@ -57,4 +57,5 @@ public:
 
 private:
 	std::array <std::unique_ptr< Pokemon >, PARTY_SIZE > m_pokemons {{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr}};
+
 };

@@ -7,7 +7,7 @@
 #include "Pokemon/Pokemon.h"
 #include "SoundTon.h"
 #include "utilities.h"
-
+#include "entity/Player.h"
 
 enum class SpritesElements
 {
@@ -19,8 +19,8 @@ enum class SpritesElements
 class Battle
 {
 public:
-	Battle(Pokemon& playerPokemon, std::shared_ptr<Pokemon> enemyPokemon)
-		: m_playerPokemon(playerPokemon),
+	Battle(std::shared_ptr<Player> playerPokemon, std::shared_ptr<Pokemon> enemyPokemon)
+		: m_player(playerPokemon),
 		  m_enemyPokemon(std::move(enemyPokemon))
 	{
 		SoundTon::getInstance().stopSound(soundNames::CITY);
@@ -68,8 +68,8 @@ public:
 	{
 		m_playerPokemonInfo->addProgressBar(m_playerPokemonInfo->getPosition().x ,
 											m_playerPokemonInfo->getPosition().y + 40, m_playerPokemonInfo->getSize().x / 3, m_playerPokemonInfo->getSize().y / 6,
-											sf::Color::Black, sf::Color::Green, m_playerPokemon.getHpPercent());
-		m_playerPokemonInfo->setText(PokemonNames.at(m_playerPokemon.getName()));
+											sf::Color::Black, sf::Color::Green, m_player->getPokemon(0).getHpPercent());
+		m_playerPokemonInfo->setText(PokemonNames.at(m_player->getPokemon(0).getName()));
 		// need to check here if we dont get the map.end
 		m_playerPokemonInfo->setResetColor();
 
@@ -96,10 +96,11 @@ private:
 	sf::IntRect m_battlePosition{ 249,6,240,112 };
 
 	sf::Sprite m_backGround;
-	Pokemon& m_playerPokemon;
+
+	std::shared_ptr<Player> m_player;
 	std::shared_ptr<Pokemon> m_enemyPokemon;
 
-	sf::Sprite& m_playerBackPokemon {m_playerPokemon.getBackSprite()};
+	sf::Sprite& m_playerBackPokemon {m_player->getPokemon(0).getBackSprite()};
 	sf::Sprite& m_enemyFrontPokemon {m_enemyPokemon->getFrontSprite()};
 
 	std::unique_ptr<Gui> m_playerPokemonInfo;

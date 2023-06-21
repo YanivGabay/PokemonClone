@@ -18,7 +18,7 @@ public:
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
 		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
-		  m_player(std::make_unique<Player>()),
+		  m_player(std::shared_ptr<Player>()),
 		  m_NPC(std::make_unique<NPC>()),
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
@@ -101,7 +101,7 @@ public:
 		resetBeforeBattle();
 		std::shared_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(LevelID::START_TOWN);
 		
-		auto encounterBattle = std::make_unique<EncounterBattleState>(getStateStack().get(), *m_player.get(), std::move(wildPokemon));
+		auto encounterBattle = std::make_unique<EncounterBattleState>(getStateStack().get(), std::move(m_player), std::move(wildPokemon));
 		
 		auto transition = std::make_unique<TransitionState>(getStateStack().get(), std::move(encounterBattle), Resources::getInstance().getColor(BLACK));
 		
@@ -159,7 +159,7 @@ public:
 
 private:
 	std::unique_ptr<Level> m_currentLevel;
-	std::unique_ptr<Player> m_player;
+	std::shared_ptr<Player> m_player;
 	std::unique_ptr<NPC> m_NPC;
 	std::unique_ptr<Camera> m_camera;
 
