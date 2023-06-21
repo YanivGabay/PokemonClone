@@ -3,6 +3,9 @@
 #include "Resources.h"
 #include "guis/Gui.h"
 #include "Pokemon/Pokemon.h"
+#include "SoundTon.h"
+#include "utilities.h"
+
 
 enum class SpritesElements
 {
@@ -16,8 +19,10 @@ class Battle
 public:
 	Battle(Pokemon& playerPokemon, std::unique_ptr<Pokemon> enemyPokemon)
 		: m_playerPokemon(playerPokemon),
-		m_enemyPokemon(std::move(enemyPokemon))
+		  m_enemyPokemon(std::move(enemyPokemon))
 	{
+		SoundTon::getInstance().stopSound(soundNames::CITY);
+		SoundTon::getInstance().playSound(soundNames::BATTLE);
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);
 		m_backGround.setTextureRect(m_battlePosition);
@@ -52,7 +57,12 @@ public:
 		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);   /// ---- writing error ----
 
 	};
-	~Battle() {};
+	
+	~Battle()
+	{
+		SoundTon::getInstance().stopSound(soundNames::BATTLE);
+		SoundTon::getInstance().playSound(soundNames::CITY);
+	}
 	
 	void setGuis()
 	{
