@@ -142,6 +142,10 @@ public:
     {
         return m_isMoving;
     }
+    void setMoving(bool value)
+    {
+        m_isMoving = value;
+    }
 private:
     bool m_isMoving;
 

@@ -51,6 +51,7 @@ public:
         m_states.get().pushQueueState(getNextState());
         m_states.get().pushQueueState(getFadeIn());
         setStatus(false);
+        m_states.get().printTypeOf();
     }
     
     void handleEvents(sf::Event event) override {}
