@@ -44,7 +44,7 @@ public:
           switch (level)
           { //attach the string and sprite for pool of this level
               case LevelID::START_TOWN:
-                  
+                  name = getRandom(FirstLevel);
                   break;
              
               default:
