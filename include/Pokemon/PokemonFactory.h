@@ -37,11 +37,11 @@ public:
           pokemon->setDefense(pokemon->getBaseDefense());
           pokemon->setSpeed(pokemon->getBaseSpeed());
           pokemon->setHP(pokemon->getBaseHP());
-
+          pokemon->levelUp(); // Level up the Pokemon to level 1
           pokemon->setCurrentHP(pokemon->getHP());
           // Set other attributes of the Pokemon as needed
 
-          pokemon->levelUp(); // Level up the Pokemon to level 1
+        
           enum PokemonIndex name = PokemonIndex::END;
           switch (level)
           { //attach the string and sprite for pool of this level
@@ -80,10 +80,10 @@ public:
         pokemon->setDefense(pokemon->getBaseDefense());
         pokemon->setSpeed(pokemon->getBaseSpeed());
         pokemon->setHP(pokemon->getBaseHP());
-        // Set other attributes of the Pokemon as needed
+        pokemon->levelUp(); // Level up the Pokemon to level 1
         pokemon->setCurrentHP(pokemon->getHP());
 
-        pokemon->levelUp(); // Level up the Pokemon to level 1
+       
 
         pokemon->setName(name);
         pokemon->setSprites();
