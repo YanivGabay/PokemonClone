@@ -45,7 +45,7 @@ public:
 		
 
 		m_playerPokemonInfo->addProgressBar(m_playerPokemonInfo->getPosition().x + 10,
-			m_playerPokemonInfo->getPosition().y + 20, m_playerPokemonInfo->getSize().x/3, m_playerPokemonInfo->getSize().y/6,
+			m_playerPokemonInfo->getPosition().y + 40, m_playerPokemonInfo->getSize().x/3, m_playerPokemonInfo->getSize().y/6,
 			sf::Color::Black, sf::Color::Green,m_playerPokemon.getHpPercent());
 		m_playerPokemonInfo->setText(PokemonNames.at(m_playerPokemon.getName()));
 		// need to check here if we dont get the map.end
