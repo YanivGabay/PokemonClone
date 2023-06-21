@@ -48,16 +48,15 @@ public:
     void entry() override {}
     void exit() override {
       
-        m_states.get().pushQueueState(getNextState());
-        m_states.get().pushQueueState(getFadeIn());
+        getStateStack().get().pushQueueState(getNextState());
+        getStateStack().get().pushQueueState(getFadeIn());
         setStatus(false);
-        m_states.get().printTypeOf();
+        getStateStack().get().printTypeOf();
     }
     
     void handleEvents(sf::Event event) override {}
 
 private:
-    std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
     std::unique_ptr<BaseState> m_currState;
     std::unique_ptr<BaseState> m_nextState;
     std::unique_ptr<BaseState> m_fadeOutState;

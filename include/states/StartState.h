@@ -33,8 +33,9 @@ public:
 		auto playstate = m_loadingFuture.get();
 
 		// Now that PlayState is created, push it to the queue
-		auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
-		m_states.get().pushQueueState(std::move(transition));
+		auto transition = std::make_unique<TransitionState>(getStateStack().get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
+		
+		getStateStack().get().pushQueueState(std::move(transition));
 
 		m_startMenu->resetText();
 		m_loadingStarted = false;
@@ -57,7 +58,7 @@ public:
 			m_loadingStarted = true;
 			// Asynchronously create PlayState
 			m_loadingFuture = std::async(std::launch::async, [this] {
-				return std::make_unique<PlayState>(m_states.get());
+				return std::make_unique<PlayState>(getStateStack().get());
 										 });
 			m_startMenu->setLoadingText();
 		}
