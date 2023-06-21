@@ -19,8 +19,8 @@ enum class SpritesElements
 class Battle
 {
 public:
-	Battle(std::shared_ptr<Player> playerPokemon, std::shared_ptr<Pokemon> enemyPokemon)
-		: m_player(playerPokemon),
+	Battle(std::shared_ptr<Player> player, std::shared_ptr<Pokemon> enemyPokemon)
+		: m_player(player),
 		  m_enemyPokemon(enemyPokemon)
 	{
 		SoundTon::getInstance().stopSound(soundNames::CITY);
@@ -106,6 +106,7 @@ private:
 	std::unique_ptr<Gui> m_playerPokemonInfo;
 	std::unique_ptr<Gui> m_enemyPokemonInfo;
 	std::unique_ptr<Gui> m_adviceActionInfo;
+
 	const sf::Vector2u m_windowSize{ Resources::getInstance().getWindow().getSize() };
 	
 	sf::Vector2f m_playerPokemonPos {100,295};

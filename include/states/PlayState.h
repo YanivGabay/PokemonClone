@@ -99,9 +99,9 @@ public:
 	{
 		std::cout << "battle should trigger" << std::endl;
 		resetBeforeBattle();
-		std::shared_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(LevelID::START_TOWN);
+		std::shared_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(levelId);
 		
-		auto encounterBattle = std::make_unique<EncounterBattleState>(getStateStack().get(), std::move(m_player), std::move(wildPokemon));
+		auto encounterBattle = std::make_unique<EncounterBattleState>(getStateStack().get(), m_player, wildPokemon);
 		
 		auto transition = std::make_unique<TransitionState>(getStateStack().get(), std::move(encounterBattle), Resources::getInstance().getColor(BLACK));
 		
