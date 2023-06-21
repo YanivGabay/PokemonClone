@@ -30,7 +30,7 @@ std::vector <PokemonIndex> FirstLevel { PokemonIndex::BULBASOR,
 
 PokemonIndex getRandom(std::vector<PokemonIndex> options)
 {
-	return options[generateRandomNumber(0, options.size())];
+	return options[generateRandomNumber(0, options.size()-1)];
 }
 
 const std::unordered_map<enum PokemonIndex, std::string> PokemonNames = { { PokemonIndex::BULBASOR, "BULBASOR" },

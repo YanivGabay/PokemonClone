@@ -44,13 +44,8 @@ public:
 			sf::Vector2f(800, 150), sf::Vector2f(0,452.0f )));
 		
 
-		m_playerPokemonInfo->addProgressBar(m_playerPokemonInfo->getPosition().x + 10,
-			m_playerPokemonInfo->getPosition().y + 40, m_playerPokemonInfo->getSize().x/3, m_playerPokemonInfo->getSize().y/6,
-			sf::Color::Black, sf::Color::Green,m_playerPokemon.getHpPercent());
-		m_playerPokemonInfo->setText(PokemonNames.at(m_playerPokemon.getName()));
-		// need to check here if we dont get the map.end
-		m_playerPokemonInfo->setResetColor();
 		
+		setGuis();
 
 		std::cout << "after add progress bar" << std::endl;
 		m_playerBackPokemon.setPosition(m_playerPokemonPos);
@@ -59,6 +54,22 @@ public:
 	};
 	~Battle() {};
 	
+	void setGuis()
+	{
+		m_playerPokemonInfo->addProgressBar(m_playerPokemonInfo->getPosition().x ,
+											m_playerPokemonInfo->getPosition().y + 40, m_playerPokemonInfo->getSize().x / 3, m_playerPokemonInfo->getSize().y / 6,
+											sf::Color::Black, sf::Color::Green, m_playerPokemon.getHpPercent());
+		m_playerPokemonInfo->setText(PokemonNames.at(m_playerPokemon.getName()));
+		// need to check here if we dont get the map.end
+		m_playerPokemonInfo->setResetColor();
+
+		m_enemyPokemonInfo->addProgressBar(m_enemyPokemonInfo->getPosition().x ,
+										   m_enemyPokemonInfo->getPosition().y + 40, m_enemyPokemonInfo->getSize().x / 3, m_enemyPokemonInfo->getSize().y / 6,
+											sf::Color::Black, sf::Color::Green, m_enemyPokemon->getHpPercent());
+		m_enemyPokemonInfo->setText(PokemonNames.at(m_enemyPokemon->getName()));
+		// need to check here if we dont get the map.end
+		m_enemyPokemonInfo->setResetColor();
+	}
 	void draw(sf::RenderWindow& window)
 	{
 		
