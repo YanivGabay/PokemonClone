@@ -16,9 +16,9 @@ public:
 	~PokemonFactory()
 	{
 	}
-    std::unique_ptr<Pokemon> createRandomPokemon(LevelID level)
+    std::shared_ptr<Pokemon> createRandomPokemon(LevelID level)
     {
-          std::unique_ptr<Pokemon> pokemon = std::make_unique<Pokemon>();
+          std::shared_ptr<Pokemon> pokemon = std::make_shared<Pokemon>();
           // Set the base attributes
         
           pokemon->setBaseHP(generateRandomNumber(5, 12));

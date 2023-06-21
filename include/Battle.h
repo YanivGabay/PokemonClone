@@ -19,7 +19,7 @@ enum class SpritesElements
 class Battle
 {
 public:
-	Battle(Pokemon& playerPokemon, std::unique_ptr<Pokemon> enemyPokemon)
+	Battle(Pokemon& playerPokemon, std::shared_ptr<Pokemon> enemyPokemon)
 		: m_playerPokemon(playerPokemon),
 		  m_enemyPokemon(std::move(enemyPokemon))
 	{
@@ -97,7 +97,7 @@ private:
 
 	sf::Sprite m_backGround;
 	Pokemon& m_playerPokemon;
-	std::unique_ptr<Pokemon> m_enemyPokemon;
+	std::shared_ptr<Pokemon> m_enemyPokemon;
 
 	sf::Sprite& m_playerBackPokemon {m_playerPokemon.getBackSprite()};
 	sf::Sprite& m_enemyFrontPokemon {m_enemyPokemon->getFrontSprite()};

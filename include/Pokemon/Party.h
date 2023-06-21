@@ -17,7 +17,7 @@ public:
 	
 	void addPokemon(std::unique_ptr<Pokemon> pokemon)
 	{
-		std::cout << "Entering addPokemon method." << std::endl;
+		
 
 		// Check if the pokemon unique_ptr is null
 		if (!pokemon)
@@ -26,18 +26,18 @@ public:
 			return;
 		}
 
-		std::cout << "Before loop in addPokemon." << std::endl;
+		
 
 		for (int pokemonIndex = 0; pokemonIndex < PARTY_SIZE; pokemonIndex++)
 		{
-			std::cout << "Inside the loop in addPokemon, index: " << pokemonIndex << std::endl;
+			
 
 			// Check if the current slot in m_pokemons is null before checking its value
 			if (!m_pokemons[pokemonIndex])
 			{
-				std::cout << "Found empty slot at index: " << pokemonIndex << std::endl;
+				
 				m_pokemons[pokemonIndex] = std::move(pokemon);
-				std::cout << "Pokemon added to party." << std::endl;
+				
 				return;
 			}
 		}

@@ -99,7 +99,7 @@ public:
 	{
 		std::cout << "battle should trigger" << std::endl;
 		resetBeforeBattle();
-		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(LevelID::START_TOWN);
+		std::shared_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(LevelID::START_TOWN);
 		
 		auto encounterBattle = std::make_unique<EncounterBattleState>(getStateStack().get(), *m_player.get(), std::move(wildPokemon));
 		

@@ -9,9 +9,9 @@ class EncounterBattleState : public BaseState
 public:
 	EncounterBattleState(Stack<BaseState>& states,
 						 Player& player,
-						 std::unique_ptr<Pokemon> wildPokemon)
+						 std::shared_ptr<Pokemon> wildPokemon)
 		: BaseState(states),
-		  m_player(player),
+		  m_player(player),m_wildPokemon(std::move(wildPokemon)),
 		  m_battle(std::move(std::make_unique<Battle>(player.getPokemon(0), std::move( wildPokemon))))
 	{
 		entry();
@@ -46,5 +46,8 @@ private:
 	sf::RenderWindow& m_window{ Resources::getInstance().getWindow() };
 	sf::View m_originalView{ m_window.getView() };
 	std::unique_ptr<Battle> m_battle;
+
+	std::shared_ptr<Pokemon> m_wildPokemon;
+
 	std::reference_wrapper<Player> m_player;
 };

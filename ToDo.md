@@ -4,5 +4,11 @@
 
 ***
 ## **5/06/2023**
-### 1.need to debug the fade in than startstate within the stack, to understand why it crashing, seperated they are working
+### things to do:
+* save and load game 0(will be member of playstate?or function?,)-change the start menu to load or new
+* finish functional battle
+* doors entrance to heal house
+* heal house itself, including sprite animation and npc and functionality
+* menu inside the game to exit , save, see pokemons?
+* open ai api for strings creationg for npcs etc
 ***
