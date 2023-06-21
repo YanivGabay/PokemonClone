@@ -25,14 +25,14 @@ public:
 
 	void entry() override
 	{
-		m_startMenu = std::move(std::make_unique<StartMenuState>(m_states));
+		m_startMenu = std::move(std::make_unique<StartMenuState>(getStateStack()));
 	}
 	
 	void exit() override
 	{
-		auto playstate = std::make_unique<PlayState>(m_states.get());
-		auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
-		m_states.get().pushQueueState(std::move(transition));
+		auto playstate = std::make_unique<PlayState>(getStateStack().get());
+		auto transition = std::make_unique<TransitionState>(getStateStack().get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
+		getStateStack().get().pushQueueState(std::move(transition));
 		m_startMenu->resetText();
 		m_loadingStarted = false;
 		
@@ -72,7 +72,6 @@ public:
 
 private:
 	std::optional<StartMenuOptions> m_choice{ std::nullopt };
-	std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
 	std::unique_ptr<StartMenuState> m_startMenu;
 
 	std::future<void> m_loadingFuture;

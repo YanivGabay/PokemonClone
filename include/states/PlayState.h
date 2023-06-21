@@ -40,8 +40,9 @@ public:
 	~PlayState() = default;
 	
 	void entry() override {
-		m_states.get().popStart();
+		getStateStack().get().popStart();
 	}
+
 	void exit() override {}
 	
 	std::array<sf::Vector2i, SIDES> getOptions(sf::Vector2i position)
@@ -96,12 +97,12 @@ public:
 		std::cout << "battle should trigger" << std::endl;
 		
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(LevelID::START_TOWN);
-		auto encounterBattle = std::make_unique<EncounterBattleState>(m_states.get(), *m_player.get(), std::move(wildPokemon));
-		auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(encounterBattle), Resources::getInstance().getColor(BLACK));
-		m_states.get().pushQueueState(std::move(transition));
 		
-
+		auto encounterBattle = std::make_unique<EncounterBattleState>(getStateStack().get(), *m_player.get(), std::move(wildPokemon));
 		
+		auto transition = std::make_unique<TransitionState>(getStateStack().get(), std::move(encounterBattle), Resources::getInstance().getColor(BLACK));
+		
+		getStateStack().get().pushQueueState(std::move(transition));
 	}
 
 	void update(sf::Time dt) override
@@ -154,7 +155,6 @@ public:
 
 private:
 	std::unique_ptr<Level> m_currentLevel;
-	std::reference_wrapper<Stack<BaseState>> m_states{ getStateStack() };
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<NPC> m_NPC;
 	std::unique_ptr<Camera> m_camera;

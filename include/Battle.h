@@ -27,22 +27,6 @@ public:
 
 		SoundTon::getInstance().setVolume(soundNames::BATTLE, 0);
 		SoundTon::getInstance().playSound(soundNames::BATTLE);
-
-		sf::Time fadeTime = sf::milliseconds(10); 
-		sf::Time totalTime = sf::Time::Zero;
-		sf::Time fadeDuration = sf::seconds(3);
-		
-		while (totalTime < fadeDuration)
-		{
-			float fadeRatio = totalTime / fadeDuration;
-			float volume = fadeRatio * SOUND_VOLUME;
-
-			SoundTon::getInstance().setVolume(soundNames::BATTLE, volume);
-			sf::sleep(fadeTime);
-			totalTime += fadeTime;
-		}
-		
-		SoundTon::getInstance().setVolume(soundNames::BATTLE, SOUND_VOLUME);
 		
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);

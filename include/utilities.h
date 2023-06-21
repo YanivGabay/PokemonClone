@@ -82,7 +82,7 @@ enum Side
 	RIGHT
 };
 
-const float SOUND_VOLUME = 10;
+const float SOUND_VOLUME = 5;
 enum soundNames { OPEN, BUSH, CITY, BATTLE };
 std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg",
 										 "resources/bush_step.ogg",
