@@ -30,12 +30,15 @@ public:
 	
 	void exit() override
 	{
-		auto playstate = std::make_unique<PlayState>(getStateStack().get());
-		auto transition = std::make_unique<TransitionState>(getStateStack().get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
-		getStateStack().get().pushQueueState(std::move(transition));
+		auto playstate = m_loadingFuture.get();
+
+		// Now that PlayState is created, push it to the queue
+		auto transition = std::make_unique<TransitionState>(m_states.get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
+		m_states.get().pushQueueState(std::move(transition));
+
 		m_startMenu->resetText();
 		m_loadingStarted = false;
-		
+		//setStatus(false);
 	}
 	
 	void update(sf::Time dt) override
@@ -48,14 +51,22 @@ public:
 			setStatus(false);
 		}
 		
-		if (m_startMenu->getChoice()==NEW_GAME&&!m_loadingStarted)
+		if (m_startMenu->getChoice() == NEW_GAME && !m_loadingStarted)
 		{
 			m_choice = std::nullopt;
 			m_loadingStarted = true;
-			m_loadingFuture = std::async(std::launch::async, &StartState::exit, this);
+			// Asynchronously create PlayState
+			m_loadingFuture = std::async(std::launch::async, [this] {
+				return std::make_unique<PlayState>(m_states.get());
+										 });
 			m_startMenu->setLoadingText();
 		}
-		
+		if (m_loadingStarted && m_loadingFuture.valid() &&
+			m_loadingFuture.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
+		{
+			exit();
+			
+		}
 		
 	}
 
@@ -74,6 +85,6 @@ private:
 	std::optional<StartMenuOptions> m_choice{ std::nullopt };
 	std::unique_ptr<StartMenuState> m_startMenu;
 
-	std::future<void> m_loadingFuture;
+	std::future<std::unique_ptr<PlayState>> m_loadingFuture;
 	std::atomic<bool> m_loadingStarted {false};
 };

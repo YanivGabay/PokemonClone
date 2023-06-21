@@ -91,11 +91,14 @@ public:
 		
 		return false;
 	}
-	
+	void resetBeforeBattle()
+	{
+		m_player->setMoving(false);
+	}
 	void triggerBattleEncounter(LevelID levelId)
 	{
 		std::cout << "battle should trigger" << std::endl;
-		
+		resetBeforeBattle();
 		std::unique_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(LevelID::START_TOWN);
 		
 		auto encounterBattle = std::make_unique<EncounterBattleState>(getStateStack().get(), *m_player.get(), std::move(wildPokemon));
@@ -107,13 +110,14 @@ public:
 
 	void update(sf::Time dt) override
 	{
+		
 		static bool firstUpdate = false;
 		if (!firstUpdate)
 		{
 			entry();
 			firstUpdate = true;
 		}
-
+		
 
 		m_player->update(dt, getMovesMap());
 		m_NPC->update(dt, getMovesMap());

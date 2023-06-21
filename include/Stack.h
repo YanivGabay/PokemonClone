@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <memory>
+#include <queue>
+
 
 
 template <class T>
@@ -69,11 +71,7 @@ public:
 	
 	void update(sf::Time dt)
 	{
-		while (!m_stateQueue.empty())
-		{
-			m_states.push_back(std::move(m_stateQueue.front()));
-			m_stateQueue.pop();
-		}
+	
 		if (!m_states.empty())
 		{
 			m_states.back()->update(dt);
@@ -82,10 +80,17 @@ public:
 				this->popState();
 			}
 		}
+		while (!m_stateQueue.empty())
+		{
+			m_states.push_back(std::move(m_stateQueue.front()));
+			m_stateQueue.pop();
+		}
 	}
 
 	void draw()
 	{
+		
+		
 		for (auto& state : m_states)
 		{
 			state->draw(m_window);
