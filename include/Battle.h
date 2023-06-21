@@ -47,7 +47,12 @@ public:
 		m_playerPokemonInfo->addProgressBar(m_playerPokemonInfo->getPosition().x + 10,
 			m_playerPokemonInfo->getPosition().y + 20, m_playerPokemonInfo->getSize().x/3, m_playerPokemonInfo->getSize().y/6,
 			sf::Color::Black, sf::Color::Green,m_playerPokemon.getHpPercent());
+		m_playerPokemonInfo->setText(PokemonNames.at(m_playerPokemon.getName()));
+		// need to check here if we dont get the map.end
+		m_playerPokemonInfo->setResetColor();
+		m_playerPokemonInfo->setPosition(m_playerPokemonInfo->getPosition().x + 2, m_playerPokemonInfo->getPosition().y + 2);
 
+		std::cout << "after add progress bar" << std::endl;
 		m_playerBackPokemon.setPosition(m_playerPokemonPos);
 		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);   /// ---- writing error ----
 

@@ -34,7 +34,7 @@ PokemonIndex getRandom(std::vector<PokemonIndex> options)
 	return options[generateRandomNumber(0, options.size())];
 }
 
-const std::unordered_map<enum PokemonIndex, std::string> pocimonNames = { { PokemonIndex::BULBASOR, "BULBASOR" },
+const std::unordered_map<enum PokemonIndex, std::string> PokemonNames = { { PokemonIndex::BULBASOR, "BULBASOR" },
 	{ PokemonIndex::CHARMANDER, "CHARMANDER" },
 	{ PokemonIndex::CHARIZARD, "CHARIZARD" },
 	{ PokemonIndex::SQUIRTLE, "SQUIRTLE" },
