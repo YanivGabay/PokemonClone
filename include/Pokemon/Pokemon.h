@@ -150,6 +150,13 @@ public:
     {
         return m_currentHP;
     }
+    float getHpPercent() const
+    {
+        std::cout << " m_currhp = " << m_currentHP << "m_hp = " << m_HP << std::endl;
+        float percentage = (static_cast<float>(m_currentHP) / static_cast<float>(m_HP)) * 100.0f;
+        std::cout << "percentage hp = " << percentage << std::endl;
+        return percentage;
+    }
     //sets::
     void setName(const  enum PokemonIndex name)
     {
@@ -264,22 +271,24 @@ private:
     sf::Sprite m_battleSpriteFront;
     sf::Sprite m_battleSpriteBack;
 
-    int m_baseHP{ 0 };;
-    int m_baseAttack{ 0 };;
-    int m_baseDefense{ 0 };;
-    int m_baseSpeed{ 0 };;
-    int m_HPIV{ 0 };;
-    int m_attackIV{ 0 };;
-    int m_defenseIV{ 0 };;
-    int m_speedIV{ 0 };;
+    int m_baseHP{ 0 };
+    int m_baseAttack{ 0 };
+    int m_baseDefense{ 0 };
+    int m_baseSpeed{ 0 };
+    int m_HPIV{ 0 };
+    int m_attackIV{ 0 };
+    int m_defenseIV{ 0 };
+    int m_speedIV{ 0 };
 
-    int m_HP{ 0 };;
-    int m_attack{ 0 };;
-    int m_defense{ 0 };;
-    int m_speed{ 0 };;
+    int m_HP{ 0 };
+    int m_attack{ 0 };
+    int m_defense{ 0 };
+    int m_speed{ 0 };
 
     int m_level{ 0 };
     int m_currentExp{ 0 };
-    float m_expToLevel{ 0 };;
-    int m_currentHP{ 0 };;
+    float m_expToLevel{ 0 };
+    int m_currentHP{ 0 };
+
+    
 };

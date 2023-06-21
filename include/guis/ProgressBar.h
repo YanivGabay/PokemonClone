@@ -18,7 +18,10 @@ public:
   
 
     void setProgress(float progress) {
-        bar.setSize(sf::Vector2f(size.x * progress, size.y));
+        float fraction = progress / 100.0f;
+
+        // Modify the bar size based on the fraction
+        bar.setSize(sf::Vector2f(size.x * fraction, size.y));
     }
 
     void draw(sf::RenderWindow& window) {

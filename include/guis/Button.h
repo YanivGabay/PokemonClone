@@ -75,7 +75,10 @@ public:
 			window.draw(*shape);
 		}
 	}
-
+    sf::Vector2f getSize()
+    {
+        return m_size;
+    }
 private:
     sf::Texture& m_texture;
     std::vector<std::unique_ptr<sf::Sprite>> m_shapes;

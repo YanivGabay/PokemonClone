@@ -37,6 +37,8 @@ public:
           pokemon->setDefense(pokemon->getBaseDefense());
           pokemon->setSpeed(pokemon->getBaseSpeed());
           pokemon->setHP(pokemon->getBaseHP());
+
+          pokemon->setCurrentHP(pokemon->getHP());
           // Set other attributes of the Pokemon as needed
 
           pokemon->levelUp(); // Level up the Pokemon to level 1
@@ -79,6 +81,7 @@ public:
         pokemon->setSpeed(pokemon->getBaseSpeed());
         pokemon->setHP(pokemon->getBaseHP());
         // Set other attributes of the Pokemon as needed
+        pokemon->setCurrentHP(pokemon->getHP());
 
         pokemon->levelUp(); // Level up the Pokemon to level 1
 
