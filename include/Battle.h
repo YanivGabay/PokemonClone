@@ -24,8 +24,6 @@ public:
 		  m_enemyPokemon(std::move(enemyPokemon))
 	{
 		SoundTon::getInstance().stopSound(soundNames::CITY);
-
-		SoundTon::getInstance().setVolume(soundNames::BATTLE, 0);
 		SoundTon::getInstance().playSound(soundNames::BATTLE);
 		
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
