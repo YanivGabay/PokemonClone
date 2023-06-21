@@ -22,7 +22,28 @@ public:
 		  m_enemyPokemon(std::move(enemyPokemon))
 	{
 		SoundTon::getInstance().stopSound(soundNames::CITY);
+
+		SoundTon::getInstance().setVolume(soundNames::BATTLE, 0);
 		SoundTon::getInstance().playSound(soundNames::BATTLE);
+
+		sf::Time fadeTime = sf::milliseconds(10); 
+		sf::Time totalTime = sf::Time::Zero;
+		sf::Time fadeDuration = sf::seconds(3);
+
+		while (totalTime < fadeDuration)
+		{
+			float fadeRatio = totalTime / fadeDuration;
+			float volume = fadeRatio * 30;
+			
+			SoundTon::getInstance().setVolume(soundNames::BATTLE, volume);
+			
+			sf::sleep(fadeTime);
+			
+			totalTime += fadeTime;
+		}
+		SoundTon::getInstance().setVolume(soundNames::BATTLE, 30);
+
+
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);
 		m_backGround.setTextureRect(m_battlePosition);
