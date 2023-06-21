@@ -1,11 +1,16 @@
 #pragma once
+
 #include <vector>
+#include <unordered_map>
 #include <string>
 #include "utilities.h"
-std::vector<std::string> pokemonFiles {"1", "4", "6", "7", "17", "25", "56", "69", "88"};
+
+std::vector<std::string> pokemonFiles { "1", "4", "6",
+										"7", "17", "25",
+										"56", "69", "88" };
+
 enum class PokemonIndex
 {
-
 	BULBASOR = 1,
 	CHARMANDER = 4,
 	CHARIZARD = 6,
@@ -18,11 +23,23 @@ enum class PokemonIndex
 	////.......
 
 	END
-
 };
-std::vector <PokemonIndex> FirstLevel{PokemonIndex::BULBASOR, PokemonIndex::PIGEOT, PokemonIndex::LEAF};
+
+std::vector <PokemonIndex> FirstLevel { PokemonIndex::BULBASOR,
+										PokemonIndex::PIGEOT,
+										PokemonIndex::LEAF };
 
 PokemonIndex getRandom(std::vector<PokemonIndex> options)
 {
 	return options[generateRandomNumber(0, options.size())];
 }
+
+const std::unordered_map<enum PokemonIndex, std::string> pocimonNames = { { PokemonIndex::BULBASOR, "BULBASOR" },
+	{ PokemonIndex::CHARMANDER, "CHARMANDER" },
+	{ PokemonIndex::CHARIZARD, "CHARIZARD" },
+	{ PokemonIndex::SQUIRTLE, "SQUIRTLE" },
+	{ PokemonIndex::PIGEOT, "PIGEOT" },
+	{ PokemonIndex::PIKACHU, "PIKACHU" },
+	{ PokemonIndex::MONKEY, "MONKEY" },
+	{ PokemonIndex::LEAF, "LEAF" },
+	{ PokemonIndex::MUD, "MUD" } };
