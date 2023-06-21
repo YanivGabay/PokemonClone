@@ -64,7 +64,7 @@ private:
 			
 			m_sound[i].setBuffer(m_soundBuffer[i]);
 
-			m_sound[i].setVolume(30);
+			m_sound[i].setVolume(SOUND_VOLUME);
 		}
 
 		//m_sound[soundNames::OPEN].setVolume(1);

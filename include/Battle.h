@@ -31,27 +31,19 @@ public:
 		sf::Time fadeTime = sf::milliseconds(10); 
 		sf::Time totalTime = sf::Time::Zero;
 		sf::Time fadeDuration = sf::seconds(3);
-
-		std::thread volumeThread([&]() {
+		
 		while (totalTime < fadeDuration)
 		{
 			float fadeRatio = totalTime / fadeDuration;
-			float volume = fadeRatio * 30;
-			
+			float volume = fadeRatio * SOUND_VOLUME;
+
 			SoundTon::getInstance().setVolume(soundNames::BATTLE, volume);
-			
 			sf::sleep(fadeTime);
-			
 			totalTime += fadeTime;
 		}
-		SoundTon::getInstance().setVolume(soundNames::BATTLE, 30);
-			});
-
-		// Detach the thread so it runs independently
-		volumeThread.detach();
 		
-
-
+		SoundTon::getInstance().setVolume(soundNames::BATTLE, SOUND_VOLUME);
+		
 		sf::Texture& texture = Resources::getInstance().getTexture("resources/battlegroundSprites.png");
 		m_backGround.setTexture(texture);
 		m_backGround.setTextureRect(m_battlePosition);
@@ -65,9 +57,6 @@ public:
 		//float scaleY = static_cast<float>(m_windowSize.y) / texture.getSize().y;
 	//	m_backGround.setScale(scaleX, scaleY);
 		
-		
-		
-	
 		m_playerPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),
 			sf::Vector2f(250,100),sf::Vector2f(SCREEN_WIDTH-350,SCREEN_HEIGHT-270)));
 
