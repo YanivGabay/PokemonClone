@@ -30,6 +30,15 @@ public:
 	 void update(sf::Time dt) override {
 		 if(m_playerTurn)
 		 m_dialoge->update(dt);
+
+		 if (m_dialoge->getChoice() != std::nullopt)
+		 {
+			 m_playerTurn = false;
+		 }
+		 if (m_dialoge->getChoice() == BattleOptions::Run)
+		 {
+			 setStatus(false);
+		 }
 		 
 	 }
 	 void handleEvents(sf::Event event) override
@@ -48,6 +57,9 @@ public:
 private:
 
 	bool m_playerTurn = { true };
+
+	std::optional <BattleOptions> m_choice {std::nullopt};
+
 
 	sf::RenderWindow& m_window{ Resources::getInstance().getWindow() };
 	sf::View m_originalView{ m_window.getView() };
