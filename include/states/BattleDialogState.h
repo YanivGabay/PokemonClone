@@ -48,13 +48,14 @@ public:
 		sf::Vector2f size;
 		sf::Vector2f pos;
 		pos.x = m_position.x + (m_size.x / 2);
-		pos.y = m_position.y;
+		pos.y = 452.0f;
 		size.x = m_size.x / 2;
 		size.y = m_size.y / 2;
 
 		for (int i = 0; i < BATTLE_OPTIONS; i++)
 		{
 			m_menuSelection[i] = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), size, pos));
+			pos.y += size.y;
 		}
 		m_menuSelection[static_cast<int>(BattleOptions::Attack)]->setText("Attack");
 		m_menuSelection[static_cast<int>(BattleOptions::Run)]->setText("Run");

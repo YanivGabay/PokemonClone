@@ -31,11 +31,18 @@ public:
 		 if(m_playerTurn)
 		 m_dialoge->update(dt);
 
-		 if (m_dialoge->getChoice() != std::nullopt)
+		 std::optional<BattleOptions> choice = m_dialoge->getChoice();
+
+		 if (choice != std::nullopt)
 		 {
 			 m_playerTurn = false;
 		 }
-		 if (m_dialoge->getChoice() == BattleOptions::Run)
+		 if (choice == BattleOptions::Attack)
+		 {
+			 //battle->triggerBackAnimation
+			 //
+		 }
+		 if (choice == BattleOptions::Run)
 		 {
 			 setStatus(false);
 		 }
