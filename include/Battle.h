@@ -92,6 +92,15 @@ public:
 		window.draw(m_enemyFrontPokemon);
 		
 	}
+
+	sf::Vector2f getAdvicePosition()
+	{
+		return m_adviceActionInfo->getPosition();
+	}
+	sf::Vector2f getAdviceSize()
+	{
+		return m_adviceActionInfo->getSize();
+	}
 private:
 	sf::IntRect m_battlePosition{ 249,6,240,112 };
 

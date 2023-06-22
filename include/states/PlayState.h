@@ -128,6 +128,7 @@ public:
 		
 		if (checkGrassBattle(updatedPos)&&m_player->getIsMoving())
 		{
+			
 			triggerBattleEncounter(m_currentLevel->getLevelId());
 		}
 		//if on grass rool a dice
@@ -142,7 +143,22 @@ public:
 	
 	void checkCollision()
 	{}
-	
+	/*
+	void flashScreen()
+	{
+		sf::RenderWindow& window = Resources::getInstance().getWindow();
+		float time = 3.0f;
+		float curr = 0.0f;
+		int frames = static_cast<int>(time * 60); // Number of frames for the desired duration
+
+		for (int frame = 0; frame < frames; ++frame)
+		{
+			window.clear(sf::Color::White);
+			this->draw(window);
+			window.display();
+		}
+	}
+	*/
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();

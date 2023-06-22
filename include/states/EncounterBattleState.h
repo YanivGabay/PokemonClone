@@ -2,7 +2,7 @@
 #include "BaseState.h"
 #include "../entity/Player.h"
 #include "../Battle.h"
-
+#include "BattleDialogState.h"
 
 class EncounterBattleState : public BaseState
 {
@@ -12,7 +12,9 @@ public:
 						 std::shared_ptr<Pokemon> wildPokemon)
 		: BaseState(states),
 		  m_player(player),m_wildPokemon(wildPokemon),
-		  m_battle(std::move(std::make_unique<Battle>(player, wildPokemon)))
+		  m_battle(std::move(std::make_unique<Battle>(player, wildPokemon))),
+		m_dialoge(std::move(std::make_unique<BattleDialogState>(getStateStack().get(),m_battle->getAdvicePosition(),m_battle->getAdviceSize())))
+	
 	{
 		entry();
 	}
@@ -24,28 +26,34 @@ public:
 	 {
 		 m_window.setView(m_originalView);
 	 }
-	 void update(sf::Time dt) override {}
+
+	 void update(sf::Time dt) override {
+		 if(m_playerTurn)
+		 m_dialoge->update(dt);
+		 
+	 }
 	 void handleEvents(sf::Event event) override
 	 {
-		 if (event.type == sf::Event::KeyReleased)
-		 {
-			 if (event.key.code == sf::Keyboard::Enter)
-			 {
-				 setStatus(false);
-				 exit();
-			 }
-		 }
+		 if (m_playerTurn)
+			 m_dialoge->handleEvents(event);
 	 }
 	 void draw(sf::RenderWindow& window) override
 	 {
 		 m_window.setView(m_window.getDefaultView());
 		 m_battle->draw(window);
+		 if (m_playerTurn)
+			 m_dialoge->draw(window);
 	 }
 
 private:
+
+	bool m_playerTurn = { true };
+
 	sf::RenderWindow& m_window{ Resources::getInstance().getWindow() };
 	sf::View m_originalView{ m_window.getView() };
 	std::unique_ptr<Battle> m_battle;
+
+	std::unique_ptr<BattleDialogState> m_dialoge;
 
 	std::shared_ptr<Pokemon> m_wildPokemon;
 
