@@ -83,18 +83,18 @@ public:
 	}
 	void draw(sf::RenderWindow& window)
 	{
-		std::cout << "start of battle draw" << std::endl;
+		
 		window.clear(sf::Color::White);
-		std::cout << "before draw background" << std::endl;
+		
 		window.draw(m_backGround);
 		
-		std::cout << "m_playerPokemonInfo before" << std::endl;
+		
 		m_playerPokemonInfo->draw(window);
-		std::cout << "m_playerPokemonInfo finished" << std::endl;
+	
 		m_enemyPokemonInfo->draw(window);
-		std::cout << "m_enemyPokemonInfo finished" << std::endl;
+	
 		m_adviceActionInfo->draw(window);
-		std::cout << "m_adviceActionInfo finished" << std::endl;
+		
 		window.draw(m_playerBackPokemon);
 		window.draw(m_enemyFrontPokemon);
 		
