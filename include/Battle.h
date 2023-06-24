@@ -86,7 +86,16 @@ public:
 		
 		window.clear(sf::Color::White);
 		window.draw(m_backGround);
+		std::cout << " crashing pos.x " << m_playerPokemonInfo->getPosition().x <<
+			"crash pos.y" << m_playerPokemonInfo->getPosition().y << std::endl;
+		std::cout << " crashing size.x " << m_playerPokemonInfo->getSize().x <<
+			"crash size.y" << m_playerPokemonInfo->getSize().y << std::endl;
+		
 		m_playerPokemonInfo->draw(window);
+		std::cout << " crashing pos.x " << m_enemyPokemonInfo->getPosition().x <<
+			"crash pos.y" << m_enemyPokemonInfo->getPosition().y << std::endl;
+		std::cout << " crashing size.x " << m_enemyPokemonInfo->getSize().x <<
+			"crash size.y" << m_enemyPokemonInfo->getSize().y << std::endl;
 		m_enemyPokemonInfo->draw(window);
 		m_adviceActionInfo->draw(window);
 		window.draw(m_playerBackPokemon);

@@ -149,6 +149,7 @@ public:
 	void draw(sf::RenderWindow& window)override
 	{
 		std::cout << "taketurnstate draw" << std::endl;
+		getStateStack().get().printTypeOf();
 		m_battle.draw(window);
 	}
 private:
