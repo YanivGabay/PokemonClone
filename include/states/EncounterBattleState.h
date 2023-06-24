@@ -34,12 +34,17 @@ public:
 
 		 if (m_battle->isEnemyPokemonDead())
 		 {
-			 
+			 //so we can add exp
+			 // check for level up
+			 //if yes push expdialoge
 			 setStatus(false);
 			 return;
 		 }
 		 if (m_battle->isplayerPokemonDead())
 		 {
+			 //if other pokemon in party
+			 //summon them
+			 //else player respawing
 			 setStatus(false);
 			 return;
 		 }
