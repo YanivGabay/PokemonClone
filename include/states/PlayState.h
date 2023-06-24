@@ -11,6 +11,8 @@
 #include "EncounterBattleState.h"
 #include "SoundTon.h"
 #include "TransitionState.h"
+#include "saveGame.h"
+
 
 class PlayState : public BaseState
 {
@@ -140,6 +142,9 @@ public:
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 		
 		m_currentLevel->updateAnimations(dt);
+
+		m_savingbufs.updateValues();
+		m_savingbufs.savingIntoFile(); /// --- for_debug --- ///
 	}
 	
 	void checkCollision()
@@ -166,4 +171,6 @@ private:
 	std::unique_ptr<Camera> m_camera;
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;
+
+	saveGame m_savingbufs;
 };
