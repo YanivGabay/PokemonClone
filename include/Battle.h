@@ -124,6 +124,29 @@ public:
 	{
 		m_playerPokemonInfo->setProgress(progress);
 	}
+	bool isplayerPokemonDead()
+	{
+		return !m_currentPlayerPokemon->isAlive();
+	}
+	bool isEnemyPokemonDead()
+	{
+		return !m_enemyPokemon->isAlive();
+	}
+	int calculateDamage(const Pokemon& attacker , const Pokemon& defender) const
+	{
+		int attackerLevel = attacker.getLevel();
+		int attackStat = attacker.getAttack();
+		int defenseStat = defender.getDefense();
+
+		
+		int damage = ((2 * attackerLevel + 2) * attackStat / defenseStat) + 2;
+
+		
+		int randomFactor = generateRandomNumber(85, 100); // Random number between 85 and 100
+		damage = (damage * randomFactor) / 100;
+
+		return damage;
+	}
 private:
 	sf::IntRect m_battlePosition{ 249,6,240,112 };
 

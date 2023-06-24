@@ -158,6 +158,19 @@ public:
         return percentage;
     }
     //sets::
+    void applyDamage(const int damage)
+    {
+        std::cout << "m_currentHP before damage" << m_currentHP<< std::endl;
+        m_currentHP -= damage;
+        if (m_currentHP < 0)
+        {
+            m_currentHP = 0;
+            
+        }
+        std::cout << "m_currentHP after damage" << m_currentHP<< std::endl;
+        std::cout << "damage taken:" << damage << std::endl;
+
+    }
     void setName(const  enum PokemonIndex name)
     {
         m_name = name;
@@ -268,7 +281,7 @@ public:
     }
     bool isAlive()
     {
-        if (m_currentHP < 0)
+        if (m_currentHP <= 0)
         {
             m_currentHP = 0;
             return false;
@@ -294,6 +307,7 @@ private:
     int m_baseAttack{ 0 };
     int m_baseDefense{ 0 };
     int m_baseSpeed{ 0 };
+
     int m_HPIV{ 0 };
     int m_attackIV{ 0 };
     int m_defenseIV{ 0 };

@@ -21,7 +21,11 @@ int generateRandomNumber(int min, int max)
 	return distribution(eng);
 }
 
-
+enum class WhosAttack
+{
+	Enemy,
+	Player
+};
 
 enum class LAYERS
 {

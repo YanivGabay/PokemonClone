@@ -64,6 +64,16 @@ public:
 			// enemyTurn();
 			 m_dialoge->setStatus(true);
 		 }
+
+		 if (m_battle->isEnemyPokemonDead())
+		 {
+			 setStatus(false);
+		 }
+		 if (m_battle->isplayerPokemonDead())
+		 {
+			 setStatus(false);
+		 }
+
 		 
 	 }
 	 void handleEvents(sf::Event event) override
@@ -74,7 +84,7 @@ public:
 	 void draw(sf::RenderWindow& window) override
 	 {
 		 m_window.setView(m_window.getDefaultView());
-
+		 std::cout << "EncounterBattleState draw" << std::endl;
 		 m_battle->draw(window);
 		 if (m_dialoge->getStatus())
 		 {
