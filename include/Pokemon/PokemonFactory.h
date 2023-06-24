@@ -60,9 +60,9 @@ public:
 
           return pokemon;
     }
-    std::unique_ptr<Pokemon> createPokemon(enum PokemonIndex name)
+    std::shared_ptr<Pokemon> createPokemon(enum PokemonIndex name)
     {
-        std::unique_ptr<Pokemon> pokemon = std::make_unique<Pokemon>();
+        std::shared_ptr<Pokemon> pokemon = std::make_shared<Pokemon>();
         // Set the base attributes
         pokemon->setBaseHP(generateRandomNumber(5, 12));
         pokemon->setBaseAttack(generateRandomNumber(5, 12));

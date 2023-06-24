@@ -53,7 +53,7 @@ public:
             }
             else
                 return;
-          
+           
             m_isMoving = true;
         }
     }
@@ -129,16 +129,21 @@ public:
         
         window.draw(m_sprite);
     }
-    Pokemon& getPokemon(int index)
+    std::shared_ptr<Pokemon> getPokemon(int index)
     {
         return m_pokemons->getPokemon(index);
     }
-    void addPokemon(std::unique_ptr<Pokemon> pokemon)
+    std::shared_ptr<Pokemon> getStarterPokemon()
+    {
+        return m_pokemons->getStarterPokemon();
+    }
+    void addPokemon(std::shared_ptr<Pokemon> pokemon)
     {
         std::cout << "before add pokemon in player" << std::endl;
-        m_pokemons->addPokemon(std::move(pokemon));
+        m_pokemons->addPokemon(pokemon);
     }
 
+    
 
     bool getIsMoving()
     {

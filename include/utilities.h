@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 
+
 const float SCREEN_WIDTH = 800;
 const float SCREEN_HEIGHT = 600;
 
@@ -19,6 +20,8 @@ int generateRandomNumber(int min, int max)
 
 	return distribution(eng);
 }
+
+
 
 enum class LAYERS
 {

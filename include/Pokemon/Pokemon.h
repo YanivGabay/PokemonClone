@@ -266,6 +266,25 @@ public:
     {
         return m_battleSpriteFront;
     }
+    bool isAlive()
+    {
+        if (m_currentHP < 0)
+        {
+            m_currentHP = 0;
+            return false;
+        }
+        return true;
+    }
+    bool levelUpCheck()
+    {
+        if (m_currentExp > m_expToLevel)
+        {
+            m_currentExp = 0;
+            return true;
+        }
+        return false;
+    }
+
 private:
     enum PokemonIndex m_name;
     sf::Sprite m_battleSpriteFront;

@@ -3,7 +3,7 @@
 #include "../entity/Player.h"
 #include "../Battle.h"
 #include "BattleDialogState.h"
-
+#include "TakeTurnState.h"
 class EncounterBattleState : public BaseState
 {
 public:
@@ -21,51 +21,76 @@ public:
 
 	~EncounterBattleState() = default;
 
-	 void entry() override {}
+	 void entry() override {
+		 m_dialoge->setStatus(true);
+	 }
 	 void exit() override
 	 {
 		 m_window.setView(m_originalView);
 	 }
 
 	 void update(sf::Time dt) override {
-		 if(m_playerTurn)
-		 m_dialoge->update(dt);
-
-		 std::optional<BattleOptions> choice = m_dialoge->getChoice();
-
-		 if (choice != std::nullopt)
+		//if status == false player made a choice
+		 if (m_dialoge->getStatus())
 		 {
-			 m_playerTurn = false;
+			 m_dialoge->update(dt);
+			 std::optional <BattleOptions> choice = m_dialoge->getChoice();
+			 if (choice == BattleOptions::Run)
+			 {	//player chose to run, quit battle
+				 setStatus(false);
+			 }
+			 if (choice == BattleOptions::Attack)
+			 {
+				 auto state = std::make_unique<TakeTurnState>(getStateStack().get(), *m_battle,
+															  m_player->getStarterPokemon(),
+															  m_wildPokemon,
+															  WhosAttack::Player);
+					 getStateStack().get().pushQueueState(std::move(state));
+					 m_dialoge->setStatus(false);
+					 m_dialoge->resetChoice();
+					 return;
+			 }
+				 
 		 }
-		 if (choice == BattleOptions::Attack)
+		 else
 		 {
-			 //battle->triggerBackAnimation
-			 //
-		 }
-		 if (choice == BattleOptions::Run)
-		 {
-			 setStatus(false);
+			 auto state = std::make_unique<TakeTurnState>(getStateStack().get(), *m_battle,
+														  m_player->getStarterPokemon(),
+														  m_wildPokemon,
+														  WhosAttack::Enemy);
+			 getStateStack().get().pushQueueState(std::move(state));
+			
+			 
+			// enemyTurn();
+			 m_dialoge->setStatus(true);
 		 }
 		 
 	 }
 	 void handleEvents(sf::Event event) override
 	 {
-		 if (m_playerTurn)
+		 if (m_dialoge->getStatus())
 			 m_dialoge->handleEvents(event);
 	 }
 	 void draw(sf::RenderWindow& window) override
 	 {
 		 m_window.setView(m_window.getDefaultView());
+
 		 m_battle->draw(window);
-		 if (m_playerTurn)
+		 if (m_dialoge->getStatus())
+		 {
+			 
+			
 			 m_dialoge->draw(window);
+		 }
+			 
+		
 	 }
 
 private:
 
 	bool m_playerTurn = { true };
 
-	std::optional <BattleOptions> m_choice {std::nullopt};
+	//std::optional <BattleOptions> m_choice {std::nullopt};
 
 
 	sf::RenderWindow& m_window{ Resources::getInstance().getWindow() };

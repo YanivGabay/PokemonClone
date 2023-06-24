@@ -78,6 +78,14 @@ public:
     {
         return m_position;
     }
+    void setProgress(float progress)
+    {
+        if (progress > 100 || progress < 0)
+        {
+            throw std::runtime_error("progress out of range.");
+        }
+        m_progressBar->setProgress(progress);
+    }
 private:
     sf::Color m_color;
     sf::Text m_text;

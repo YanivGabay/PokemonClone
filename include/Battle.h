@@ -21,7 +21,8 @@ class Battle
 public:
 	Battle(std::shared_ptr<Player> player, std::shared_ptr<Pokemon> enemyPokemon)
 		: m_player(player),
-		  m_enemyPokemon(enemyPokemon)
+		m_enemyPokemon(enemyPokemon),
+		m_currentPlayerPokemon(player->getStarterPokemon())
 	{
 		SoundTon::getInstance().stopSound(soundNames::CITY);
 		SoundTon::getInstance().playSound(soundNames::BATTLE);
@@ -34,10 +35,7 @@ public:
 
 		// Set the scale
 		m_backGround.setScale(scaleX, scaleY);
-		//m_backGround.setPosition(sf::Vector2f(0, 0));
-		//float scaleX = static_cast<float>(m_windowSize.x) / texture.getSize().x;
-		//float scaleY = static_cast<float>(m_windowSize.y) / texture.getSize().y;
-	//	m_backGround.setScale(scaleX, scaleY);
+
 		
 		m_playerPokemonInfo = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(),
 			sf::Vector2f(250,100),sf::Vector2f(SCREEN_WIDTH-350,SCREEN_HEIGHT-270)));
@@ -54,7 +52,7 @@ public:
 
 		std::cout << "after add progress bar" << std::endl;
 		m_playerBackPokemon.setPosition(m_playerPokemonPos);
-		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);   /// ---- writing error ----
+		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);  
 
 	};
 	
@@ -68,8 +66,8 @@ public:
 	{
 		m_playerPokemonInfo->addProgressBar(m_playerPokemonInfo->getPosition().x ,
 											m_playerPokemonInfo->getPosition().y + 40, m_playerPokemonInfo->getSize().x / 3, m_playerPokemonInfo->getSize().y / 6,
-											sf::Color::Black, sf::Color::Green, m_player->getPokemon(0).getHpPercent());
-		m_playerPokemonInfo->setText(PokemonNames.at(m_player->getPokemon(0).getName()));
+											sf::Color::Black, sf::Color::Green, m_currentPlayerPokemon->getHpPercent());
+		m_playerPokemonInfo->setText(PokemonNames.at(m_currentPlayerPokemon->getName()));
 		// need to check here if we dont get the map.end
 		m_playerPokemonInfo->setResetColor();
 
@@ -79,6 +77,9 @@ public:
 		m_enemyPokemonInfo->setText(PokemonNames.at(m_enemyPokemon->getName()));
 		// need to check here if we dont get the map.end
 		m_enemyPokemonInfo->setResetColor();
+
+		m_adviceActionInfo->setText("What will you do?");
+		m_adviceActionInfo->setResetColor();
 	}
 	void draw(sf::RenderWindow& window)
 	{
@@ -101,15 +102,38 @@ public:
 	{
 		return m_adviceActionInfo->getSize();
 	}
+	void setAdviceText(const std::string& string)
+	{
+		
+		m_adviceActionInfo->setText(string);
+		
+	}
+	void setEmptyAdviceText()
+	{
+		m_adviceActionInfo->setText("");
+	}
+	void setDefaultAdviceText()
+	{
+		m_adviceActionInfo->setText("What will Player do?");
+	}
+	void setEnemyHealthProgress(float progress)
+	{
+		m_enemyPokemonInfo->setProgress(progress);
+	}
+	void setPlayerHealthProgress(float progress)
+	{
+		m_playerPokemonInfo->setProgress(progress);
+	}
 private:
 	sf::IntRect m_battlePosition{ 249,6,240,112 };
 
 	sf::Sprite m_backGround;
 
 	std::shared_ptr<Player> m_player;
+	std::shared_ptr<Pokemon> m_currentPlayerPokemon;
 	std::shared_ptr<Pokemon> m_enemyPokemon;
 
-	sf::Sprite& m_playerBackPokemon {m_player->getPokemon(0).getBackSprite()};
+	sf::Sprite& m_playerBackPokemon {m_currentPlayerPokemon->getBackSprite()};
 	sf::Sprite& m_enemyFrontPokemon {m_enemyPokemon->getFrontSprite()};
 
 	std::unique_ptr<Gui> m_playerPokemonInfo;

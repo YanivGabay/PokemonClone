@@ -110,6 +110,10 @@ public:
 	{
 		return m_choice;
 	}
+	void resetChoice()
+	{
+		m_choice = std::nullopt;
+	}
 private:
 	std::optional<BattleOptions> m_choice{ std::nullopt };
 	std::optional<BattleOptions> m_hover {BattleOptions::Attack};
