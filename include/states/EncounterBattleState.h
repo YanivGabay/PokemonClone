@@ -12,7 +12,7 @@ public:
 						 std::shared_ptr<Pokemon> wildPokemon)
 		: BaseState(states),
 		  m_player(player),m_wildPokemon(wildPokemon),
-		  m_battle(std::move(std::make_unique<Battle>(player, wildPokemon))),
+		  m_battle(std::make_shared<Battle>(player, wildPokemon)),
 		m_dialoge(std::move(std::make_unique<BattleDialogState>(getStateStack().get(),m_battle->getAdvicePosition(),m_battle->getAdviceSize())))
 	
 	{
@@ -31,6 +31,19 @@ public:
 
 	 void update(sf::Time dt) override {
 		//if status == false player made a choice
+
+		 if (m_battle->isEnemyPokemonDead())
+		 {
+			 
+			 setStatus(false);
+			 return;
+		 }
+		 if (m_battle->isplayerPokemonDead())
+		 {
+			 setStatus(false);
+			 return;
+		 }
+
 		 if (m_dialoge->getStatus())
 		 {
 			 m_dialoge->update(dt);
@@ -41,7 +54,7 @@ public:
 			 }
 			 if (choice == BattleOptions::Attack)
 			 {
-				 auto state = std::make_unique<TakeTurnState>(getStateStack().get(), *m_battle,
+				 auto state = std::make_unique<TakeTurnState>(getStateStack().get(), m_battle,
 															  m_player->getStarterPokemon(),
 															  m_wildPokemon,
 															  WhosAttack::Player);
@@ -54,7 +67,7 @@ public:
 		 }
 		 else
 		 {
-			 auto state = std::make_unique<TakeTurnState>(getStateStack().get(), *m_battle,
+			 auto state = std::make_unique<TakeTurnState>(getStateStack().get(), m_battle,
 														  m_player->getStarterPokemon(),
 														  m_wildPokemon,
 														  WhosAttack::Enemy);
@@ -65,14 +78,7 @@ public:
 			 m_dialoge->setStatus(true);
 		 }
 
-		 if (m_battle->isEnemyPokemonDead())
-		 {
-			 setStatus(false);
-		 }
-		 if (m_battle->isplayerPokemonDead())
-		 {
-			 setStatus(false);
-		 }
+		
 
 		 
 	 }
@@ -105,7 +111,7 @@ private:
 
 	sf::RenderWindow& m_window{ Resources::getInstance().getWindow() };
 	sf::View m_originalView{ m_window.getView() };
-	std::unique_ptr<Battle> m_battle;
+	std::shared_ptr<Battle> m_battle;
 
 	std::unique_ptr<BattleDialogState> m_dialoge;
 

@@ -8,7 +8,7 @@
 class TakeTurnState : public BaseState
 {
 public:
-	TakeTurnState(Stack<BaseState>& states, Battle& battle, std::shared_ptr<Pokemon> playerPokemon,
+	TakeTurnState(Stack<BaseState>& states, std::shared_ptr<Battle> battle, std::shared_ptr<Pokemon> playerPokemon,
 				  std::shared_ptr<Pokemon> enemyPokemon, WhosAttack ID)
 		: BaseState(states), m_battle(battle), m_playerPokemon(playerPokemon), m_wildPokemon(enemyPokemon),
 		m_id(ID), m_attackingPokemon(ID == WhosAttack::Player ? playerPokemon->getBackSprite() : enemyPokemon->getFrontSprite()),
@@ -24,7 +24,7 @@ public:
 	{
 
 		m_id == WhosAttack::Player ?
-			m_battle.setAdviceText("Attack!!") : m_battle.setAdviceText("Be Careful!");
+			m_battle->setAdviceText("Attack!!") : m_battle->setAdviceText("Be Careful!");
 		
 
 	}
@@ -148,9 +148,8 @@ public:
 	}
 	void draw(sf::RenderWindow& window)override
 	{
-		std::cout << "taketurnstate draw" << std::endl;
-		getStateStack().get().printTypeOf();
-		m_battle.draw(window);
+		
+		m_battle->draw(window);
 	}
 private:
 	
@@ -166,7 +165,7 @@ private:
 
 	sf::Sprite& m_attackingPokemon;
 	sf::Sprite& m_defendingPokemon;
-	Battle& m_battle;
+	std::shared_ptr<Battle> m_battle;
 
 	sf::Vector2f m_originalPos;
 	sf::Vector2f m_afterMove;

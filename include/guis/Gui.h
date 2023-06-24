@@ -63,10 +63,13 @@ public:
     }
     void draw(sf::RenderWindow& window)
     {
+        std::cout << "drawing gui button " << std::endl;
         m_button->draw(window);
+        std::cout << "drawing gui m_text " << std::endl;
         window.draw(m_text);
 
         if (m_hasProgressBar) {
+            std::cout << "drawing gui progressbar " << std::endl;
             m_progressBar->draw(window);
         }
     }

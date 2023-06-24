@@ -6,7 +6,7 @@
 class TakeDamageState : public BaseState
 {
 public:
-	TakeDamageState(Stack<BaseState>& states, Battle& battle,
+	TakeDamageState(Stack<BaseState>& states, std::shared_ptr<Battle> battle,
 					std::shared_ptr<Pokemon> attacker,
 					std::shared_ptr<Pokemon> defender,
 					WhosAttack id) : BaseState(states), m_battle(battle),
@@ -19,7 +19,7 @@ public:
 
 	~TakeDamageState() =  default;
 	 void entry() {
-		  m_damage = m_battle.calculateDamage(*m_attacker, *m_defender);
+		  m_damage = m_battle->calculateDamage(*m_attacker, *m_defender);
 		  m_startHPPercent = m_defender->getHpPercent();
 		  m_defender->applyDamage(m_damage);
 		  m_endHPPercent = m_defender->getHpPercent();
@@ -49,11 +49,11 @@ public:
 			 // Set the current HP progress
 			 if (m_id == WhosAttack::Enemy)
 			 {
-				 m_battle.setPlayerHealthProgress(currentHPPercent);
+				 m_battle->setPlayerHealthProgress(currentHPPercent);
 			 }
 			 else
 			 {
-				 m_battle.setEnemyHealthProgress(currentHPPercent);
+				 m_battle->setEnemyHealthProgress(currentHPPercent);
 			 }
 			
 			 // If progress is complete, set m_guiUpdateCompleted to true
@@ -61,11 +61,11 @@ public:
 			 {
 				 if (m_id == WhosAttack::Enemy)
 				 {
-					 m_battle.setPlayerHealthProgress(m_endHPPercent);
+					 m_battle->setPlayerHealthProgress(m_endHPPercent);
 				 }
 				 else
 				 {
-					 m_battle.setEnemyHealthProgress(m_endHPPercent);
+					 m_battle->setEnemyHealthProgress(m_endHPPercent);
 				 }
 				 m_guiUpdateCompleted = true;
 			 }
@@ -80,7 +80,8 @@ public:
 	 
 	 }
 	 void draw(sf::RenderWindow& window) {
-		 m_battle.draw(window);
+		 std::cout << "takeDamage draw" << std::endl;
+		 m_battle->draw(window);
 	 
 	 }
 private:
@@ -97,7 +98,7 @@ private:
 	float m_startHPPercent;
 	float m_endHPPercent;
 
-	Battle& m_battle;
+	std::shared_ptr<Battle> m_battle;
 
 	std::shared_ptr<Pokemon> m_attacker;
 	std::shared_ptr<Pokemon> m_defender;
