@@ -19,7 +19,7 @@ public:
 		: BaseState(states),
 		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
 		  m_player(std::make_shared<Player>()),
-		  m_NPC(std::make_unique<NPC>()),
+		  m_NPC(std::make_shared<NPC>()),
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
@@ -41,6 +41,7 @@ public:
 	
 	void entry() override {
 		getStateStack().get().popStart();
+		m_NPC->setMovable(false);
 	}
 
 	void exit() override {}
@@ -56,9 +57,9 @@ public:
 		return neighbors;
 	}
 	
-	const std::map<Side, bool> getMovesMap()
+	const std::map<Side, bool> getMovesMap(sf::Vector2i currPos)
 	{
-		sf::Vector2i currPos = m_player.get()->getPosition();
+		
 
 		std::array<sf::Vector2i, SIDES> tilesOptions = getOptions(currPos);
 		std::map <Side, bool> directionMap;
@@ -119,8 +120,8 @@ public:
 		}
 		
 
-		m_player->update(dt, getMovesMap());
-		m_NPC->update(dt, getMovesMap());
+		m_player->update(dt, getMovesMap(m_player->getPosition()));
+		m_NPC->update(dt, getMovesMap(m_NPC->getPosition()));
 		
 		//if we are here, the player is after collision check
 		
@@ -147,7 +148,7 @@ public:
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();
-		m_NPC->AIMoving();
+		
 	}
 	
 	void draw(sf::RenderWindow& window) override
@@ -161,7 +162,7 @@ public:
 private:
 	std::unique_ptr<Level> m_currentLevel;
 	std::shared_ptr<Player> m_player;
-	std::unique_ptr<NPC> m_NPC;
+	std::shared_ptr<NPC> m_NPC;
 	std::unique_ptr<Camera> m_camera;
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;

@@ -24,8 +24,8 @@ public:
           m_position(11, 48),
           m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
           m_movingObj(11, 48),
-          m_sprite(Resources::getInstance().getTexture(myTexture),
-          Resources::getInstance().getRect(PlayerID::UP_IDLE))
+          m_sprite(Resources::getInstance().getTexture(myTexture))
+         
     {
         m_sprite.setOrigin(0, m_sprite.getTextureRect().height / 2);
     }
