@@ -52,6 +52,16 @@ enum class PlayerID
 	END
 };
 
+PlayerID nextFrame(PlayerID current)
+{
+	// The first frame of each direction has an index that is a multiple of 3
+	int baseIndex = static_cast<int>(current) / 3 * 3;
+	int nextIndex = (static_cast<int>(current) + 1 - baseIndex) % 3 + baseIndex;
+
+	
+	return static_cast<PlayerID>(nextIndex);
+}
+
 enum class LevelID
 {
 	POKE_CENTER,

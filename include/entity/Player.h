@@ -68,24 +68,24 @@ public:
         if (m_isMoving)
         {
             addMoveProgress(getMoveSpeed(), dt);
-            // m_moveProgress += (m_moveSpeed * dt.asSeconds());
+           
             
             Side side = m_movingObj.getSide();
             if (side == UP)
             {
-                setSprite(PlayerID::UP_IDLE);
+                setSprite(nextFrame(m_curr));
             }
             else if (side==DOWN)
             {
-                setSprite(PlayerID::DOWN_IDLE);
+                setSprite(nextFrame(m_curr));
             }
             else if (side == RIGHT)
             {
-                setSprite(PlayerID::RIGHT_IDLE);
+                setSprite(nextFrame(m_curr));
             }
             else if (side == LEFT)
             {
-                setSprite(PlayerID::LEFT_IDLE);
+                setSprite(nextFrame(m_curr));
             }
             
             if (getMoveProgress() >= 1.0f)
@@ -94,7 +94,7 @@ public:
                 bool isValidPosition = !checkUppers(directionMap, side);
                 if (isValidPosition)
                 {
-                    std::cout << "valid position" << std::endl;
+                   
                     b2Vec2 newPos = m_movingObj.getPos();
                     
                     setTargetPosition(sf::Vector2i(newPos.x, newPos.y));
@@ -102,12 +102,13 @@ public:
                 }
                 else
                 {
-                    std::cout << "not valid position" << std::endl;
+                    
                     setTargetPosition(getPosition());
                     m_movingObj.setPosition(getPosition());
                 }
                 
                 m_isMoving = false;
+                setIdle();
                 setMoveProgress(0.0f);
             }
         }
@@ -116,16 +117,40 @@ public:
             //we are not moving
         }
     }
-
+    void setIdle()
+    {
+        Side side = m_movingObj.getSide();
+        if (side == UP)
+        {
+            m_curr = PlayerID::UP_IDLE;
+            
+        }
+        else if (side == DOWN)
+        {
+           
+            m_curr = PlayerID::DOWN_IDLE;
+            
+        }
+        else if (side == RIGHT)
+        {
+           
+            m_curr = PlayerID::RIGHT_IDLE;
+            
+        }
+        else if (side == LEFT)
+        {
+           
+            m_curr = PlayerID::LEFT_IDLE;
+            
+        }
+        setSprite(m_curr);
+    }
     virtual void draw(sf::RenderWindow& window) override
     {
         sf::Vector2f pixelPosition = gridToPixelPosition(getPosition());
       
         m_sprite.setPosition(pixelPosition);
-
-
-       // m_shape.setPosition(pixelPosition);
-       // m_shape.setRotation(m_movingObj.getAngle());
+             
         
         window.draw(m_sprite);
     }
@@ -155,6 +180,6 @@ public:
     }
 private:
     bool m_isMoving;
-
+    PlayerID m_curr{ PlayerID::UP_IDLE };
     std::unique_ptr<Party> m_pokemons;
 };

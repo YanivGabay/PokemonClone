@@ -59,7 +59,11 @@ public:
         checkIndex(index);
         return m_pokemons[index];
     }
-
+    std::shared_ptr<Pokemon> getCurrPokemon()
+    {
+        checkIndex(m_CurrentPokemonIndex.value());
+        return m_pokemons[m_CurrentPokemonIndex.value()];
+    }
     void setCurrentPokemon(int index)
     {
         checkIndex(index);
