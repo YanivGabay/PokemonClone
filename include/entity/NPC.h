@@ -17,9 +17,11 @@ class NPC : public Entity
 {
 public:
     NPC()
-        : Entity("resources/maleSpriteSheet.png")
+        : Entity("resources/npcSprites.png")
        
-    {}
+    {
+        setSprite(NpcId::HealDown);
+    }
     virtual ~NPC() = default;
     
     void setMovable(bool value)
@@ -48,6 +50,10 @@ public:
         // m_shape.setRotation(m_movingObj.getAngle());
 
         window.draw(m_sprite);
+    }
+    void setSprite(NpcId desiredSprite)
+    {
+        m_sprite.setTextureRect(Resources::getInstance().getRect(desiredSprite));
     }
 
 private:

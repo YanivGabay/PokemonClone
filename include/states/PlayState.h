@@ -155,7 +155,7 @@ public:
 	{
 		m_currentLevel->draw(window);
 		m_player->draw(window);
-		m_NPC->draw(window);
+		//m_NPC->draw(window);
 		window.setView(m_camera->getView());
 	}
 

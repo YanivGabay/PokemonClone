@@ -96,13 +96,13 @@ public:
                 {
                    
                     b2Vec2 newPos = m_movingObj.getPos();
-                    
+                    std::cout << "good movment" << std::endl;
                     setTargetPosition(sf::Vector2i(newPos.x, newPos.y));
                     setPosition(getTargetPosition());
                 }
                 else
                 {
-                    
+                    std::cout << "bad movment" << std::endl;
                     setTargetPosition(getPosition());
                     m_movingObj.setPosition(getPosition());
                 }
@@ -116,6 +116,10 @@ public:
         {
             //we are not moving
         }
+    }
+    void setSprite(PlayerID desiredSprite)
+    {
+        m_sprite.setTextureRect(Resources::getInstance().getRect(desiredSprite));
     }
     void setIdle()
     {

@@ -8,21 +8,32 @@
     ],
     "fileStates": {
         "": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "#firstTown": {
+            "scaleInDock": 1
+        },
+        "#spritesheet": {
+            "scaleInDock": 1
         },
         "firstTown.tmj": {
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 393,
-                "y": 424
+                "x": 313,
+                "y": 438
             }
         },
         "firstTown.tmj#spritesheet": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "spritesheet.tsx": {
+            "scaleInDock": 1
         }
     },
+    "last.externalTilesetPath": "D:/CODING/github_repos/ShaharAshe/oop-Project-Pokemon/resources",
     "last.imagePath": "D:/CODING/github_repos/ShaharAshe/oop-Project-Pokemon/resources",
     "map.height": 60,
     "map.lastUsedFormat": "json",
@@ -37,6 +48,7 @@
         "firstTown.tmj"
     ],
     "tileset.embedInMap": true,
+    "tileset.lastUsedFilter": "All Files (*)",
     "tileset.tileSize": {
         "height": 16,
         "width": 16

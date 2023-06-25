@@ -35,10 +35,7 @@ public:
     virtual void draw(sf::RenderWindow&) = 0;
     virtual void update(sf::Time, const std::map<Side, bool>&) = 0;
     
-    void setSprite(PlayerID desiredSprite)
-    {
-        m_sprite.setTextureRect(Resources::getInstance().getRect(desiredSprite));
-    }
+   
 
     sf::Vector2i getPosition()
     {

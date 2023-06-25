@@ -52,7 +52,7 @@ enum class PlayerID
 	END
 };
 
-enum class NpcRects
+enum class NpcId
 {
 	HealDown,
 	HealUp,
@@ -65,7 +65,9 @@ enum class NpcRects
 	ProffesorDown,
 	ProffesorUp,
 	ProffesorLeft,
-	ProffesorRight
+	ProffesorRight,
+
+	END
 };
 
 PlayerID nextFrame(PlayerID current)

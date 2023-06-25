@@ -140,6 +140,16 @@ public:
 		
 		return *m_playerRects[id];
 	}
+	sf::IntRect& getRect(NpcId id)
+	{
+		if (m_npcRects.find(id) == m_npcRects.end())
+		{
+			std::cerr << "Failed to load npcrect: id num: " << static_cast<int>(id) << std::endl;
+			throw std::runtime_error("Failed to load texture.");
+		}
+
+		return *m_npcRects[id];
+	}
 	std::pair<sf::Sprite, sf::Sprite> getPokemonSprites(enum PokemonIndex name)
 	{
 		if (m_pokemonSprite.find(name) == m_pokemonSprite.end())
@@ -184,7 +194,7 @@ public:
 		
 			sf::Vector2i size = sf::Vector2i(16, 21);
 			sf::Vector2i position = sf::Vector2i(0, 0);
-			for (NpcRects id = NpcRects::UP_IDLE; id != NpcRects::END; id = static_cast<NpcRects>(static_cast<int>(id) + 1))
+			for (NpcId id = NpcId::HealDown; id != NpcId::END; id = static_cast<NpcId>(static_cast<int>(id) + 1))
 			{
 				int row = static_cast<int>(id) / 4;  // Calculate the row index
 				int col = static_cast<int>(id) % 4;  // Calculate the column index
@@ -203,7 +213,7 @@ private:
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
 	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
 
-	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_npcRects;
+	std::unordered_map<NpcId, std::unique_ptr<sf::IntRect>> m_npcRects;
 
 	std::unique_ptr<sf::Font> m_font;
 
@@ -228,5 +238,6 @@ private:
 		loadFrames();
 		loadPlayerRects();
 		loadPokemonSprites();
+		loadNpcSprites();
 	};
 };
