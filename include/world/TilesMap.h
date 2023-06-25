@@ -104,7 +104,7 @@ public:
 							
 							gameTile->addAnimation(mytype, std::move(animationsRects),0.5f);
 							
-							if (mytype != "flowers"&&mytype != "water")
+							if (!checkIfContinous(mytype))
 							{
 								gameTile->setAnimationMode(AnimationMode::SingleLoop);
 							}

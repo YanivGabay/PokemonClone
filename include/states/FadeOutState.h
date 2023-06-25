@@ -1,15 +1,15 @@
 #pragma once
 
 #include <iostream>
-
+#include "FadeInState.h"
 #include "BaseState.h"
 #include "Utilities/Fades.h"
 
 class FadeOutState : public BaseState
 {
 public:
-    FadeOutState(Stack<BaseState>& states, sf::Color color)
-        : BaseState(states), m_color(color)
+    FadeOutState(Stack<BaseState>& states, sf::Color color, bool withTransition)
+        : BaseState(states), m_color(color), m_transition(withTransition)
     {
         m_color.a = 0;
         m_fadeShape.setSize(sf::Vector2f(getWindowSize().x*3, getWindowSize().y * 3));
@@ -31,6 +31,8 @@ public:
         if (m_progress > 65535.0f)
         {
             m_progress = 65535.0f;
+            if (!m_transition)
+                getStateStack().get().pushQueueState(std::move(std::make_unique<FadeInState>(getStateStack().get(), m_color)));
             setStatus(false); // Set the status to false to indicate that the fade-in is complete
         }
 
@@ -46,6 +48,7 @@ public:
     }
 
 private:
+    bool m_transition;
     sf::RectangleShape m_fadeShape;
     sf::Color m_color;
     float m_progress{ 0 };

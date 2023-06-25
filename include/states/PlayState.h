@@ -70,28 +70,40 @@ public:
 
 		return directionMap;
 	}
-	
-	bool checkGrassBattle(sf::Vector2i updatedPos)
+	void checkTileOn(sf::Vector2i updatedPos)
 	{
 		Tile* tile = m_currentLevel->getActiveTile(updatedPos.x, updatedPos.y);
-		
 		if (tile)
 		{
-			if (tile->getId() == "tallgrass")
+			std::string type = tile->getId();
+
+			if (type == "tallgrass"&&m_player->getIsMoving())
 			{
-				// SoundTon::getInstance().playSound(soundNames::BUSH);
 				tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
-				
+
 				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
 				{
 					// SoundTon::getInstance().playSound(soundNames::BUSH);
-					return true;
+					triggerBattleEncounter(m_currentLevel->getLevelId());
 				}
 			}
+			else if (type == "portal")
+			{
+			
+				
+				auto fadeout = std::make_unique<FadeOutState>(getStateStack().get(), sf::Color::White,true);
+																
+				getStateStack().get().pushQueueState(std::move(fadeout));
+				m_transition = true;
+			}
+			else
+			{
+				;
+			}
 		}
-		
-		return false;
 	}
+	
+	
 	void resetBeforeBattle()
 	{
 		m_player->setMoving(false);
@@ -111,7 +123,17 @@ public:
 
 	void update(sf::Time dt) override
 	{
-		
+		if (m_transition)
+		{
+			if (m_player->getPosition().y < 300)
+				m_currentLevel->nextLevel();
+			else
+				m_currentLevel->returnLevel();
+
+			auto fadein = std::make_unique<FadeInState>(getStateStack().get(), sf::Color::White);
+			getStateStack().get().pushQueueState(std::move(fadein));
+			m_transition = false;
+		}
 		static bool firstUpdate = false;
 		if (!firstUpdate)
 		{
@@ -119,19 +141,8 @@ public:
 			firstUpdate = true;
 		}
 		
-
-		m_player->update(dt, getMovesMap(m_player->getPosition()));
-		m_NPC->update(dt, getMovesMap(m_NPC->getPosition()));
-		
-		//if we are here, the player is after collision check
-		
-		sf::Vector2i updatedPos = m_player.get()->getPosition();
-		
-		if (checkGrassBattle(updatedPos)&&m_player->getIsMoving())
-		{
-			
-			triggerBattleEncounter(m_currentLevel->getLevelId());
-		}
+		checkCollision(dt);
+		checkTileOn(m_player->getPosition());
 		//if on grass rool a dice
 		// if certain push battlestate and other states
 		
@@ -142,8 +153,16 @@ public:
 		m_currentLevel->updateAnimations(dt);
 	}
 	
-	void checkCollision()
-	{}
+	void checkCollision(sf::Time dt)
+	{
+		m_player->update(dt, getMovesMap(m_player->getPosition()));
+		m_NPC->update(dt, getMovesMap(m_NPC->getPosition()));
+
+		//if we are here, the player is after collision check
+
+		
+	}
+	
 	
 	void handleEvents(sf::Event event) override
 	{
@@ -155,11 +174,13 @@ public:
 	{
 		m_currentLevel->draw(window);
 		m_player->draw(window);
-		//m_NPC->draw(window);
+		m_NPC->draw(window);
 		window.setView(m_camera->getView());
 	}
 
 private:
+	bool m_transition {false};
+
 	std::unique_ptr<Level> m_currentLevel;
 	std::shared_ptr<Player> m_player;
 	std::shared_ptr<NPC> m_NPC;

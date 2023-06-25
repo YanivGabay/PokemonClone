@@ -117,9 +117,20 @@ enum Side
 	RIGHT
 };
 
+
 const float SOUND_VOLUME = 5;
 enum soundNames { OPEN, BUSH, CITY, BATTLE };
 std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg",
 										 "resources/bush_step.ogg",
 										 "resources/City.ogg",
 										 "resources/Battle.ogg" };
+std::vector<std::string> m_continuosAnimationId {"flowers", "portal", "water","sea-rock"};
+bool checkIfContinous(std::string tileId)
+{
+	for (auto& id: m_continuosAnimationId)
+	{
+		if (tileId == id)
+			return true;
+	}
+	return false;
+}

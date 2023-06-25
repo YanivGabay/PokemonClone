@@ -22,6 +22,7 @@ public:
           m_isMoving(false),m_pokemons(std::move(std::make_unique<Party>()))
     {
         setSprite(PlayerID::UP_IDLE);
+        setOrigin();
     }
     
     virtual ~Player() = default;

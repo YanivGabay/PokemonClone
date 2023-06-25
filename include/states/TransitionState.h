@@ -12,7 +12,7 @@ public:
     TransitionState(Stack<BaseState>& states, std::unique_ptr<BaseState> nextState, sf::Color color)
         : BaseState(states),
           m_nextState(std::move(nextState)),
-          m_fadeOutState(std::make_unique<FadeOutState>(states,color)),
+          m_fadeOutState(std::make_unique<FadeOutState>(states,color,true)),
           m_fadeInState(std::make_unique<FadeInState>(states,color)) {}
     
     ~TransitionState() = default;

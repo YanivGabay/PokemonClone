@@ -10,9 +10,11 @@ class Level
 public:
 	using MapIterator = std::vector<std::unique_ptr<TilesMap>>::iterator;
 	Level()
-		: m_maps(1, std::make_unique<TilesMap>("resources/firstTown.tmj")),
-		m_currLevel(m_maps.begin())
 	{
+		m_maps.emplace_back(std::make_unique<TilesMap>("resources/firstTown.tmj"));
+		m_maps.emplace_back(std::make_unique<TilesMap>("resources/secondMap.tmj"));
+			m_currLevel = m_maps.begin();
+			
 	}
 	
 
@@ -45,6 +47,16 @@ public:
 	const LevelID getLevelId()
 	{
 		return m_id;
+	}
+	void nextLevel()
+	{
+		m_currLevel++;
+		m_id = static_cast<LevelID>(static_cast<int>(LevelID::START_TOWN) + 1);
+	}
+	void returnLevel()
+	{
+		m_currLevel--;
+		m_id = static_cast<LevelID>(static_cast<int>(LevelID::START_TOWN) -1);
 	}
 private:
 	

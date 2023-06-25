@@ -21,6 +21,7 @@ public:
        
     {
         setSprite(NpcId::HealDown);
+        setOrigin();
     }
     virtual ~NPC() = default;
     

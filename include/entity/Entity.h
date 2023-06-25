@@ -27,7 +27,7 @@ public:
           m_sprite(Resources::getInstance().getTexture(myTexture))
          
     {
-        m_sprite.setOrigin(0, m_sprite.getTextureRect().height / 2);
+       
     }
     
     virtual ~Entity() = default;
@@ -35,7 +35,10 @@ public:
     virtual void draw(sf::RenderWindow&) = 0;
     virtual void update(sf::Time, const std::map<Side, bool>&) = 0;
     
-   
+    void setOrigin()
+    {
+        m_sprite.setOrigin(0, m_sprite.getTextureRect().height / 2);
+   }
 
     sf::Vector2i getPosition()
     {

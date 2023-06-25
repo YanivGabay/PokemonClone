@@ -1,6 +1,7 @@
 ﻿configure_file("maleSpriteSheet.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("spritesheet.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("firstTown.tmj" ${CMAKE_BINARY_DIR}/resources COPYONLY)
+configure_file("secondMap.tmj" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("framesSpritesheet.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("battlegroundSprites.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("npcSprites.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
