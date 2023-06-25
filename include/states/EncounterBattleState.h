@@ -104,7 +104,7 @@ public:
 	 void draw(sf::RenderWindow& window) override
 	 {
 		 m_window.setView(m_window.getDefaultView());
-		 std::cout << "EncounterBattleState draw" << std::endl;
+		
 		 m_battle->draw(window);
 		 if (m_dialoge->getStatus())
 		 {
