@@ -71,6 +71,11 @@ public:
     {
         return m_name;
     }
+
+    std::string getPokemonName()
+    {
+        return PokemonNames.at(m_name);
+    }
     int getBaseHP() const
     {
         return m_baseHP;
@@ -158,7 +163,7 @@ public:
         return percentage;
     }
     //sets::
-    void setName(const  enum PokemonIndex name)
+    void setName(const enum PokemonIndex name)
     {
         m_name = name;
     }
