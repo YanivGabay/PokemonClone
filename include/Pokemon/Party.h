@@ -1,6 +1,8 @@
 #pragma once
+
 #include "Pokemon.h"
 #include <array>
+#include <iterator>
 #include "Utilities/PokemonIndex.h"
 #include <optional>
 const int STARTER = 0;

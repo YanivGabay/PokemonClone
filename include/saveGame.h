@@ -14,6 +14,10 @@
 #include <iterator>
 #include <locale>
 
+#include "Pokemon\Party.h"
+#include "Level.h"
+#include "entity\NPC.h"
+
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -22,7 +26,7 @@ class saveGame
 {
 public:
     saveGame()
-        : m_directoryPath("C:\\savingFiles"),
+        : m_directoryPath(".\\savingFiles"),
           m_fileName("1")
     {
         if (!fs::exists(m_directoryPath) &&
@@ -34,10 +38,41 @@ public:
 
 	~saveGame() = default;
 
-	void updateValues()
-	{
-		m_savingBuf["name"] = "John Doe";
-	}
+	void updatePlayer(int playerPosX, int playerPosY, enum LevelID levelId, int encounterRate, float cameraCenterX, float cameraCenterY)
+    {
+        m_savingBuf["player"]["position"]["x"] = playerPosX;
+        m_savingBuf["player"]["position"]["y"] = playerPosY;
+
+        m_savingBuf["player"]["EncounterRate"] = encounterRate;
+
+        m_savingBuf["player"]["camera"]["x"] = cameraCenterX;
+        m_savingBuf["player"]["camera"]["y"] = cameraCenterY;
+    }
+
+    void updateParty(int partySize)
+    {
+        m_savingBuf["Party"]["Size"] = partySize;
+    }
+    void updateParty (Pokemon partyPokemon)
+    {
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getAttack"] = partyPokemon.getAttack();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getAttackIV"] = partyPokemon.getAttackIV();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseAttack"] = partyPokemon.getBaseAttack();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseDefense"] = partyPokemon.getBaseDefense();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseHP"] = partyPokemon.getBaseHP();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseSpeed"] = partyPokemon.getBaseSpeed();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getCurrentExp"] = partyPokemon.getCurrentExp();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getCurrentHP"] = partyPokemon.getCurrentHP();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getDefense"] = partyPokemon.getDefense();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getDefenseIV"] = partyPokemon.getDefenseIV();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getExpToLevel"] = partyPokemon.getExpToLevel();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getHP"] = partyPokemon.getHP();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getHpPercent"] = partyPokemon.getHpPercent();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getLevel"] = partyPokemon.getLevel();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getName"] = partyPokemon.getName();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getSpeed"] = partyPokemon.getSpeed();
+        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getSpeedIV"] = partyPokemon.getSpeedIV();
+    }
 
     void savingIntoFile()
     {

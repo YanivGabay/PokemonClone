@@ -71,6 +71,11 @@ public:
     {
         return m_name;
     }
+
+    std::string getPokemonName()
+    {
+        return PokemonNames.at(m_name);
+    }
     int getBaseHP() const
     {
         return m_baseHP;

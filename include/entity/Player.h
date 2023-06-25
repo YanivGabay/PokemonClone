@@ -30,7 +30,6 @@ public:
     {
         if (!m_isMoving)
         {
-          
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
                 m_movingObj.setMove(LEFT);
@@ -174,10 +173,17 @@ public:
     {
         return m_isMoving;
     }
+
     void setMoving(bool value)
     {
         m_isMoving = value;
     }
+
+    int getPartySize()
+    {
+        return  m_pokemons->getPartySize();
+    }
+
 private:
     bool m_isMoving;
     PlayerID m_curr{ PlayerID::UP_IDLE };
