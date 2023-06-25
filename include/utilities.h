@@ -52,6 +52,22 @@ enum class PlayerID
 	END
 };
 
+enum class NpcRects
+{
+	HealDown,
+	HealUp,
+	HealLeft,
+	HealRight,
+	FatDown,
+	FatUp,
+	FatLeft,
+	FatRight,
+	ProffesorDown,
+	ProffesorUp,
+	ProffesorLeft,
+	ProffesorRight
+};
+
 PlayerID nextFrame(PlayerID current)
 {
 	// The first frame of each direction has an index that is a multiple of 3

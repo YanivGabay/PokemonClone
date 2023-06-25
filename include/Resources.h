@@ -179,12 +179,32 @@ public:
 		}
 
 	}
+	void loadNpcSprites()
+	{
+		
+			sf::Vector2i size = sf::Vector2i(16, 21);
+			sf::Vector2i position = sf::Vector2i(0, 0);
+			for (NpcRects id = NpcRects::UP_IDLE; id != NpcRects::END; id = static_cast<NpcRects>(static_cast<int>(id) + 1))
+			{
+				int row = static_cast<int>(id) / 4;  // Calculate the row index
+				int col = static_cast<int>(id) % 4;  // Calculate the column index
+
+				position.x = col * (16);   // Update the x position
+				position.y = row * (21);   // Update the y position
+
+				m_npcRects[id] = std::make_unique<sf::IntRect>(position.x, position.y, size.x, size.y);
+			}
+		
+	}
 private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
 	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
 	std::unordered_map<FrameID, std::unique_ptr<sf::IntRect>> m_frameBoxRects;
 	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_playerRects;
+
+	std::unordered_map<PlayerID, std::unique_ptr<sf::IntRect>> m_npcRects;
+
 	std::unique_ptr<sf::Font> m_font;
 
 	std::unordered_map<enum PokemonIndex, std::pair<sf::Sprite, sf::Sprite>> m_pokemonSprite;
