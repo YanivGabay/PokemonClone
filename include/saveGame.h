@@ -40,38 +40,38 @@ public:
 
 	void updatePlayer(int playerPosX, int playerPosY, enum LevelID levelId, int encounterRate, float cameraCenterX, float cameraCenterY)
     {
-        m_savingBuf["player"]["position"]["x"] = playerPosX;
-        m_savingBuf["player"]["position"]["y"] = playerPosY;
+        m_savingBuf["playState"]["Playerposition"]["x"] = playerPosX;
+        m_savingBuf["playState"]["Playerposition"]["y"] = playerPosY;
 
-        m_savingBuf["player"]["EncounterRate"] = encounterRate;
+        m_savingBuf["playState"]["EncounterRate"] = encounterRate;
 
-        m_savingBuf["player"]["camera"]["x"] = cameraCenterX;
-        m_savingBuf["player"]["camera"]["y"] = cameraCenterY;
+        m_savingBuf["playState"]["cameraPosition"]["x"] = cameraCenterX;
+        m_savingBuf["playState"]["cameraPosition"]["y"] = cameraCenterY;
     }
 
     void updateParty(int partySize)
     {
         m_savingBuf["Party"]["Size"] = partySize;
     }
-    void updateParty (Pokemon partyPokemon)
+    void updateParty (std::shared_ptr<Pokemon> partyPokemon)
     {
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getAttack"] = partyPokemon.getAttack();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getAttackIV"] = partyPokemon.getAttackIV();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseAttack"] = partyPokemon.getBaseAttack();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseDefense"] = partyPokemon.getBaseDefense();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseHP"] = partyPokemon.getBaseHP();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getBaseSpeed"] = partyPokemon.getBaseSpeed();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getCurrentExp"] = partyPokemon.getCurrentExp();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getCurrentHP"] = partyPokemon.getCurrentHP();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getDefense"] = partyPokemon.getDefense();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getDefenseIV"] = partyPokemon.getDefenseIV();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getExpToLevel"] = partyPokemon.getExpToLevel();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getHP"] = partyPokemon.getHP();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getHpPercent"] = partyPokemon.getHpPercent();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getLevel"] = partyPokemon.getLevel();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getName"] = partyPokemon.getName();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getSpeed"] = partyPokemon.getSpeed();
-        m_savingBuf["Party"][partyPokemon.getPokemonName()]["getSpeedIV"] = partyPokemon.getSpeedIV();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getAttack"] = partyPokemon->getAttack();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getAttackIV"] = partyPokemon->getAttackIV();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getBaseAttack"] = partyPokemon->getBaseAttack();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getBaseDefense"] = partyPokemon->getBaseDefense();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getBaseHP"] = partyPokemon->getBaseHP();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getBaseSpeed"] = partyPokemon->getBaseSpeed();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getCurrentExp"] = partyPokemon->getCurrentExp();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getCurrentHP"] = partyPokemon->getCurrentHP();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getDefense"] = partyPokemon->getDefense();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getDefenseIV"] = partyPokemon->getDefenseIV();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getExpToLevel"] = partyPokemon->getExpToLevel();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getHP"] = partyPokemon->getHP();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getHpPercent"] = partyPokemon->getHpPercent();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getLevel"] = partyPokemon->getLevel();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getName"] = partyPokemon->getName();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getSpeed"] = partyPokemon->getSpeed();
+        m_savingBuf["Party"][partyPokemon->getPokemonName()]["getSpeedIV"] = partyPokemon->getSpeedIV();
     }
 
     void savingIntoFile()

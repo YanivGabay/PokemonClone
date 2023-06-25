@@ -19,6 +19,10 @@ public:
     {
     }
 
+    int getPartySize()
+    {
+        return PARTY_SIZE;
+    }
     void addPokemon(std::shared_ptr<Pokemon> pokemon)
     {
         if (!pokemon)
@@ -53,7 +57,8 @@ public:
 
         if (!m_pokemons[index])
         {
-            throw std::runtime_error("No Pokemon found at the specified index.");
+            ;
+            //throw std::runtime_error("No Pokemon found at the specified index.");
         }
     }
     std::shared_ptr<Pokemon> getPokemon(int index)

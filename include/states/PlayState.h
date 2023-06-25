@@ -150,8 +150,9 @@ public:
 								  m_currentLevel->getEncounterRate(),
 								  m_camera->getView().getCenter().x,
 								  m_camera->getView().getCenter().y);
-		
+
 		m_savingbufs.updateParty(m_player->getPartySize());
+
 		for (size_t i = 0; i < m_player->getPartySize(); ++i)
 		{
 			if (m_player->getPokemon(i))
