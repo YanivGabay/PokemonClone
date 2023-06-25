@@ -104,7 +104,7 @@ public:
 	 
 		 if (event.type == sf::Event::KeyReleased)
 		 {
-			 if (event.key.code == sf::Keyboard::Enter&& m_levelUp)
+			 if (event.key.code == sf::Keyboard::Z&& m_levelUp)
 			 {
 				 m_finish = true;
 			 }

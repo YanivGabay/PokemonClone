@@ -126,9 +126,20 @@ public:
 		if (m_transition)
 		{
 			if (m_player->getPosition().y < 300)
+			{
 				m_currentLevel->nextLevel();
+				m_player->setPosition(m_currentLevel->getExit());
+				sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
+				m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+			}
 			else
+			{
 				m_currentLevel->returnLevel();
+				m_player->setPosition(m_currentLevel->getExit());
+				sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
+				m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+			}
+			
 
 			auto fadein = std::make_unique<FadeInState>(getStateStack().get(), sf::Color::White);
 			getStateStack().get().pushQueueState(std::move(fadein));

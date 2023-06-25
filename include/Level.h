@@ -13,7 +13,7 @@ public:
 	{
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/firstTown.tmj"));
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/secondMap.tmj"));
-			m_currLevel = m_maps.begin();
+			m_currMap = m_maps.begin();
 			
 	}
 	
@@ -24,21 +24,24 @@ public:
 	
 	void draw(sf::RenderWindow& window)
 	{
-		(*m_currLevel)->draw(window);
+		(*m_currMap)->draw(window);
 	}
 	
 	void updateAnimations(sf::Time dt)
 	{
-		(*m_currLevel)->updateAnimations(dt);
+		(*m_currMap)->updateAnimations(dt);
 	}
-
+	sf::Vector2i getExit()
+	{
+		return (*m_currMap)->getExitPos();
+	}
 	Tile* getActiveTile(int x,int y)
 	{
-		return (*m_currLevel)->getTile(x, y);
+		return (*m_currMap)->getTile(x, y);
 	}
 	bool checkCollisionUpper(sf::Vector2i target)
 	{
-		return (*m_currLevel)->checkCollisionUpper(target);
+		return (*m_currMap)->checkCollisionUpper(target);
 	}
 	const int getEncounterRate()
 	{
@@ -50,19 +53,19 @@ public:
 	}
 	void nextLevel()
 	{
-		m_currLevel++;
+		m_currMap++;
 		m_id = static_cast<LevelID>(static_cast<int>(LevelID::START_TOWN) + 1);
 	}
 	void returnLevel()
 	{
-		m_currLevel--;
+		m_currMap--;
 		m_id = static_cast<LevelID>(static_cast<int>(LevelID::START_TOWN) -1);
 	}
 private:
 	
 	std::vector<std::unique_ptr<TilesMap>> m_maps;
 	
-	MapIterator m_currLevel;
+	MapIterator m_currMap;
 	LevelID m_id{ LevelID::START_TOWN };
 	int m_encounterRate{ 2 };
 };

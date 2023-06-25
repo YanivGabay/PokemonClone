@@ -120,18 +120,30 @@ public:
 						{
 							m_mediumTiles.push_back(std::move(gameTile));
 							m_mediumMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_mediumTiles.back().get());
+							if (mytype == "portal")
+							{
+								
+								m_exits.push_back((m_mediumTiles.back().get()));
+							}
 						}
 						else
 						{
 							m_upperTiles.push_back(std::move(gameTile));
 							m_upperMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_upperTiles.back().get());
+							
 						}
 					}
 				}
 			}
 		}
 	}
-	
+	sf::Vector2i getExitPos()
+	{
+		sf::Vector2i m_pos;
+		m_pos.x = m_exits.back()->getPosition().x;
+		m_pos.y = m_exits.back()->getPosition().y;
+		return m_pos;
+	}
 	void draw(sf::RenderWindow& window)
 	{
 		for (auto& tile	: m_lowerTiles)
@@ -198,7 +210,8 @@ private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;
 	std::vector<std::unique_ptr<Tile>> m_mediumTiles;
 	std::vector<std::unique_ptr<Tile>> m_upperTiles;
-	std::vector<std::unique_ptr<Tile>> m_exits;
+
+	std::vector<Tile*> m_exits;
 	
 	std::unordered_map<std::pair<int, int>, Tile*, PairHash> m_mediumMap;
 	std::unordered_map<std::pair<int, int>, Tile*, PairHash> m_upperMap;

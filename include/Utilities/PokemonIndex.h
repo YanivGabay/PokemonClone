@@ -27,7 +27,10 @@ enum class PokemonIndex { BULBASOR = 1,
 std::vector <PokemonIndex> FirstLevel { PokemonIndex::BULBASOR,
 										PokemonIndex::PIGEOT,
 										PokemonIndex::LEAF };
-
+std::vector <PokemonIndex> SecondLevel { PokemonIndex::MONKEY,
+PokemonIndex::MUD,
+PokemonIndex::LEAF,
+PokemonIndex::PIKACHU};
 PokemonIndex getRandom(std::vector<PokemonIndex> options)
 {
 	return options[generateRandomNumber(0, options.size()-1)];
