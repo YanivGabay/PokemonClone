@@ -42,10 +42,7 @@ public:
 
 			 // Calculate the current HP percentage based on the progress
 			 float currentHPPercent = (1 - progress) * m_startHPPercent + progress * m_endHPPercent;
-			 std::cout << "m_startHPPercent" << m_startHPPercent << std::endl;
-			 std::cout << "m_endHPPercent" << m_endHPPercent << std::endl;
-			 std::cout << "currentHPPercent: " << currentHPPercent << std::endl;
-			 std::cout << "progress" << progress << std::endl;
+			
 			 // Set the current HP progress
 			 if (m_id == WhosAttack::Enemy)
 			 {

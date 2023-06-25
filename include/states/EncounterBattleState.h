@@ -4,6 +4,7 @@
 #include "../Battle.h"
 #include "BattleDialogState.h"
 #include "TakeTurnState.h"
+#include "AddExpState.h"
 class EncounterBattleState : public BaseState
 {
 public:
@@ -37,6 +38,13 @@ public:
 			 //so we can add exp
 			 // check for level up
 			 //if yes push expdialoge
+			
+			 auto state = std::make_unique<AddExpState>(getStateStack().get(), m_player,
+														m_wildPokemon,
+														m_battle												 
+														 );
+			 getStateStack().get().pushQueueState(std::move(state));
+			 exit();
 			 setStatus(false);
 			 return;
 		 }
@@ -45,6 +53,7 @@ public:
 			 //if other pokemon in party
 			 //summon them
 			 //else player respawing
+			 exit();
 			 setStatus(false);
 			 return;
 		 }
@@ -110,9 +119,7 @@ public:
 private:
 
 	bool m_playerTurn = { true };
-
-	//std::optional <BattleOptions> m_choice {std::nullopt};
-
+		
 
 	sf::RenderWindow& m_window{ Resources::getInstance().getWindow() };
 	sf::View m_originalView{ m_window.getView() };

@@ -297,6 +297,14 @@ public:
         }
         return false;
     }
+    float getCurrentExpPercent() const
+    {
+        if (m_expToLevel == 0)
+        {
+            return 0.0f;
+        }
+        return (static_cast<float>(m_currentExp) / m_expToLevel) * 100.0f;
+    }
 
 private:
     enum PokemonIndex m_name;

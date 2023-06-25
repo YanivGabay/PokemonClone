@@ -60,12 +60,23 @@ public:
 
           return pokemon;
     }
+    std::shared_ptr<Pokemon> createRandomPokemonByLevel(LevelID id,int level)
+    {
+        std::shared_ptr<Pokemon> pokemon = createRandomPokemon(id);
+        if (level < 1)
+            throw std::range_error("level under 1");
+        for (int i = 0; i < level; i++)
+        {
+            pokemon->levelUp();
+        }
+        return pokemon;
+    }
     std::shared_ptr<Pokemon> createPokemon(enum PokemonIndex name)
     {
         std::shared_ptr<Pokemon> pokemon = std::make_shared<Pokemon>();
         // Set the base attributes
         pokemon->setBaseHP(generateRandomNumber(5, 12));
-        pokemon->setBaseAttack(generateRandomNumber(5, 12));
+        pokemon->setBaseAttack(generateRandomNumber(6, 12));
         pokemon->setBaseDefense(generateRandomNumber(5, 12));
         pokemon->setBaseSpeed(generateRandomNumber(5, 12));
 
