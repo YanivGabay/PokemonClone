@@ -13,7 +13,7 @@ public:
 		m_battle(battle), m_expProgress(std::move(std::make_unique<ProgressBar>(400, 452.0f, 200, 50, sf::Color::Black, sf::Color::Blue))),
 		BaseState(states)
 	{
-		
+		entry();
 	};
 	~AddExpState() {};
 	 void entry() {
