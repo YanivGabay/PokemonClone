@@ -50,7 +50,7 @@ public:
 			exit(5);
 			return;
 		}
-
+		
 		tson::Vector2i myvector = map.get()->getSize();
 		m_mapXSize = myvector.x;
 		m_mapYSize = myvector.y;
