@@ -66,12 +66,12 @@ public:
 
 		if (m_startMenu->getChoice() == LOAD_GAME && !m_loadingStarted)
 		{
+			std::cout << "helboz" << std::endl;
 			m_choice = std::nullopt;
 			m_loadingStarted = true;
 			// Asynchronously create PlayState
 			m_loadingFuture = std::async(std::launch::async, [this] {
-				return std::make_unique<PlayState>(getStateStack().get(), m_saveManager.loadingFromFile(getStateStack().get()));
-				});
+				return m_saveManager.loadingFromFile(getStateStack().get());});
 			m_startMenu->setLoadingText();
 		}
 

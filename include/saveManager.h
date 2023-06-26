@@ -30,7 +30,7 @@ class saveManager
 public:
     saveManager()
         : m_directoryPath(".\\savingFiles"),
-          m_fileName("saveedGame")
+          m_fileName("savedGame")
     {
         if (!fs::exists(m_directoryPath) &&
             !fs::is_directory(m_directoryPath))
@@ -65,42 +65,42 @@ public:
     }
     void updateParty (std::shared_ptr<Pokemon> partyPokemon)
     {
-        int currPokemon = static_cast<int>(partyPokemon->getName());
-        m_savingBuf["Party"][currPokemon]["getAttack"] = partyPokemon->getAttack();
+        std::string StrCurrPokemon = std::to_string(static_cast<int>(partyPokemon->getName()));
+        m_savingBuf["Party"][StrCurrPokemon]["getAttack"] = partyPokemon->getAttack();
         
-        m_savingBuf["Party"][currPokemon]["getAttackIV"] = partyPokemon->getAttackIV();
+        m_savingBuf["Party"][StrCurrPokemon]["getAttackIV"] = partyPokemon->getAttackIV();
         
-        m_savingBuf["Party"][currPokemon]["getBaseAttack"] = partyPokemon->getBaseAttack();
+        m_savingBuf["Party"][StrCurrPokemon]["getBaseAttack"] = partyPokemon->getBaseAttack();
         
-        m_savingBuf["Party"][currPokemon]["getBaseDefense"] = partyPokemon->getBaseDefense();
+        m_savingBuf["Party"][StrCurrPokemon]["getBaseDefense"] = partyPokemon->getBaseDefense();
         
-        m_savingBuf["Party"][currPokemon]["getBaseHP"] = partyPokemon->getBaseHP();
+        m_savingBuf["Party"][StrCurrPokemon]["getBaseHP"] = partyPokemon->getBaseHP();
         
-        m_savingBuf["Party"][currPokemon]["getBaseSpeed"] = partyPokemon->getBaseSpeed();
+        m_savingBuf["Party"][StrCurrPokemon]["getBaseSpeed"] = partyPokemon->getBaseSpeed();
         
-        m_savingBuf["Party"][currPokemon]["getCurrentExp"] = partyPokemon->getCurrentExp();
+        m_savingBuf["Party"][StrCurrPokemon]["getCurrentExp"] = partyPokemon->getCurrentExp();
         
-        m_savingBuf["Party"][currPokemon]["getCurrentHP"] = partyPokemon->getCurrentHP();
+        m_savingBuf["Party"][StrCurrPokemon]["getCurrentHP"] = partyPokemon->getCurrentHP();
         
-        m_savingBuf["Party"][currPokemon]["getDefense"] = partyPokemon->getDefense();
+        m_savingBuf["Party"][StrCurrPokemon]["getDefense"] = partyPokemon->getDefense();
         
-        m_savingBuf["Party"][currPokemon]["getDefenseIV"] = partyPokemon->getDefenseIV();
+        m_savingBuf["Party"][StrCurrPokemon]["getDefenseIV"] = partyPokemon->getDefenseIV();
         
-        m_savingBuf["Party"][currPokemon]["getExpToLevel"] = partyPokemon->getExpToLevel();
+        m_savingBuf["Party"][StrCurrPokemon]["getExpToLevel"] = partyPokemon->getExpToLevel();
         
-        m_savingBuf["Party"][currPokemon]["getHP"] = partyPokemon->getHP();
+        m_savingBuf["Party"][StrCurrPokemon]["getHP"] = partyPokemon->getHP();
         
-        m_savingBuf["Party"][currPokemon]["getHpPercent"] = partyPokemon->getHpPercent();
+        m_savingBuf["Party"][StrCurrPokemon]["getHpPercent"] = partyPokemon->getHpPercent();
         
-        m_savingBuf["Party"][currPokemon]["getLevel"] = partyPokemon->getLevel();
+        m_savingBuf["Party"][StrCurrPokemon]["getLevel"] = partyPokemon->getLevel();
         
-        m_savingBuf["Party"][currPokemon]["getName"] = partyPokemon->getName();
+        m_savingBuf["Party"][StrCurrPokemon]["getName"] = partyPokemon->getName();
         
-        m_savingBuf["Party"][currPokemon]["getSpeed"] = partyPokemon->getSpeed();
+        m_savingBuf["Party"][StrCurrPokemon]["getSpeed"] = partyPokemon->getSpeed();
         
-        m_savingBuf["Party"][currPokemon]["getSpeedIV"] = partyPokemon->getSpeedIV();
+        m_savingBuf["Party"][StrCurrPokemon]["getSpeedIV"] = partyPokemon->getSpeedIV();
 
-        m_savingBuf["Party"][currPokemon]["getHPIV"] = partyPokemon->getHPIV();
+        m_savingBuf["Party"][StrCurrPokemon]["getHPIV"] = partyPokemon->getHPIV();
     }
 
     void savingIntoFile()
@@ -127,7 +127,8 @@ public:
     std::unique_ptr<PlayState> loadingFromFile(Stack<BaseState>& states)
     {
         // Specify the file name
-        std::string fileName = m_directoryPath + "\\" + m_fileName;
+        std::string fileName = m_directoryPath + "\\";
+        fileName += m_fileName + ".json";
 
         // Open the file for reading
         std::fstream openingJsonFile;
@@ -136,6 +137,7 @@ public:
         openingJsonFile.open(fileName, std::ios::in);
         if (openingJsonFile)
         {
+            std::cout << "1234" << std::endl;
             // Read the contents of the file into a string
             std::string fileContents((std::istreambuf_iterator<char>(openingJsonFile)), std::istreambuf_iterator<char>());
 
@@ -154,25 +156,24 @@ public:
             std::unique_ptr<Party> pokemons(std::make_unique<Party>());
             for (size_t i = 0; i < m_savingBuf["Party"]["Size"]; ++i)
             {
-                int currPokemon = static_cast<int>(i);
-                
-                pokemons->addPokemon(std::make_shared<Pokemon> (m_savingBuf["Party"][currPokemon]["getName"],
-                    m_savingBuf["Party"][currPokemon]["getBaseHP"],
-                    m_savingBuf["Party"][currPokemon]["getBaseAttack"],
-                    m_savingBuf["Party"][currPokemon]["getBaseDefense"],
-                    m_savingBuf["Party"][currPokemon]["getBaseSpeed"],
-                    m_savingBuf["Party"][currPokemon]["getHPIV"],
-                    m_savingBuf["Party"][currPokemon]["getAttackIV"],
-                    m_savingBuf["Party"][currPokemon]["getDefenseIV"],
-                    m_savingBuf["Party"][currPokemon]["getSpeedIV"],
-                    m_savingBuf["Party"][currPokemon]["getHP"],
-                    m_savingBuf["Party"][currPokemon]["getAttack"],
-                    m_savingBuf["Party"][currPokemon]["getDefense"],
-                    m_savingBuf["Party"][currPokemon]["getSpeed"],
-                    m_savingBuf["Party"][currPokemon]["getLevel"],
-                    m_savingBuf["Party"][currPokemon]["getCurrentExp"],
-                    m_savingBuf["Party"][currPokemon]["getExpToLevel"],
-                    m_savingBuf["Party"][currPokemon]["getCurrentHP"]));
+                std::string StrCurrPokemon = std::to_string(static_cast<int>(i));
+                pokemons->addPokemon(std::make_shared<Pokemon> (m_savingBuf["Party"][StrCurrPokemon]["getName"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getBaseHP"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getBaseAttack"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getBaseDefense"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getBaseSpeed"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getHPIV"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getAttackIV"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getDefenseIV"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getSpeedIV"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getHP"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getAttack"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getDefense"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getSpeed"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getLevel"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getCurrentExp"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getExpToLevel"],
+                    m_savingBuf["Party"][StrCurrPokemon]["getCurrentHP"]));
             }
             
             std::shared_ptr<Player> player(std::make_shared<Player>(std::move(pokemons)));
@@ -192,10 +193,10 @@ public:
 
             std::unique_ptr<PlayState> loadPlayState = std::make_unique<PlayState>(states, std::move(currentLevel), std::move(player), std::move(NPC), std::move(camera));
 
-            return loadPlayState;
+            return (loadPlayState);
         }
         
-        return std::unique_ptr<PlayState>(std::make_unique<PlayState>(states));
+        return std::unique_ptr<PlayState>((std::make_unique<PlayState>(states)));
     }
 
 private:
