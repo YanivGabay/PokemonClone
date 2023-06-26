@@ -11,7 +11,8 @@ const int PARTY_SIZE = 6;
 class Party
 {
 public:
-    Party() : m_CurrentPokemonIndex(std::nullopt)
+    Party()
+        : m_CurrentPokemonIndex(std::nullopt)
     {
     }
 

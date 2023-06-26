@@ -13,14 +13,15 @@
 #include <ctime>
 #include <iterator>
 #include <locale>
+//#include <>
 
 #include "Pokemon\Party.h"
 #include "Level.h"
 #include "entity\NPC.h"
 #include "Utilities\PokemonIndex.h"
-#include "states\PlayState.h"
+#include "states\BaseState.h"
 
-
+class PlayState;
 using json = nlohmann::json;
 namespace fs = std::filesystem;
 
@@ -42,7 +43,7 @@ public:
 
 	void updatePlayer(int playerPosX, int playerPosY,
                       enum LevelID levelId, int encounterRate,
-                      float cameraCenterX, float cameraCenterY,
+                      float cameraX, float cameraY,
                       int NpcPosX, int NpcPosY)
     {
         m_savingBuf["playState"]["Playerposition"]["x"] = playerPosX;
@@ -51,8 +52,8 @@ public:
         m_savingBuf["playState"]["levelId"] = levelId;
         m_savingBuf["playState"]["EncounterRate"] = encounterRate;
 
-        m_savingBuf["playState"]["cameraPosition"]["x"] = cameraCenterX;
-        m_savingBuf["playState"]["cameraPosition"]["y"] = cameraCenterY;
+        m_savingBuf["playState"]["cameraPosition"]["x"] = cameraX;
+        m_savingBuf["playState"]["cameraPosition"]["y"] = cameraY;
 
         m_savingBuf["playState"]["NpcPosition"]["x"] = NpcPosX;
         m_savingBuf["playState"]["NpcPosition"]["y"] = NpcPosY;
@@ -155,7 +156,7 @@ public:
             {
                 int currPokemon = static_cast<int>(i);
                 
-                pokemons->addPokemon( std::make_unique<Pokemon> (m_savingBuf["Party"][currPokemon]["getName"],
+                pokemons->addPokemon(std::make_shared<Pokemon> (m_savingBuf["Party"][currPokemon]["getName"],
                     m_savingBuf["Party"][currPokemon]["getBaseHP"],
                     m_savingBuf["Party"][currPokemon]["getBaseAttack"],
                     m_savingBuf["Party"][currPokemon]["getBaseDefense"],
@@ -174,19 +175,22 @@ public:
                     m_savingBuf["Party"][currPokemon]["getCurrentHP"]));
             }
             
-            std::shared_ptr<Player> player(std::make_shared<Player>(pokemons));
+            std::shared_ptr<Player> player(std::make_shared<Player>(std::move(pokemons)));
             
             player->setPosition(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"],
                 m_savingBuf["playState"]["Playerposition"]["y"]));
 
-            std::shared_ptr<NPC> NPC(std::make_shared<NPC>(m_savingBuf["playState"]["NpcPosition"]["x"], m_savingBuf["playState"]["NpcPosition"]["y"]));
-
+            std::shared_ptr<NPC> NPC(std::make_shared<NPC>());
+            NPC->setPosition(sf::Vector2i(m_savingBuf["playState"]["NpcPosition"]["x"], m_savingBuf["playState"]["NpcPosition"]["y"]));
+            
             std::unique_ptr<Camera> camera(std::make_unique<Camera>(m_savingBuf["playState"]["cameraPosition"]["x"],
-                m_savingBuf["playState"]["cameraPosition"]["y"]));
+                m_savingBuf["playState"]["cameraPosition"]["y"],
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT));
             
             openingJsonFile.close();
 
-            std::unique_ptr<PlayState> loadPlayState = std::make_unique<PlayState>(states, currentLevel, player, NPC, camera);
+            std::unique_ptr<PlayState> loadPlayState = std::make_unique<PlayState>(states, std::move(currentLevel), std::move(player), std::move(NPC), std::move(camera));
 
             return loadPlayState;
         }
