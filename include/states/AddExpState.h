@@ -70,14 +70,14 @@ public:
 				
 				 m_expProgress->setProgress(m_endExpPercent);
 								
-				 if (m_endExpPercent == 100.0f)
+				 if (m_endExpPercent >= 100.0f)
 				 {
 					 m_levelUp = true;
 					 setUpLevelUp();
 					 m_elapsedTime = sf::seconds(0.0f);
 				 }
+				 else setStatus(false);
 				 
-				 setStatus(false);
 				 m_guiUpdateCompleted = true;
 			 }
 		 }
@@ -104,7 +104,7 @@ public:
 	 
 		 if (event.type == sf::Event::KeyReleased)
 		 {
-			 if (event.key.code == sf::Keyboard::Z&& m_levelUp)
+			 if (event.key.code == sf::Keyboard::Enter&& m_levelUp)
 			 {
 				 m_finish = true;
 			 }
