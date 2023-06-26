@@ -23,6 +23,10 @@ public:
         return m_view;
     }
 
+    void debug()
+    {
+        std::cout << "camera" << std::endl;
+    }
 private:
     sf::View m_view;
 };

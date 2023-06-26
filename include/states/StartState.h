@@ -70,8 +70,10 @@ public:
 			m_choice = std::nullopt;
 			m_loadingStarted = true;
 			// Asynchronously create PlayState
+
 			m_loadingFuture = std::async(std::launch::async, [this] {
-				return m_saveManager.loadingFromFile(getStateStack().get());});
+				return std::move( m_saveManager.loadingFromFile(getStateStack().get()));
+				});
 			m_startMenu->setLoadingText();
 		}
 
