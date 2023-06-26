@@ -111,6 +111,31 @@ public:
 
 		return directionMap;
 	}
+	void tallGrass(const std::string type,Tile* tile)
+	{
+		if (type == "tallgrass" && m_player->getIsMoving())
+		{
+			tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
+
+			if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
+			{
+				// SoundTon::getInstance().playSound(soundNames::BUSH);
+				triggerBattleEncounter(m_currentLevel->getLevelId());
+			}
+		}
+	}
+	void portal(const std::string type, Tile* tile)
+	{
+		if (type == "portal" && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		{
+
+			auto fadeout = std::make_unique<FadeOutState>(getStateStack().get(), sf::Color::White, true);
+
+			getStateStack().get().pushQueueState(std::move(fadeout));
+			m_transition = true;
+			m_player->setMoving(false);
+		}
+	}
 	void checkTileOn(sf::Vector2i updatedPos)
 	{
 		Tile* tile = m_currentLevel->getActiveTile(updatedPos.x, updatedPos.y);
@@ -118,30 +143,8 @@ public:
 		{
 			std::string type = tile->getId();
 
-			if (type == "tallgrass"&&m_player->getIsMoving())
-			{
-				tile->playAnimation(sf::Time(sf::seconds(1.0f / 60.0f)));
-
-				if (m_currentLevel->getEncounterRate() > generateRandomNumber(0, 100))
-				{
-					// SoundTon::getInstance().playSound(soundNames::BUSH);
-					triggerBattleEncounter(m_currentLevel->getLevelId());
-				}
-			}
-			else if (type == "portal"&& sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-			{
-			
-				
-				auto fadeout = std::make_unique<FadeOutState>(getStateStack().get(), sf::Color::White,true);
-																
-				getStateStack().get().pushQueueState(std::move(fadeout));
-				m_transition = true;
-				m_player->setMoving(false);
-			}
-			else
-			{
-				;
-			}
+			tallGrass(type, tile);
+			portal(type, tile);
 		}
 	}
 	
@@ -169,7 +172,7 @@ public:
 		{
 			//push the playermenu state
 			sf::Vector2f cameraCenter = m_camera->getView().getCenter();
-			auto state = std::make_unique<PlayerMenuState>(getStateStack().get(), *this,cameraCenter,m_player);
+			auto state = std::make_unique<PlayerMenuState>(getStateStack().get(),m_savingbufs,cameraCenter,m_player);
 			getStateStack().get().pushQueueState(std::move(state));
 			m_menu = false;
 			return;
@@ -217,7 +220,15 @@ public:
 		
 		m_currentLevel->updateAnimations(dt);
 
+		savingIntoBuffer();
 		//-----------------------
+		
+		
+		//m_savingbufs.savingIntoFile(); /// --- for_debug --- ///
+		//---------------
+	}
+	void savingIntoBuffer()
+	{
 		m_savingbufs.updatePlayer(m_player->getPosition().x,
 								  m_player->getPosition().y,
 								  m_currentLevel->getLevelId(),
@@ -226,7 +237,7 @@ public:
 								  m_camera->getView().getCenter().y,
 								  m_NPC->getPosition().x,
 								  m_NPC->getPosition().y);
-		
+
 		m_savingbufs.updateParty(m_player->getPartySize());
 
 		for (size_t i = 0; i < m_player->getPartySize(); ++i)
@@ -236,11 +247,7 @@ public:
 				m_savingbufs.updateParty(m_player->getPokemon(i));
 			}
 		}
-		
-		m_savingbufs.savingIntoFile(); /// --- for_debug --- ///
-		//---------------
 	}
-	
 	void checkCollision(sf::Time dt)
 	{
 		m_player->update(dt, getMovesMap(m_player->getPosition()));

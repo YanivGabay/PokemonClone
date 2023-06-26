@@ -3,6 +3,7 @@
 #include "guis/Gui.h"
 #include "entity/Player.h"
 #include "PokemonMenuState.h"
+#include "saveManager.h"
 class PlayState;
 
 enum PlayerMenuOptions
@@ -39,9 +40,9 @@ std::optional<PlayerMenuOptions> operator--(std::optional<PlayerMenuOptions> opt
 class PlayerMenuState : public BaseState
 {
 public:
-	PlayerMenuState(Stack<BaseState>& states,PlayState& state,sf::Vector2f cameraCenter,
+	PlayerMenuState(Stack<BaseState>& states, saveManager& manager,sf::Vector2f cameraCenter,
 					std::shared_ptr<Player> player): BaseState(states),
-		m_playState(state),m_cameraCenter(cameraCenter),m_player(player) { 
+		m_saveGame(manager),m_cameraCenter(cameraCenter),m_player(player) {
 		entry();
 	};
 	~PlayerMenuState() {};
@@ -91,8 +92,9 @@ public:
 			 m_selection = std::nullopt;
 		 }
 		 else if (m_selection == SaveGame)
-		 {
+		 {	
 			 
+			 m_saveGame.savingIntoFile();
 		 }
 
 		 else if (m_selection == QuitGame)
@@ -132,7 +134,7 @@ public:
 		 }
 	 }
 private:
-
+	bool m_saving {false};
 	bool m_finish {false};
 	
 	std::array<std::unique_ptr<Gui>, PlayerMenuSize> m_menuSelection {};
@@ -140,7 +142,7 @@ private:
 	std::optional<PlayerMenuOptions> m_selection{ std::nullopt };
 	std::optional<PlayerMenuOptions> m_hover{ Pokemons };
 	
-	PlayState& m_playState;
+	saveManager& m_saveGame;
 
 	std::shared_ptr<Player> m_player;
 

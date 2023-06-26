@@ -187,7 +187,7 @@ public:
             std::cout << "888" << std::endl;
             std::shared_ptr<Player> player(std::make_shared<Player>(std::move(pokemons)));
             std::cout << "999" << std::endl;
-            player->setPosition(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"],
+            player->setPositions(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"],
                 m_savingBuf["playState"]["Playerposition"]["y"]));
 
             std::shared_ptr<NPC> NPC(std::make_shared<NPC>());
