@@ -169,7 +169,7 @@ public:
 		{
 			//push the playermenu state
 			sf::Vector2f cameraCenter = m_camera->getView().getCenter();
-			auto state = std::make_unique<PlayerMenuState>(getStateStack().get(), *this,cameraCenter);
+			auto state = std::make_unique<PlayerMenuState>(getStateStack().get(), *this,cameraCenter,m_player);
 			getStateStack().get().pushQueueState(std::move(state));
 			m_menu = false;
 			return;

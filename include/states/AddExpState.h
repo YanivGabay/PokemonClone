@@ -26,7 +26,7 @@ public:
 		 m_startExpPercent = m_player->getStarterPokemon()->getCurrentExpPercent();
 
 		  float exp = m_wildPokemon->getLevel() * 5;
-
+		  m_battle->setAdviceText("Your Pokemon Gained:" + std::to_string(exp) );
 		  m_player->getStarterPokemon()->setCurrentExp(m_player->getStarterPokemon()->getCurrentExp() + exp);
 		
 		

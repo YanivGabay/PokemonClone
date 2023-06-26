@@ -6,9 +6,11 @@
 class PokemonMenuState :public BaseState
 {
 public:
-	PokemonMenuState(Stack<BaseState>& states,std::shared_ptr<Player> player,sf::Vector2f cameraCenter) : BaseState(states),
-		m_player(player),m_cameraCenter(cameraCenter)
-	{ }
+	PokemonMenuState(Stack<BaseState>& states, std::shared_ptr<Player> player, sf::Vector2f cameraCenter) : BaseState(states),
+		m_player(player), m_cameraCenter(cameraCenter), m_front(m_player->getStarterPokemon()->getFrontSprite())
+	{
+		entry();
+	}
 	~PokemonMenuState() {};
 
 	 void entry() {
@@ -30,6 +32,8 @@ public:
 		 m_exp->addProgressBar(m_exp->getPosition().x, m_exp->getPosition().y, buttonSize.x, buttonSize.y, sf::Color::Black,
 								sf::Color::Blue, m_player->getStarterPokemon()->getCurrentExpPercent());
 		 setText();
+
+		 m_front.setPosition(m_cameraCenter.x, m_cameraCenter.y);
 	 }
 	 void setText()
 	 {
@@ -56,17 +60,28 @@ public:
 	 
 	 
 	 }
-	 void handleEvents(sf::Event event) {
-	 
-	 
+	 void handleEvents(sf::Event event)
+	 {
+
+		 if (event.type == sf::Event::KeyReleased)
+		 {
+			 if (event.key.code == sf::Keyboard::M)
+			 {
+				 setStatus(false);
+			 }
+		 }
 	 }
 	 void draw(sf::RenderWindow& window) {
 	 
-	 
+		 m_main->draw(window);
+		 m_life->draw(window);
+		 m_exp->draw(window);
+		 window.draw(m_front);
 	 }
 private:
 	std::shared_ptr<Player> m_player;
 
+	sf::Sprite& m_front;
 	sf::Vector2f m_cameraCenter;
 	std::unique_ptr<Gui> m_main;
 	std::unique_ptr<Gui> m_life;

@@ -84,16 +84,20 @@ public:
 			 }
 		 }
 
-		 if (option == Pokemons)
+		 if (m_selection == Pokemons)
 		 {
-			auto state = std::make_unique<PokemonMenuState>(getStateStack().get(),m_player,m_cameraCenter)
+			 auto state = std::make_unique<PokemonMenuState>(getStateStack().get(), m_player, m_cameraCenter);
+			 getStateStack().get().pushQueueState(std::move(state));
+			 m_selection = std::nullopt;
 		 }
-		 else if (option == SaveGame)
+		 else if (m_selection == SaveGame)
 		 {
 			 
 		 }
-		 else if (option == QuitGame)
+
+		 else if (m_selection == QuitGame)
 		 {
+			 m_selection = std::nullopt;
 			 setStatus(false);
 			 
 		 }
