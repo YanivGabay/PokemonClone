@@ -11,7 +11,8 @@ const int PARTY_SIZE = 6;
 class Party
 {
 public:
-    Party() : m_CurrentPokemonIndex(std::nullopt)
+    Party()
+        : m_CurrentPokemonIndex(std::nullopt)
     {
     }
 
@@ -33,16 +34,20 @@ public:
 
         for (int pokemonIndex = 0; pokemonIndex < PARTY_SIZE; pokemonIndex++)
         {
+            std::cout << ",,,,,,,,," << std::endl;
             if (!m_pokemons[pokemonIndex])
             {
+                std::cout << "......." << std::endl;
                 m_pokemons[pokemonIndex] = std::move(pokemon);
-
+                std::cout << "///////////" << std::endl;
                 // Set the current Pokemon index if it's the first Pokemon added
                 if (!m_CurrentPokemonIndex)
                 {
+                    std::cout << "*********" << std::endl;
                     m_CurrentPokemonIndex = pokemonIndex;
-                }
 
+                }
+                std::cout << "@@@@@@@@@@2" << std::endl;
                 return;
             }
         }
