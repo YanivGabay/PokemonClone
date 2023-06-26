@@ -66,7 +66,6 @@ public:
     }
     void updateParty (std::shared_ptr<Pokemon> partyPokemon)
     {
-        // m_savingBuf["Party"]["ReallSize"] += 1;
         std::string StrCurrPokemon = std::to_string(static_cast<int>(partyPokemon->getName()));
         m_savingBuf["Party"][StrCurrPokemon]["getAttack"] = partyPokemon->getAttack();
         
