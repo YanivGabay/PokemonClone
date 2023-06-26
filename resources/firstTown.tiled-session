@@ -19,10 +19,10 @@
         },
         "firstTown.tmj": {
             "scale": 1,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 302,
-                "y": 427
+                "x": 299,
+                "y": 424
             }
         },
         "firstTown.tmj#spritesheet": {
@@ -31,10 +31,10 @@
         },
         "secondMap.tmj": {
             "scale": 0.75,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 210.66666666666674,
-                "y": 537.3333333333334
+                "x": 206.66666666666674,
+                "y": 533.3333333333334
             }
         },
         "secondMap.tmj#spritesheet": {
