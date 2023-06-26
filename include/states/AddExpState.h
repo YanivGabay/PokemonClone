@@ -72,6 +72,7 @@ public:
 								
 				 if (m_endExpPercent >= 100.0f)
 				 {
+					 m_battle->setAdviceText("Good job! your pokemon has leveled up!\n press enter to continue");
 					 m_levelUp = true;
 					 setUpLevelUp();
 					 m_elapsedTime = sf::seconds(0.0f);
