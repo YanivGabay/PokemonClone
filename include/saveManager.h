@@ -62,11 +62,13 @@ public:
     void updateParty(int partySize)
     {
         m_savingBuf["Party"]["Size"] = partySize;
+        m_savingBuf["Party"]["RealSize"] = -1;
         // m_savingBuf["Party"]["ReallSize"] = 0;
     }
-    void updateParty (std::shared_ptr<Pokemon> partyPokemon)
+    void updateParty (std::shared_ptr<Pokemon> partyPokemon,const int index)
     {
-        std::string StrCurrPokemon = std::to_string(static_cast<int>(partyPokemon->getName()));
+        m_savingBuf["Party"]["RealSize"] = index;
+        std::string StrCurrPokemon = std::to_string(static_cast<int>(index));
         m_savingBuf["Party"][StrCurrPokemon]["getAttack"] = partyPokemon->getAttack();
         
         m_savingBuf["Party"][StrCurrPokemon]["getAttackIV"] = partyPokemon->getAttackIV();
@@ -159,29 +161,49 @@ public:
             std::cout << "555" << std::endl;
             std::unique_ptr<Party> pokemons(std::make_unique<Party>());
             std::cout << "666" << std::endl;
-            for (size_t i = 0; i < m_savingBuf["Party"]["ReallSize"]; ++i)
+            for (size_t i = 0; i <= m_savingBuf["Party"]["RealSize"]; ++i)
             {
                 std::cout << "########" << std::endl;
                 std::string StrCurrPokemon = std::to_string(static_cast<int>(i));
                 std::cout << "========" << std::endl;
-
-                pokemons->addPokemon(std::make_shared<Pokemon> (m_savingBuf.at("Party").at(i).at("city"),
-                    m_savingBuf.at("Party").at(i).at("getBaseHP"),
-                    m_savingBuf.at("Party").at(i).at("getBaseAttack"),
-                    m_savingBuf.at("Party").at(i).at("getBaseDefense"),
-                    m_savingBuf.at("Party").at(i).at("getBaseSpeed"),
-                    m_savingBuf.at("Party").at(i).at("getHPIV"),
-                    m_savingBuf.at("Party").at(i).at("getAttackIV"),
-                    m_savingBuf.at("Party").at(i).at("getDefenseIV"),
-                    m_savingBuf.at("Party").at(i).at("getSpeedIV"),
-                    m_savingBuf.at("Party").at(i).at("getHP"),
-                    m_savingBuf.at("Party").at(i).at("getAttack"),
-                    m_savingBuf.at("Party").at(i).at("getDefense"),
-                    m_savingBuf.at("Party").at(i).at("getSpeed"),
-                    m_savingBuf.at("Party").at(i).at("getLevel"),
-                    m_savingBuf.at("Party").at(i).at("getCurrentExp"),
-                    m_savingBuf.at("Party").at(i).at("getExpToLevel"),
-                    m_savingBuf.at("Party").at(i).at("getCurrentHP")));
+                std::cout << "i" << std::endl;
+                /*
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getName") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseHP") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseAttack") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseDefense") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseSpeed") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getHPIV") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getAttackIV") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getDefenseIV") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getSpeedIV") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getHP") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getAttack") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getDefense") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getSpeed") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getLevel") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentExp") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getExpToLevel") << std::endl;
+                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentHP") << std::endl;
+                */
+                pokemons->addPokemon(std::make_shared<Pokemon> (
+                    static_cast<PokemonIndex>(m_savingBuf.at("Party").at(StrCurrPokemon).at("getName")),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseHP"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseAttack"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseDefense"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseSpeed"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getHPIV"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getAttackIV"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getDefenseIV"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getSpeedIV"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getHP"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getAttack"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getDefense"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getSpeed"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getLevel"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentExp"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getExpToLevel"),
+                    m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentHP")));
                 std::cout << "777" << std::endl;
             }
             std::cout << "888" << std::endl;

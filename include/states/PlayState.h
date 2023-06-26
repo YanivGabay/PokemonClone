@@ -244,7 +244,7 @@ public:
 		{
 			if (m_player->getPokemon(i))
 			{
-				m_savingbufs.updateParty(m_player->getPokemon(i));
+				m_savingbufs.updateParty(m_player->getPokemon(i),i);
 			}
 		}
 	}

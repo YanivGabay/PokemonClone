@@ -23,6 +23,7 @@ public:
           m_pokemons(std::move(pokemons))
     {
         setSprite(PlayerID::UP_IDLE);
+        setOrigin();
     }
 
     Player()
