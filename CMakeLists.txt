@@ -21,16 +21,19 @@ include (cmake/Zip.cmake)
 set (SFML_LOCATION "C:/SFML/SFML-2.5.1")
 set (SFML_DIR "${SFML_LOCATION}/lib/cmake/SFML")
 
+#--------------------------------------
 
-set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/external/boost_1_82_0")  
+# Add the include directory for nlohmann json
+include_directories(${CMAKE_SOURCE_DIR}/external/json-develop/single_include)
 
-find_package(Boost 1.82.0)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-    target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
-else()
-    message(WARNING "Boost not found. Some features may be disabled.")
-endif()
+# Add the library to your project
+add_library(nlohmann_json INTERFACE)
+target_include_directories(nlohmann_json INTERFACE ${CMAKE_SOURCE_DIR}/external/json-develop/single_include)
+
+# Link the library to your executable
+target_link_libraries(${CMAKE_PROJECT_NAME} nlohmann_json)
+
+#--------------------------------------
 
 find_package (SFML 2.5 COMPONENTS graphics audio REQUIRED)
 

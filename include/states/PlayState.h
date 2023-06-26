@@ -11,10 +11,50 @@
 #include "EncounterBattleState.h"
 #include "SoundTon.h"
 #include "TransitionState.h"
+#include "saveManager.h"
+#include <iostream>
+
 
 class PlayState : public BaseState
 {
 public:
+	PlayState(Stack<BaseState>& states,
+			  std::unique_ptr<PlayState> other)
+		: BaseState(states),
+		  m_camera(std::move(other->m_camera)),
+		  m_player(other->m_player),
+		  m_NPC(other->m_NPC),
+		  m_currentLevel(std::move(other->m_currentLevel)),
+		  m_pokemonFactory(std::make_unique<PokemonFactory>())
+	{
+		m_camera->debug();
+		std::cout << m_player->getPosition().x << "  " << m_player->getPosition().y << std::endl;
+		std::cout << m_NPC->getPosition().x << "  " << m_NPC->getPosition().y << std::endl;
+		std::cout << int(m_currentLevel->getLevelId()) << std::endl;
+		SoundTon::getInstance().stopSound(soundNames::OPEN);
+		SoundTon::getInstance().playSound(soundNames::CITY);
+	}
+
+	PlayState(Stack<BaseState>& states,
+			  std::unique_ptr<Level> currentLevel,
+			  std::shared_ptr<Player> player,
+			  std::shared_ptr<NPC> NPC,
+			  std::unique_ptr<Camera> camera)
+		: BaseState(states),
+		  m_camera(std::move(camera)),
+		  m_player(player),
+		  m_NPC(NPC),
+		  m_currentLevel(std::move(currentLevel)),
+		  m_pokemonFactory(std::make_unique<PokemonFactory>())
+	{
+		m_camera->debug();
+		std::cout << m_player->getPosition().x << "  " << m_player->getPosition().y << std::endl;
+		std::cout << m_NPC->getPosition().x << "  " << m_NPC->getPosition().y << std::endl;
+		std::cout << int(m_currentLevel->getLevelId()) << std::endl;
+		// SoundTon::getInstance().stopSound(soundNames::OPEN);
+		// SoundTon::getInstance().playSound(soundNames::CITY);
+	}
+
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
 		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
@@ -23,7 +63,11 @@ public:
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
-		
+		m_camera->debug();
+		std::cout << m_player->getPosition().x << "  " << m_player->getPosition().y << std::endl;
+		std::cout << m_NPC->getPosition().x << "  " << m_NPC->getPosition().y << std::endl;
+		std::cout << int(m_currentLevel->getLevelId()) << std::endl;
+
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 
@@ -33,7 +77,6 @@ public:
 		m_player->addPokemon(firstpokemon);
 
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
-		
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
 	
@@ -59,8 +102,6 @@ public:
 	
 	const std::map<Side, bool> getMovesMap(sf::Vector2i currPos)
 	{
-		
-
 		std::array<sf::Vector2i, SIDES> tilesOptions = getOptions(currPos);
 		std::map <Side, bool> directionMap;
 		directionMap[RIGHT] = m_currentLevel->checkCollisionUpper(tilesOptions[RIGHT] * TILE_SIZE);
@@ -165,6 +206,29 @@ public:
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 		
 		m_currentLevel->updateAnimations(dt);
+
+		//-----------------------
+		m_savingbufs.updatePlayer(m_player->getPosition().x,
+								  m_player->getPosition().y,
+								  m_currentLevel->getLevelId(),
+								  m_currentLevel->getEncounterRate(),
+								  m_camera->getView().getCenter().x,
+								  m_camera->getView().getCenter().y,
+								  m_NPC->getPosition().x,
+								  m_NPC->getPosition().y);
+		
+		m_savingbufs.updateParty(m_player->getPartySize());
+
+		for (size_t i = 0; i < m_player->getPartySize(); ++i)
+		{
+			if (m_player->getPokemon(i))
+			{
+				m_savingbufs.updateParty(m_player->getPokemon(i));
+			}
+		}
+		
+		m_savingbufs.savingIntoFile(); /// --- for_debug --- ///
+		//---------------
 	}
 	
 	void checkCollision(sf::Time dt)
@@ -204,4 +268,6 @@ private:
 	std::unique_ptr<Camera> m_camera;
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;
+
+	saveManager m_savingbufs;
 };

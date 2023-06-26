@@ -8,12 +8,47 @@
 class Pokemon
 {
 public:
-    Pokemon() {}
-	
-
-	~Pokemon()
-	{
-	}
+    Pokemon() = default;
+    Pokemon(enum PokemonIndex name,
+            int baseHP,
+            int baseAttack,
+            int baseDefense,
+            int baseSpeed,
+            int HPIV,
+            int attackIV,
+            int defenseIV,
+            int speedIV,
+            int HP,
+            int attack,
+            int defense,
+            int speed,
+            int level,
+            int currentExp,
+            float expToLevel,
+            int currentHP)
+        : m_name(name),
+        m_baseHP(baseHP),
+        m_baseAttack(baseAttack),
+        m_baseDefense(baseDefense),
+        m_baseSpeed(baseSpeed),
+        m_HPIV(HPIV),
+        m_attackIV(attackIV),
+        m_defenseIV(defenseIV),
+        m_speedIV(speedIV),
+        m_HP(HP),
+        m_attack(attack),
+        m_defense(defense),
+        m_speed(speed),
+        m_level(level),
+        m_currentExp(currentExp),
+        m_expToLevel(expToLevel),
+        m_currentHP(currentHP)
+    {
+        setSprites();
+    }
+    
+    ~Pokemon() = default;
+    
     std::vector<int> levelUp()
     {
         m_level++;
@@ -70,6 +105,11 @@ public:
     enum PokemonIndex getName() const
     {
         return m_name;
+    }
+
+    std::string getPokemonName()
+    {
+        return PokemonNames.at(m_name);
     }
     int getBaseHP() const
     {

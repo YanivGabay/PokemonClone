@@ -17,9 +17,18 @@
 class Player : public Entity
 {
 public:
+    Player(std::unique_ptr<Party> pokemons)
+        : Entity("resources/maleSpriteSheet.png"),
+          m_isMoving(false),
+          m_pokemons(std::move(pokemons))
+    {
+        setSprite(PlayerID::UP_IDLE);
+    }
+
     Player()
         : Entity("resources/maleSpriteSheet.png"),
-          m_isMoving(false),m_pokemons(std::move(std::make_unique<Party>()))
+          m_isMoving(false),
+          m_pokemons(std::move(std::make_unique<Party>()))
     {
         setSprite(PlayerID::UP_IDLE);
         setOrigin();
@@ -31,7 +40,6 @@ public:
     {
         if (!m_isMoving)
         {
-          
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
                 m_movingObj.setMove(LEFT);
@@ -179,10 +187,17 @@ public:
     {
         return m_isMoving;
     }
+
     void setMoving(bool value)
     {
         m_isMoving = value;
     }
+
+    int getPartySize()
+    {
+        return  m_pokemons->getPartySize();
+    }
+
 private:
     bool m_isMoving;
     PlayerID m_curr{ PlayerID::UP_IDLE };

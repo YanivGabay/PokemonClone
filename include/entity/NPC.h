@@ -35,10 +35,7 @@ public:
         return directionMap.at(side);
     }
 
-    virtual void update(sf::Time dt, const std::map<Side, bool>& directionMap) override
-    {
-       
-    }
+    virtual void update(sf::Time dt, const std::map<Side, bool>& directionMap) override {}
 
     virtual void draw(sf::RenderWindow& window) override
     {

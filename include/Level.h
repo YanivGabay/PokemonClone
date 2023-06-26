@@ -43,6 +43,7 @@ public:
 	{
 		return (*m_currMap)->checkCollisionUpper(target);
 	}
+
 	const int getEncounterRate()
 	{
 		return m_encounterRate;
@@ -68,6 +69,15 @@ public:
 			m_currMap--;
 			m_id = static_cast<LevelID>(static_cast<int>(m_id) - 1);
 		}
+	}
+	
+	void setEncounterRate(int rate)
+	{
+		m_encounterRate = rate;
+	}
+	void setLevelId(LevelID id)
+	{
+		m_id = id;
 	}
 private:
 	
