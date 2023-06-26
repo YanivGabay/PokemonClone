@@ -8,12 +8,32 @@
 class Pokemon
 {
 public:
-    Pokemon() {}
-	
+    Pokemon() = default;
+    Pokemon(enum PokemonIndex m_name,
+            // sf::Sprite m_battleSpriteFront,
+            // sf::Sprite m_battleSpriteBack,
+            int m_baseHP,
+            int m_baseAttack,
+            int m_baseDefense,
+            int m_baseSpeed,
+            int m_HPIV,
+            int m_attackIV,
+            int m_defenseIV,
+            int m_speedIV,
+            int m_HP,
+            int m_attack,
+            int m_defense,
+            int m_speed,
+            int m_level,
+            int m_currentExp,
+            float m_expToLevel,
+            int m_currentHP)
+    {
 
-	~Pokemon()
-	{
-	}
+    }
+    
+    ~Pokemon() = default;
+    
     std::vector<int> levelUp()
     {
         m_level++;

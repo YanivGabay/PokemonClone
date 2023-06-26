@@ -20,7 +20,6 @@ public:
 
     sf::View& getView()
     {
-        
         return m_view;
     }
 

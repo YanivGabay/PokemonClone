@@ -10,6 +10,7 @@
 #include "TransitionState.h"
 #include "PlayState.h"
 #include <future>
+#include "saveManager.h"
 
 
 class StartState : public BaseState
@@ -62,6 +63,18 @@ public:
 										 });
 			m_startMenu->setLoadingText();
 		}
+
+		if (m_startMenu->getChoice() == LOAD_GAME && !m_loadingStarted)
+		{
+			m_choice = std::nullopt;
+			m_loadingStarted = true;
+			// Asynchronously create PlayState
+			m_loadingFuture = std::async(std::launch::async, [this] {
+				return std::make_unique<PlayState>(getStateStack().get(), m_saveManager.loadingFromFile(getStateStack().get()));
+				});
+			m_startMenu->setLoadingText();
+		}
+
 		if (m_loadingStarted && m_loadingFuture.valid() &&
 			m_loadingFuture.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
 		{
@@ -83,6 +96,7 @@ public:
 	}
 
 private:
+	saveManager m_saveManager;
 	std::optional<StartMenuOptions> m_choice{ std::nullopt };
 	std::unique_ptr<StartMenuState> m_startMenu;
 

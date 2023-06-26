@@ -11,12 +11,41 @@
 #include "EncounterBattleState.h"
 #include "SoundTon.h"
 #include "TransitionState.h"
-#include "saveGame.h"
+#include "saveManager.h"
 
 
 class PlayState : public BaseState
 {
 public:
+	PlayState(Stack<BaseState>& states,
+		std::unique_ptr<PlayState> other)
+		: BaseState(states),
+		m_camera(std::move(other->m_camera)),
+		m_player(std::move(other->m_player)),
+		m_NPC(std::move(other->m_NPC)),
+		m_currentLevel(std::move(other->m_currentLevel)),
+		m_pokemonFactory(std::make_unique<PokemonFactory>())
+	{
+		SoundTon::getInstance().stopSound(soundNames::OPEN);
+		SoundTon::getInstance().playSound(soundNames::CITY);
+	}
+
+	PlayState(Stack<BaseState>& states,
+			  std::unique_ptr<Level> currentLevel,
+			  std::shared_ptr<Player> player,
+			  std::shared_ptr<NPC> NPC,
+			  std::unique_ptr<Camera> camera)
+		: BaseState(states),
+		  m_camera(std::move(camera)),
+		  m_player(std::move(player)),
+		  m_NPC(std::move(NPC)),
+		  m_currentLevel(std::move(currentLevel)),
+		  m_pokemonFactory(std::make_unique<PokemonFactory>())
+	{
+	//	SoundTon::getInstance().stopSound(soundNames::OPEN);
+		//SoundTon::getInstance().playSound(soundNames::CITY);
+	}
+
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
 		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
@@ -35,7 +64,6 @@ public:
 		m_player->addPokemon(firstpokemon);
 
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
-		
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
 	
@@ -61,8 +89,6 @@ public:
 	
 	const std::map<Side, bool> getMovesMap(sf::Vector2i currPos)
 	{
-		
-
 		std::array<sf::Vector2i, SIDES> tilesOptions = getOptions(currPos);
 		std::map <Side, bool> directionMap;
 		directionMap[RIGHT] = m_currentLevel->checkCollisionUpper(tilesOptions[RIGHT] * TILE_SIZE);
@@ -149,8 +175,10 @@ public:
 								  m_currentLevel->getLevelId(),
 								  m_currentLevel->getEncounterRate(),
 								  m_camera->getView().getCenter().x,
-								  m_camera->getView().getCenter().y);
-
+								  m_camera->getView().getCenter().y,
+								  m_NPC->getPosition().x,
+								  m_NPC->getPosition().y);
+		
 		m_savingbufs.updateParty(m_player->getPartySize());
 
 		for (size_t i = 0; i < m_player->getPartySize(); ++i)
@@ -190,5 +218,5 @@ private:
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;
 
-	saveGame m_savingbufs;
+	saveManager m_savingbufs;
 };

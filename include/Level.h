@@ -30,6 +30,7 @@ public:
 	{
 		return m_map->checkCollisionUpper(target);
 	}
+
 	const int getEncounterRate()
 	{
 		return m_encounterRate;
@@ -37,6 +38,15 @@ public:
 	const LevelID getLevelId()
 	{
 		return m_id;
+	}
+	
+	void setEncounterRate(int rate)
+	{
+		m_encounterRate = rate;
+	}
+	void setLevelId(LevelID id)
+	{
+		m_id = id;
 	}
 private:
 	std::unique_ptr<TilesMap> m_map;

@@ -17,9 +17,18 @@
 class Player : public Entity
 {
 public:
+    Player(std::unique_ptr<Party> pokemons)
+        : Entity("resources/maleSpriteSheet.png"),
+          m_isMoving(false),
+          m_pokemons(std::move(pokemons))
+    {
+        setSprite(PlayerID::UP_IDLE);
+    }
+
     Player()
         : Entity("resources/maleSpriteSheet.png"),
-          m_isMoving(false),m_pokemons(std::move(std::make_unique<Party>()))
+          m_isMoving(false),
+          m_pokemons(std::move(std::make_unique<Party>()))
     {
         setSprite(PlayerID::UP_IDLE);
     }
