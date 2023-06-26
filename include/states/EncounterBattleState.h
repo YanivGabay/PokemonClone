@@ -120,7 +120,7 @@ private:
 
 	bool m_playerTurn = { true };
 		
-
+	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
 	sf::RenderWindow& m_window{ Resources::getInstance().getWindow() };
 	sf::View m_originalView{ m_window.getView() };
 	std::shared_ptr<Battle> m_battle;

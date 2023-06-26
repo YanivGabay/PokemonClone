@@ -1,7 +1,8 @@
 #pragma once
 #include "BaseState.h"
 #include "guis/Gui.h"
-
+#include "entity/Player.h"
+#include "PokemonMenuState.h"
 class PlayState;
 
 enum PlayerMenuOptions
@@ -38,8 +39,9 @@ std::optional<PlayerMenuOptions> operator--(std::optional<PlayerMenuOptions> opt
 class PlayerMenuState : public BaseState
 {
 public:
-	PlayerMenuState(Stack<BaseState>& states,PlayState& state,sf::Vector2f cameraCenter): BaseState(states),
-		m_playState(state),m_cameraCenter(cameraCenter) { 
+	PlayerMenuState(Stack<BaseState>& states,PlayState& state,sf::Vector2f cameraCenter,
+					std::shared_ptr<Player> player): BaseState(states),
+		m_playState(state),m_cameraCenter(cameraCenter),m_player(player) { 
 		entry();
 	};
 	~PlayerMenuState() {};
@@ -81,6 +83,20 @@ public:
 				 m_menuSelection[i]->setResetColor();
 			 }
 		 }
+
+		 if (option == Pokemons)
+		 {
+			auto state = std::make_unique<PokemonMenuState>(getStateStack().get(),m_player,m_cameraCenter)
+		 }
+		 else if (option == SaveGame)
+		 {
+			 
+		 }
+		 else if (option == QuitGame)
+		 {
+			 setStatus(false);
+			 
+		 }
 		//if not null,switch case what to do
 	 }
 	 void handleEvents(sf::Event event){
@@ -121,6 +137,8 @@ private:
 	std::optional<PlayerMenuOptions> m_hover{ Pokemons };
 	
 	PlayState& m_playState;
+
+	std::shared_ptr<Player> m_player;
 
 	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
 	sf::Vector2f m_cameraCenter;
