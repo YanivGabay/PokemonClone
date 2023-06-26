@@ -53,13 +53,19 @@ public:
 	}
 	void nextLevel()
 	{
-		m_currMap++;
-		m_id = static_cast<LevelID>(static_cast<int>(m_id) + 1);
+		if (m_currMap != m_maps.end() - 1)
+		{
+			m_currMap++;
+			m_id = static_cast<LevelID>(static_cast<int>(m_id) + 1);
+		}
 	}
 	void returnLevel()
 	{
-		m_currMap--;
-		m_id = static_cast<LevelID>(static_cast<int>(m_id) -1);
+		if (m_currMap != m_maps.begin())
+		{
+			m_currMap--;
+			m_id = static_cast<LevelID>(static_cast<int>(m_id) - 1);
+		}
 	}
 private:
 	

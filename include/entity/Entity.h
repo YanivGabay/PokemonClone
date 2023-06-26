@@ -64,7 +64,11 @@ public:
     {
         m_position = targetPos;
     }
-
+    void setPositions(sf::Vector2i position)
+    {
+        m_position = position;
+        m_movingObj.setPosition(position);
+    }
     sf::Vector2i getTargetPosition()
     {
         return m_targetPosition;

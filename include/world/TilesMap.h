@@ -122,7 +122,7 @@ public:
 							m_mediumMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_mediumTiles.back().get());
 							if (mytype == "portal")
 							{
-								
+								std::cout << "x of portal:" << actualPosition.x << "y of portal" << actualPosition.y << std::endl;
 								m_exits.push_back((m_mediumTiles.back().get()));
 							}
 						}
@@ -140,8 +140,8 @@ public:
 	sf::Vector2i getExitPos()
 	{
 		sf::Vector2i m_pos;
-		m_pos.x = m_exits.back()->getPosition().x;
-		m_pos.y = m_exits.back()->getPosition().y;
+		m_pos.x = m_exits.back()->getPosition().x / TILE_SIZE ;
+		m_pos.y = m_exits.back()->getPosition().y / TILE_SIZE ;
 		return m_pos;
 	}
 	void draw(sf::RenderWindow& window)

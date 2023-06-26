@@ -87,7 +87,7 @@ public:
 					triggerBattleEncounter(m_currentLevel->getLevelId());
 				}
 			}
-			else if (type == "portal")
+			else if (type == "portal"&&m_player->getIsMoving())
 			{
 			
 				
@@ -95,6 +95,7 @@ public:
 																
 				getStateStack().get().pushQueueState(std::move(fadeout));
 				m_transition = true;
+				m_player->setMoving(false);
 			}
 			else
 			{
@@ -128,16 +129,18 @@ public:
 			if (m_player->getPosition().y < 300)
 			{
 				m_currentLevel->nextLevel();
-				m_player->setPosition(m_currentLevel->getExit());
-				sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
-				m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+				m_player->setPositions(m_currentLevel->getExit());
+				m_player->setMoving(false);
+				std::cout << "player x" << m_player->getPosition().x << std::endl;
+				std::cout << "player y" << m_player->getPosition().x << std::endl;
 			}
-			else
+			else 
 			{
 				m_currentLevel->returnLevel();
-				m_player->setPosition(m_currentLevel->getExit());
-				sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
-				m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
+				m_player->setPositions(m_currentLevel->getExit());
+
+				std::cout << "player x" << m_player->getPosition().x << std::endl;
+				std::cout << "player y" << m_player->getPosition().x << std::endl;
 			}
 			
 
