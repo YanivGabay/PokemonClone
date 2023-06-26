@@ -192,23 +192,22 @@ public:
     }
     float getHpPercent() const
     {
-        std::cout << " m_currhp = " << m_currentHP << "m_hp = " << m_HP << std::endl;
+       
         float percentage = (static_cast<float>(m_currentHP) / static_cast<float>(m_HP)) * 100.0f;
-        std::cout << "percentage hp = " << percentage << std::endl;
+      
         return percentage;
     }
     //sets::
     void applyDamage(const int damage)
     {
-        std::cout << "m_currentHP before damage" << m_currentHP<< std::endl;
+        
         m_currentHP -= damage;
         if (m_currentHP < 0)
         {
             m_currentHP = 0;
             
         }
-        std::cout << "m_currentHP after damage" << m_currentHP<< std::endl;
-        std::cout << "damage taken:" << damage << std::endl;
+       
 
     }
     void setName(const  enum PokemonIndex name)

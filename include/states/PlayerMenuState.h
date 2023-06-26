@@ -2,6 +2,8 @@
 #include "BaseState.h"
 #include "guis/Gui.h"
 
+class PlayState;
+
 enum PlayerMenuOptions
 {
 	Pokemons,
@@ -36,17 +38,22 @@ std::optional<PlayerMenuOptions> operator--(std::optional<PlayerMenuOptions> opt
 class PlayerMenuState : public BaseState
 {
 public:
-	PlayerMenuState(Stack<BaseState>& states): BaseState(states) { };
+	PlayerMenuState(Stack<BaseState>& states,PlayState& state,sf::Vector2f cameraCenter): BaseState(states),
+		m_playState(state),m_cameraCenter(cameraCenter) { 
+		entry();
+	};
 	~PlayerMenuState() {};
 
 
 	 void entry(){
+		 
 		 sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 3, m_windowSize.y / 3);
-		 float x = (static_cast<float>(m_windowSize.x / 2) - (buttonSize.x / 2));
+		// float x = (static_cast<float>(m_cameraCenter.x ) - (buttonSize.x / 2));
 
 		 for (size_t i = 0; i < PlayerMenuSize; i++)
 		 {
-			 m_menuSelection[i] = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), buttonSize, sf::Vector2f(x, 50 + buttonSize.y * i)));
+			 m_menuSelection[i] = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), buttonSize,
+																  sf::Vector2f(m_cameraCenter.x+m_windowSize.x/2-buttonSize.x,m_cameraCenter.y-m_windowSize.y/2+50*i)));
 		 }
 
 		 resetText();
@@ -77,7 +84,7 @@ public:
 		//if not null,switch case what to do
 	 }
 	 void handleEvents(sf::Event event){
-		 if (event.type == sf::Event::KeyReleased)
+		 if (event.type == sf::Event::KeyPressed)
 		 {
 			 if (event.key.code == sf::Keyboard::Enter)
 			 {
@@ -91,6 +98,11 @@ public:
 			 {
 				 m_hover = --m_hover;
 			 }
+			 if (event.key.code == sf::Keyboard::M)
+			 {
+				 setStatus(false);
+			 }
+			
 		 }
 	 }
 	 void draw(sf::RenderWindow& window){
@@ -100,13 +112,17 @@ public:
 		 }
 	 }
 private:
+
+	bool m_finish {false};
 	
 	std::array<std::unique_ptr<Gui>, PlayerMenuSize> m_menuSelection {};
 
 	std::optional<PlayerMenuOptions> m_selection{ std::nullopt };
 	std::optional<PlayerMenuOptions> m_hover{ Pokemons };
 	
+	PlayState& m_playState;
 
 	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
+	sf::Vector2f m_cameraCenter;
 };
 

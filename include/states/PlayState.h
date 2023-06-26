@@ -13,7 +13,7 @@
 #include "TransitionState.h"
 #include "saveManager.h"
 #include <iostream>
-
+#include "PlayerMenuState.h"
 
 class PlayState : public BaseState
 {
@@ -165,6 +165,16 @@ public:
 
 	void update(sf::Time dt) override
 	{
+		if (m_menu)
+		{
+			//push the playermenu state
+			sf::Vector2f cameraCenter = m_camera->getView().getCenter();
+			auto state = std::make_unique<PlayerMenuState>(getStateStack().get(), *this,cameraCenter);
+			getStateStack().get().pushQueueState(std::move(state));
+			m_menu = false;
+			return;
+		}
+
 		if (m_transition)
 		{
 			if (m_player->getPosition().y < 30)
@@ -245,8 +255,12 @@ public:
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();
-
 		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+		{
+			m_menu = true;
+
+		}
 			
 		
 	}
@@ -261,7 +275,7 @@ public:
 
 private:
 	bool m_transition {false};
-
+	bool m_menu{ false };
 	std::unique_ptr<Level> m_currentLevel;
 	std::shared_ptr<Player> m_player;
 	std::shared_ptr<NPC> m_NPC;
