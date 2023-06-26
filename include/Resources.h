@@ -134,7 +134,7 @@ public:
 	{
 		if (m_playerRects.find(id) == m_playerRects.end())
 		{
-			std::cerr << "Failed to load playerrect: " << std::endl;
+			std::cerr << "Failed to load playerrect: id num: " << static_cast<int>(id) << std::endl;
 			throw std::runtime_error("Failed to load texture.");
 		}
 		

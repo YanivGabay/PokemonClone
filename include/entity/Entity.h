@@ -18,14 +18,25 @@ sf::Vector2f gridToPixelPosition(sf::Vector2i gridPosition)
 
 class Entity {
 public:
+    Entity(int PosX, int PosY, const std::string myTexture)
+        : m_moveProgress(0.0f),
+          m_moveSpeed(15.0f),
+          m_position(PosX, PosY),
+          m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
+          m_movingObj(PosX, PosY),
+          m_sprite(Resources::getInstance().getTexture(myTexture))
+    {
+        m_sprite.setOrigin(0, m_sprite.getTextureRect().height / 2);
+    }
+
     Entity(const std::string myTexture)
         : m_moveProgress(0.0f),
           m_moveSpeed(15.0f),
           m_position(11, 48),
           m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
           m_movingObj(11, 48),
-          m_sprite(Resources::getInstance().getTexture(myTexture),
-          Resources::getInstance().getRect(PlayerID::UP_IDLE))
+          m_sprite(Resources::getInstance().getTexture(myTexture))
+         
     {
         m_sprite.setOrigin(0, m_sprite.getTextureRect().height / 2);
     }

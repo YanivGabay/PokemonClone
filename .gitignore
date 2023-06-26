@@ -364,3 +364,6 @@ FodyWeavers.xsd
 /external/boost_1_82_0
 
 /external/json-develop/
+/include/entity/Entity.h
+/include/entity/Player.h
+/include/guis/Gui.h

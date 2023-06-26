@@ -63,10 +63,13 @@ public:
     }
     void draw(sf::RenderWindow& window)
     {
+       
         m_button->draw(window);
+       
         window.draw(m_text);
 
         if (m_hasProgressBar) {
+            
             m_progressBar->draw(window);
         }
     }
@@ -77,6 +80,14 @@ public:
     sf::Vector2f getPosition()
     {
         return m_position;
+    }
+    void setProgress(float progress)
+    {
+        if (progress > 100 || progress < 0)
+        {
+            throw std::runtime_error("progress out of range.");
+        }
+        m_progressBar->setProgress(progress);
     }
 private:
     sf::Color m_color;

@@ -21,8 +21,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 301,
-                "y": 426
+                "x": 300,
+                "y": 425
             }
         },
         "firstTown.tmj#spritesheet": {
@@ -52,10 +52,12 @@
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
-        "firstTown.tmj"
+        "firstTown.tmj",
+        "secondMap.tmj"
     ],
     "project": "firstTown.tiled-project",
     "recentFiles": [
+        "secondMap.tmj",
         "firstTown.tmj"
     ],
     "tileset.embedInMap": true,

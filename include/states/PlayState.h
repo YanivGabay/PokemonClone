@@ -11,17 +11,46 @@
 #include "EncounterBattleState.h"
 #include "SoundTon.h"
 #include "TransitionState.h"
-#include "saveGame.h"
+#include "saveManager.h"
 
 
 class PlayState : public BaseState
 {
 public:
+	PlayState(Stack<BaseState>& states,
+		std::unique_ptr<PlayState> other)
+		: BaseState(states),
+		m_camera(std::move(other->m_camera)),
+		m_player(std::move(other->m_player)),
+		m_NPC(std::move(other->m_NPC)),
+		m_currentLevel(std::move(other->m_currentLevel)),
+		m_pokemonFactory(std::make_unique<PokemonFactory>())
+	{
+		SoundTon::getInstance().stopSound(soundNames::OPEN);
+		SoundTon::getInstance().playSound(soundNames::CITY);
+	}
+
+	PlayState(Stack<BaseState>& states,
+			  std::unique_ptr<Level> currentLevel,
+			  std::shared_ptr<Player> player,
+			  std::shared_ptr<NPC> NPC,
+			  std::unique_ptr<Camera> camera)
+		: BaseState(states),
+		  m_camera(std::move(camera)),
+		  m_player(std::move(player)),
+		  m_NPC(std::move(NPC)),
+		  m_currentLevel(std::move(currentLevel)),
+		  m_pokemonFactory(std::make_unique<PokemonFactory>())
+	{
+	//	SoundTon::getInstance().stopSound(soundNames::OPEN);
+		//SoundTon::getInstance().playSound(soundNames::CITY);
+	}
+
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
 		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
 		  m_player(std::make_shared<Player>()),
-		  m_NPC(std::make_unique<NPC>()),
+		  m_NPC(std::make_shared<NPC>()),
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
@@ -31,11 +60,10 @@ public:
 
 		//temporary
 		std::cout << "before add pokemon in playstate" << std::endl;
-		std::unique_ptr<Pokemon> firstpokemon = m_pokemonFactory->createPokemon(PokemonIndex::CHARIZARD);
-		m_player->addPokemon(std::move(firstpokemon));
+		std::shared_ptr<Pokemon> firstpokemon = m_pokemonFactory->createPokemon(PokemonIndex::CHARIZARD);
+		m_player->addPokemon(firstpokemon);
 
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
-		
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
 	
@@ -43,6 +71,7 @@ public:
 	
 	void entry() override {
 		getStateStack().get().popStart();
+		m_NPC->setMovable(false);
 	}
 
 	void exit() override {}
@@ -58,10 +87,8 @@ public:
 		return neighbors;
 	}
 	
-	const std::map<Side, bool> getMovesMap()
+	const std::map<Side, bool> getMovesMap(sf::Vector2i currPos)
 	{
-		sf::Vector2i currPos = m_player.get()->getPosition();
-
 		std::array<sf::Vector2i, SIDES> tilesOptions = getOptions(currPos);
 		std::map <Side, bool> directionMap;
 		directionMap[RIGHT] = m_currentLevel->checkCollisionUpper(tilesOptions[RIGHT] * TILE_SIZE);
@@ -121,8 +148,8 @@ public:
 		}
 		
 
-		m_player->update(dt, getMovesMap());
-		m_NPC->update(dt, getMovesMap());
+		m_player->update(dt, getMovesMap(m_player->getPosition()));
+		m_NPC->update(dt, getMovesMap(m_NPC->getPosition()));
 		
 		//if we are here, the player is after collision check
 		
@@ -142,32 +169,37 @@ public:
 		
 		m_currentLevel->updateAnimations(dt);
 
-		m_savingbufs.updateValues();
+		//-----------------------
+		m_savingbufs.updatePlayer(m_player->getPosition().x,
+								  m_player->getPosition().y,
+								  m_currentLevel->getLevelId(),
+								  m_currentLevel->getEncounterRate(),
+								  m_camera->getView().getCenter().x,
+								  m_camera->getView().getCenter().y,
+								  m_NPC->getPosition().x,
+								  m_NPC->getPosition().y);
+		
+		m_savingbufs.updateParty(m_player->getPartySize());
+
+		for (size_t i = 0; i < m_player->getPartySize(); ++i)
+		{
+			if (m_player->getPokemon(i))
+			{
+				m_savingbufs.updateParty(m_player->getPokemon(i));
+			}
+		}
+		
 		m_savingbufs.savingIntoFile(); /// --- for_debug --- ///
+		//---------------
 	}
 	
 	void checkCollision()
 	{}
-	/*
-	void flashScreen()
-	{
-		sf::RenderWindow& window = Resources::getInstance().getWindow();
-		float time = 3.0f;
-		float curr = 0.0f;
-		int frames = static_cast<int>(time * 60); // Number of frames for the desired duration
-
-		for (int frame = 0; frame < frames; ++frame)
-		{
-			window.clear(sf::Color::White);
-			this->draw(window);
-			window.display();
-		}
-	}
-	*/
+	
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();
-		m_NPC->AIMoving();
+		
 	}
 	
 	void draw(sf::RenderWindow& window) override
@@ -181,10 +213,10 @@ public:
 private:
 	std::unique_ptr<Level> m_currentLevel;
 	std::shared_ptr<Player> m_player;
-	std::unique_ptr<NPC> m_NPC;
+	std::shared_ptr<NPC> m_NPC;
 	std::unique_ptr<Camera> m_camera;
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;
 
-	saveGame m_savingbufs;
+	saveManager m_savingbufs;
 };

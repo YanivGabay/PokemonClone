@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 
+
 const float SCREEN_WIDTH = 800;
 const float SCREEN_HEIGHT = 600;
 
@@ -19,6 +20,12 @@ int generateRandomNumber(int min, int max)
 
 	return distribution(eng);
 }
+
+enum class WhosAttack
+{
+	Enemy,
+	Player
+};
 
 enum class LAYERS
 {
@@ -44,6 +51,16 @@ enum class PlayerID
 
 	END
 };
+
+PlayerID nextFrame(PlayerID current)
+{
+	// The first frame of each direction has an index that is a multiple of 3
+	int baseIndex = static_cast<int>(current) / 3 * 3;
+	int nextIndex = (static_cast<int>(current) + 1 - baseIndex) % 3 + baseIndex;
+
+	
+	return static_cast<PlayerID>(nextIndex);
+}
 
 enum class LevelID
 {

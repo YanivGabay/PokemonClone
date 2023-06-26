@@ -8,12 +8,32 @@
 class Pokemon
 {
 public:
-    Pokemon() {}
-	
+    Pokemon() = default;
+    Pokemon(enum PokemonIndex m_name,
+            // sf::Sprite m_battleSpriteFront,
+            // sf::Sprite m_battleSpriteBack,
+            int m_baseHP,
+            int m_baseAttack,
+            int m_baseDefense,
+            int m_baseSpeed,
+            int m_HPIV,
+            int m_attackIV,
+            int m_defenseIV,
+            int m_speedIV,
+            int m_HP,
+            int m_attack,
+            int m_defense,
+            int m_speed,
+            int m_level,
+            int m_currentExp,
+            float m_expToLevel,
+            int m_currentHP)
+    {
 
-	~Pokemon()
-	{
-	}
+    }
+    
+    ~Pokemon() = default;
+    
     std::vector<int> levelUp()
     {
         m_level++;
@@ -70,6 +90,11 @@ public:
     enum PokemonIndex getName() const
     {
         return m_name;
+    }
+
+    std::string getPokemonName()
+    {
+        return PokemonNames.at(m_name);
     }
     int getBaseHP() const
     {
@@ -158,6 +183,19 @@ public:
         return percentage;
     }
     //sets::
+    void applyDamage(const int damage)
+    {
+        std::cout << "m_currentHP before damage" << m_currentHP<< std::endl;
+        m_currentHP -= damage;
+        if (m_currentHP < 0)
+        {
+            m_currentHP = 0;
+            
+        }
+        std::cout << "m_currentHP after damage" << m_currentHP<< std::endl;
+        std::cout << "damage taken:" << damage << std::endl;
+
+    }
     void setName(const  enum PokemonIndex name)
     {
         m_name = name;
@@ -266,6 +304,33 @@ public:
     {
         return m_battleSpriteFront;
     }
+    bool isAlive()
+    {
+        if (m_currentHP <= 0)
+        {
+            m_currentHP = 0;
+            return false;
+        }
+        return true;
+    }
+    bool levelUpCheck()
+    {
+        if (m_currentExp > m_expToLevel)
+        {
+            m_currentExp = 0;
+            return true;
+        }
+        return false;
+    }
+    float getCurrentExpPercent() const
+    {
+        if (m_expToLevel == 0)
+        {
+            return 0.0f;
+        }
+        return (static_cast<float>(m_currentExp) / m_expToLevel) * 100.0f;
+    }
+
 private:
     enum PokemonIndex m_name;
     sf::Sprite m_battleSpriteFront;
@@ -275,6 +340,7 @@ private:
     int m_baseAttack{ 0 };
     int m_baseDefense{ 0 };
     int m_baseSpeed{ 0 };
+
     int m_HPIV{ 0 };
     int m_attackIV{ 0 };
     int m_defenseIV{ 0 };
