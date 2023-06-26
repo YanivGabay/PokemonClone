@@ -99,7 +99,7 @@ public:
                     b2Vec2 newPos = m_movingObj.getPos();
                     std::cout << "good movment" << std::endl;
                     setTargetPosition(sf::Vector2i(newPos.x, newPos.y));
-                    setPosition(getTargetPosition());
+                    setPositions(getTargetPosition());
                 }
                 else
                 {

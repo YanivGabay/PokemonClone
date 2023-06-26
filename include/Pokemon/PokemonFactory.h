@@ -77,7 +77,7 @@ public:
     {
         std::shared_ptr<Pokemon> pokemon = std::make_shared<Pokemon>();
         // Set the base attributes
-        pokemon->setBaseHP(generateRandomNumber(5, 12));
+        pokemon->setBaseHP(generateRandomNumber(8, 12));
         pokemon->setBaseAttack(generateRandomNumber(6, 12));
         pokemon->setBaseDefense(generateRandomNumber(5, 12));
         pokemon->setBaseSpeed(generateRandomNumber(5, 12));
