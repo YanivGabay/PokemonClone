@@ -282,7 +282,7 @@ public:
     bool isAlive()
     {
         if (m_currentHP <= 0)
-        {
+        { 
             m_currentHP = 0;
             return false;
         }

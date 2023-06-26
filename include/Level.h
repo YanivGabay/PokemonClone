@@ -55,6 +55,7 @@ public:
 	{
 		if (m_currMap != m_maps.end() - 1)
 		{
+			std::cout << "inside next level" << std::endl;
 			m_currMap++;
 			m_id = static_cast<LevelID>(static_cast<int>(m_id) + 1);
 		}
@@ -63,6 +64,7 @@ public:
 	{
 		if (m_currMap != m_maps.begin())
 		{
+			std::cout << "inside return level" << std::endl;
 			m_currMap--;
 			m_id = static_cast<LevelID>(static_cast<int>(m_id) - 1);
 		}

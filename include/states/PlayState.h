@@ -87,7 +87,7 @@ public:
 					triggerBattleEncounter(m_currentLevel->getLevelId());
 				}
 			}
-			else if (type == "portal"&&m_player->getIsMoving())
+			else if (type == "portal"&& sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
 			
 				
@@ -126,7 +126,7 @@ public:
 	{
 		if (m_transition)
 		{
-			if (m_player->getPosition().y < 300)
+			if (m_player->getPosition().y < 30)
 			{
 				m_currentLevel->nextLevel();
 				m_player->setPositions(m_currentLevel->getExit());
@@ -138,7 +138,7 @@ public:
 			{
 				m_currentLevel->returnLevel();
 				m_player->setPositions(m_currentLevel->getExit());
-
+				m_player->setMoving(false);
 				std::cout << "player x" << m_player->getPosition().x << std::endl;
 				std::cout << "player y" << m_player->getPosition().x << std::endl;
 			}
@@ -181,6 +181,9 @@ public:
 	void handleEvents(sf::Event event) override
 	{
 		m_player->handleInput();
+
+		
+			
 		
 	}
 	
