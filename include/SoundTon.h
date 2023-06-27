@@ -66,6 +66,8 @@ private:
 			m_sound[i].setVolume(SOUND_VOLUME);
 			m_sound[i].setLoop(true);
 		}
+		m_sound[soundNames::PORTAL].setVolume(20.f);
+		m_sound[soundNames::PORTAL].setLoop(false);
 		m_sound[soundNames::NM_CLICK].setVolume(10.f);
 		m_sound[soundNames::NM_CLICK].setLoop(false);
 		m_sound[soundNames::POKEMON_CHOOSE].setVolume(10.f);

@@ -121,7 +121,7 @@ enum Side
 
 const float SOUND_VOLUME = 5;
 
-enum soundNames { OPEN, BUSH, CITY, BATTLE, SAVING, HEAL, CLICK, MENU, POKEMON_CHOOSE, WIN, LOSE, NM_CLICK, MENU_THEME, POKEMON};
+enum soundNames { OPEN, BUSH, CITY, BATTLE, SAVING, HEAL, CLICK, MENU, POKEMON_CHOOSE, WIN, LOSE, NM_CLICK, MENU_THEME, POKEMON, PORTAL};
 std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg",
 										 "resources/bush_step.ogg",
 										 "resources/City.ogg",
@@ -135,7 +135,8 @@ std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg",
 										 "resources/lose.ogg",
 										 "resources/NM_click.ogg",
 										 "resources/menu_theme.ogg",
-										 "resources/pokemon.ogg" };
+										 "resources/pokemon.ogg",
+										 "resources/portal.ogg" };
 
 std::vector<std::string> m_continuosAnimationId {"flowers", "portal", "water","sea-rock","fountain"};
 bool checkIfContinous(std::string tileId)

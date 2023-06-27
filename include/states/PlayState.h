@@ -124,7 +124,8 @@ public:
 	{
 		if (type == "portal" && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
-
+			SoundTon::getInstance().playSound(soundNames::PORTAL);
+			
 			auto fadeout = std::make_unique<FadeOutState>(getStateStack().get(), sf::Color::White, true);
 
 			getStateStack().get().pushQueueState(std::move(fadeout));
@@ -192,6 +193,7 @@ public:
 		if (m_transition)
 		{
 			moveIntoNewTileMap();
+			SoundTon::getInstance().playSound(soundNames::PORTAL);
 		}
 	
 		

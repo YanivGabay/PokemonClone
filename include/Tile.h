@@ -7,7 +7,6 @@
 
 const sf::Time TIME_PER_FRAME = sf::seconds(1.0f / 60.0f);
 
-
 class Tile
 {
 public:
