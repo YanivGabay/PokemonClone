@@ -79,7 +79,7 @@ public:
         default:
             break;
         }
-        std::cout << "m_positionofPhysicsMove.x" << m_position.x << "m_positionofPhysicsMove.y" << m_position.y << std::endl;
+       
         m_body->SetTransform(m_position ,m_angle);
         m_angle = m_body->GetAngle();
     }

@@ -9,11 +9,12 @@ class PlayState;
 enum PlayerMenuOptions
 {
 	Pokemons,
+	Heal,
 	SaveGame,
 	QuitGame
 
 };
-const int PlayerMenuSize = 3;
+const int PlayerMenuSize = 4;
 std::optional<PlayerMenuOptions> operator++(std::optional<PlayerMenuOptions> option)
 {
 	if (option)
@@ -64,6 +65,7 @@ public:
 	 void resetText()
 	 {
 		 m_menuSelection[PlayerMenuOptions::Pokemons]->setText("Pokemons");
+		 m_menuSelection[PlayerMenuOptions::Heal]->setText("Heal");
 		 m_menuSelection[PlayerMenuOptions::SaveGame]->setText("SaveGame");
 		 m_menuSelection[PlayerMenuOptions::QuitGame]->setText("QuitGame");
 	 }
@@ -95,6 +97,11 @@ public:
 		 {	
 			 
 			 m_saveGame.savingIntoFile();
+		 }
+		 else if (m_selection == Heal)
+		 {
+
+			 m_player->healPokemons();
 		 }
 
 		 else if (m_selection == QuitGame)

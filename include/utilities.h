@@ -124,7 +124,7 @@ std::vector<std::string> sound_files = { "resources/pokemonOpening.ogg",
 										 "resources/bush_step.ogg",
 										 "resources/City.ogg",
 										 "resources/Battle.ogg" };
-std::vector<std::string> m_continuosAnimationId {"flowers", "portal", "water","sea-rock"};
+std::vector<std::string> m_continuosAnimationId {"flowers", "portal", "water","sea-rock","fountain"};
 bool checkIfContinous(std::string tileId)
 {
 	for (auto& id: m_continuosAnimationId)

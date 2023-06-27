@@ -32,9 +32,9 @@ public:
     Entity(const std::string myTexture)
         : m_moveProgress(0.0f),
           m_moveSpeed(15.0f),
-          m_position(11, 48),
+          m_position(24, 48),
           m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
-          m_movingObj(11, 48),
+          m_movingObj(24, 48),
           m_sprite(Resources::getInstance().getTexture(myTexture))
          
     {

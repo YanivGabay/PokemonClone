@@ -36,7 +36,7 @@ enum class PokemonIndex
 
 std::vector <PokemonIndex> FirstLevel
 {
-	PokemonIndex::VENASUR,
+	PokemonIndex::BULBASOR,
 		PokemonIndex::PIGEOT,
 		PokemonIndex::LEAF
 };

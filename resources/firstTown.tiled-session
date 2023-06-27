@@ -21,8 +21,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 341,
-                "y": 264
+                "x": 220,
+                "y": 379
             }
         },
         "firstTown.tmj#spritesheet": {
@@ -30,11 +30,11 @@
             "scaleInEditor": 1
         },
         "secondMap.tmj": {
-            "scale": 0.75,
-            "selectedLayer": 1,
+            "scale": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 206.66666666666674,
-                "y": 533.3333333333334
+                "x": 149,
+                "y": 425
             }
         },
         "secondMap.tmj#spritesheet": {
@@ -42,6 +42,17 @@
             "scaleInEditor": 1
         },
         "spritesheet.tsx": {
+            "scaleInDock": 1
+        },
+        "thirdMap.tmj": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 368,
+                "y": 587
+            }
+        },
+        "thirdMap.tmj#spritesheet": {
             "scaleInDock": 1
         }
     },
@@ -51,7 +62,7 @@
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 50,
+    "map.width": 60,
     "openFiles": [
         "firstTown.tmj",
         "secondMap.tmj"

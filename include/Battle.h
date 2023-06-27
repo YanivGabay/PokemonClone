@@ -50,7 +50,7 @@ public:
 		
 		setGuis();
 
-		std::cout << "after add progress bar" << std::endl;
+		
 		m_playerBackPokemon.setPosition(m_playerPokemonPos);
 		m_enemyFrontPokemon.setPosition(m_enemyPokemonPos);  
 

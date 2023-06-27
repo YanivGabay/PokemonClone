@@ -13,6 +13,7 @@ public:
 	{
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/firstTown.tmj"));
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/secondMap.tmj"));
+		m_maps.emplace_back(std::make_unique<TilesMap>("resources/thirdMap.tmj"));
 			m_currMap = m_maps.begin();
 			
 	}
@@ -30,6 +31,11 @@ public:
 	void updateAnimations(sf::Time dt)
 	{
 		(*m_currMap)->updateAnimations(dt);
+
+	}
+	sf::Vector2i getBackExit()
+	{
+		return (*m_currMap)->getExitBackPos();
 	}
 	sf::Vector2i getExit()
 	{
@@ -56,7 +62,7 @@ public:
 	{
 		if (m_currMap != m_maps.end() - 1)
 		{
-			std::cout << "inside next level" << std::endl;
+			
 			m_currMap++;
 			m_id = static_cast<LevelID>(static_cast<int>(m_id) + 1);
 		}
@@ -65,7 +71,7 @@ public:
 	{
 		if (m_currMap != m_maps.begin())
 		{
-			std::cout << "inside return level" << std::endl;
+			
 			m_currMap--;
 			m_id = static_cast<LevelID>(static_cast<int>(m_id) - 1);
 		}

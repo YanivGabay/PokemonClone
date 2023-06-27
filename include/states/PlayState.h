@@ -159,7 +159,7 @@ public:
 	}
 	void triggerBattleEncounter(LevelID levelId)
 	{
-		std::cout << "battle should trigger" << std::endl;
+		
 		resetBeforeBattle();
 		std::shared_ptr<Pokemon> wildPokemon = m_pokemonFactory->createRandomPokemon(levelId);
 		
@@ -196,27 +196,7 @@ public:
 
 		if (m_transition)
 		{
-			if (m_player->getPosition().y < 30)
-			{
-				m_currentLevel->nextLevel();
-				m_player->setPositions(m_currentLevel->getExit());
-				m_player->setMoving(false);
-				std::cout << "player x" << m_player->getPosition().x << std::endl;
-				std::cout << "player y" << m_player->getPosition().x << std::endl;
-			}
-			else 
-			{
-				m_currentLevel->returnLevel();
-				m_player->setPositions(m_currentLevel->getExit());
-				m_player->setMoving(false);
-				std::cout << "player x" << m_player->getPosition().x << std::endl;
-				std::cout << "player y" << m_player->getPosition().x << std::endl;
-			}
-			
-
-			auto fadein = std::make_unique<FadeInState>(getStateStack().get(), sf::Color::White);
-			getStateStack().get().pushQueueState(std::move(fadein));
-			m_transition = false;
+			moveIntoNewTileMap();
 		}
 	
 		
@@ -239,6 +219,29 @@ public:
 		//m_savingbufs.savingIntoFile(); /// --- for_debug --- ///
 		//---------------
 	}
+	void moveIntoNewTileMap()
+	{
+		if (m_player->getPosition().y < 30)
+		{
+			m_currentLevel->nextLevel();
+			m_player->setPositions(m_currentLevel->getExit());
+			m_player->setMoving(false);
+
+		}
+		else
+		{
+			m_currentLevel->returnLevel();
+			m_player->setPositions(m_currentLevel->getExit());
+			m_player->setMoving(false);
+
+		}
+
+
+		auto fadein = std::make_unique<FadeInState>(getStateStack().get(), sf::Color::White);
+		getStateStack().get().pushQueueState(std::move(fadein));
+		m_transition = false;
+	}
+
 	void savingIntoBuffer()
 	{
 		m_savingbufs.updatePlayer(m_player->getPosition().x,
@@ -288,7 +291,7 @@ public:
 	{
 		m_currentLevel->draw(window);
 		m_player->draw(window);
-		m_NPC->draw(window);
+		//m_NPC->draw(window);
 		window.setView(m_camera->getView());
 	}
 

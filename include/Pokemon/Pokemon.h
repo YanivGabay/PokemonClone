@@ -301,7 +301,7 @@ public:
         m_battleSpriteBack = spritePair.second;
         if (!m_battleSpriteFront.getTexture()||!m_battleSpriteBack.getTexture())
         {
-            std::cout << "no texture of pokemon" << "enum value:" << static_cast<int> (m_name) << std::endl;
+            std::cerr << "no texture of pokemon" << "enum value:" << static_cast<int> (m_name) << std::endl;
         }
         m_battleSpriteFront.setScale(2.0f, 2.0f);
         m_battleSpriteBack.setScale(2.0f, 2.0f);

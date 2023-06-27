@@ -106,13 +106,13 @@ public:
                 {
                    
                     b2Vec2 newPos = m_movingObj.getPos();
-                    std::cout << "good movment" << std::endl;
+                   
                     setTargetPosition(sf::Vector2i(newPos.x, newPos.y));
                     setPositions(getTargetPosition());
                 }
                 else
                 {
-                    std::cout << "bad movment" << std::endl;
+                   
                     setTargetPosition(getPosition());
                     m_movingObj.setPosition(getPosition());
                 }
@@ -178,10 +178,13 @@ public:
     }
     void addPokemon(std::shared_ptr<Pokemon> pokemon)
     {
-        std::cout << "before add pokemon in player" << std::endl;
+      
         m_pokemons->addPokemon(pokemon);
     }
-
+    void healPokemons()
+    {
+        m_pokemons->healPokemon();
+    }
     
 
     bool getIsMoving()

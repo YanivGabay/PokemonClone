@@ -2,6 +2,7 @@
 configure_file("spritesheet.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("firstTown.tmj" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("secondMap.tmj" ${CMAKE_BINARY_DIR}/resources COPYONLY)
+configure_file("thirdMap.tmj" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("framesSpritesheet.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("battlegroundSprites.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
 configure_file("npcSprites.png" ${CMAKE_BINARY_DIR}/resources COPYONLY)
@@ -29,7 +30,7 @@ configure_file("pokemonSpritesSheet/384.png" ${CMAKE_BINARY_DIR}/resources/pokem
 
 file(COPY ${CMAKE_SOURCE_DIR}/resources/pokemonSpritesSheet/back DESTINATION ${CMAKE_BINARY_DIR}/resources)
 configure_file("pokemonSpritesSheet/back/1.png" ${CMAKE_BINARY_DIR}/resources/pokemonSpritesSheet/back COPYONLY)
-configure_file("pokemonSpritesSheet/back/3.png" ${CMAKE_BINARY_DIR}/resources/pokemonSpritesSheet COPYONLY)
+configure_file("pokemonSpritesSheet/back/3.png" ${CMAKE_BINARY_DIR}/resources/pokemonSpritesSheet/back COPYONLY)
 configure_file("pokemonSpritesSheet/back/4.png" ${CMAKE_BINARY_DIR}/resources/pokemonSpritesSheet/back COPYONLY)
 configure_file("pokemonSpritesSheet/back/6.png" ${CMAKE_BINARY_DIR}/resources/pokemonSpritesSheet/back COPYONLY)
 configure_file("pokemonSpritesSheet/back/7.png" ${CMAKE_BINARY_DIR}/resources/pokemonSpritesSheet/back COPYONLY)

@@ -23,7 +23,7 @@ public:
 		int counter = 0;
 		for (auto& pokemon : m_starters)
 		{
-			pokemon->getFrontSprite().setPosition(m_prompt->getPosition().x + 200 * counter+25, m_cameraCenter.y + 100);
+			pokemon->getFrontSprite().setPosition(m_prompt->getPosition().x + m_windowSize.x / 3 * counter+25, m_cameraCenter.y+100 );
 			counter++;
 		}
 		m_prompt->setResetColor();

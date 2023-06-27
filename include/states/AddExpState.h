@@ -37,9 +37,7 @@ public:
 			
 		 }
 			
-		 std::cout << "m_startExpPercent" << m_startExpPercent <<std::endl;
-		 std::cout << "exp" << exp << std::endl;
-		 std::cout << "m_endExpPercent" << m_endExpPercent <<std::endl;
+		
 
 
 
