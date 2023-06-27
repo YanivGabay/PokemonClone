@@ -5,7 +5,6 @@
 #include <ctime>
 #include <sstream>
 #include <string>
-
 #include <filesystem>
 #include <iomanip>
 #include <fstream>
@@ -13,12 +12,11 @@
 #include <ctime>
 #include <iterator>
 #include <locale>
-//#include <>
-
 #include "Pokemon\Party.h"
 #include "Level.h"
 #include "Utilities\PokemonIndex.h"
 #include "states\BaseState.h"
+
 
 class PlayState;
 using json = nlohmann::json;
@@ -58,12 +56,13 @@ public:
     {
         m_savingBuf["Party"]["Size"] = partySize;
         m_savingBuf["Party"]["RealSize"] = -1;
-        // m_savingBuf["Party"]["ReallSize"] = 0;
     }
+    
     void updateParty (std::shared_ptr<Pokemon> partyPokemon,const int index)
     {
         m_savingBuf["Party"]["RealSize"] = index;
         std::string StrCurrPokemon = std::to_string(static_cast<int>(index));
+        
         m_savingBuf["Party"][StrCurrPokemon]["getAttack"] = partyPokemon->getAttack();
         
         m_savingBuf["Party"][StrCurrPokemon]["getAttackIV"] = partyPokemon->getAttackIV();
@@ -130,57 +129,29 @@ public:
 
         // Open the file for reading
         std::fstream openingJsonFile;
-        std::cout << "111" << std::endl;
+        
         // Check if the file opened successfully
         openingJsonFile.open(fileName, std::ios::in);
-        std::cout << "222" << std::endl;
+        
         if (openingJsonFile)
         {
-            std::cout << "333" << std::endl;
             // Read the contents of the file into a string
             std::string fileContents((std::istreambuf_iterator<char>(openingJsonFile)), std::istreambuf_iterator<char>());
 
             // Parse the string as a JSON object
             m_savingBuf = json::parse(fileContents);
-            std::cout << m_savingBuf << std::endl;
-            // Access values from the JSON object
-            // std::string name = m_savingBuf["name"];
-            // int age = m_savingBuf["age"];
-            // std::string city = m_savingBuf["city"];
-
+            
             std::unique_ptr<Level> currentLevel(std::make_unique<Level>());
-            std::cout << "444" << std::endl;
+            
             currentLevel->setEncounterRate(m_savingBuf["playState"]["EncounterRate"]);
+            
             currentLevel->setLevelId(m_savingBuf["playState"]["levelId"]);
             
-            std::cout << "555" << std::endl;
             std::unique_ptr<Party> pokemons(std::make_unique<Party>());
-            std::cout << "666" << std::endl;
             for (size_t i = 0; i <= m_savingBuf["Party"]["RealSize"]; ++i)
             {
-                std::cout << "########" << std::endl;
                 std::string StrCurrPokemon = std::to_string(static_cast<int>(i));
-                std::cout << "========" << std::endl;
-                std::cout << "i" << std::endl;
-                /*
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getName") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseHP") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseAttack") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseDefense") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseSpeed") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getHPIV") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getAttackIV") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getDefenseIV") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getSpeedIV") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getHP") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getAttack") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getDefense") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getSpeed") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getLevel") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentExp") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getExpToLevel") << std::endl;
-                std::cout << m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentHP") << std::endl;
-                */
+                
                 pokemons->addPokemon(std::make_shared<Pokemon> (
                     static_cast<PokemonIndex>(m_savingBuf.at("Party").at(StrCurrPokemon).at("getName")),
                     m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseHP"),
@@ -199,22 +170,16 @@ public:
                     m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentExp"),
                     m_savingBuf.at("Party").at(StrCurrPokemon).at("getExpToLevel"),
                     m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentHP")));
-                std::cout << "777" << std::endl;
             }
-            std::cout << "888" << std::endl;
+            
             std::shared_ptr<Player> player(std::make_shared<Player>(std::move(pokemons)));
-            std::cout << "999" << std::endl;
-            player->setPositions(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"],
-                m_savingBuf["playState"]["Playerposition"]["y"]));
+            
+            player->setPositions(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"], m_savingBuf["playState"]["Playerposition"]["y"]));
 
-            std::unique_ptr<Camera> camera(std::make_unique<Camera>(m_savingBuf["playState"]["cameraPosition"]["x"],
-                m_savingBuf["playState"]["cameraPosition"]["y"]));
-
-            std::cout << "x = " << m_savingBuf["playState"]["cameraPosition"]["x"] << " y = " << m_savingBuf["playState"]["cameraPosition"]["y"] << std::endl;
-
-            std::cout << "111111111" << std::endl;
+            std::unique_ptr<Camera> camera(std::make_unique<Camera>(m_savingBuf["playState"]["cameraPosition"]["x"], m_savingBuf["playState"]["cameraPosition"]["y"]));
+            
             openingJsonFile.close();
-            std::cout << "12121212" << std::endl;
+            
             return std::unique_ptr<PlayState>((std::make_unique<PlayState>(states, std::move(currentLevel), player, std::move(camera))));
         }
         

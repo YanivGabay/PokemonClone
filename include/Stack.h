@@ -5,7 +5,6 @@
 #include <queue>
 
 
-
 template <class T>
 class Stack
 {
@@ -41,7 +40,8 @@ public:
 		return m_states.back();
 	}
 
-	bool empty(){
+	bool empty()
+	{
 		return m_states.empty();
 	}
 
@@ -71,15 +71,16 @@ public:
 	
 	void update(sf::Time dt)
 	{
-	
 		if (!m_states.empty())
 		{
 			m_states.back()->update(dt);
+	
 			if (!m_states.back()->getStatus())
 			{
 				this->popState();
 			}
 		}
+		
 		while (!m_stateQueue.empty())
 		{
 			m_states.push_back(std::move(m_stateQueue.front()));
@@ -89,8 +90,6 @@ public:
 
 	void draw()
 	{
-		
-		
 		for (auto& state : m_states)
 		{
 			state->draw(m_window);
@@ -105,10 +104,13 @@ public:
 	int size()
 	{	
 		if (m_states.empty())
+		{
 			return 0;
+		}
 
 		return m_states.size();
 	}
+	
 	void printTypeOf()
 	{
 		for (std::size_t i = 0; i < m_states.size(); ++i)
@@ -117,12 +119,12 @@ public:
 			std::cout << typeid(*m_states[i]).name() << std::endl;
 		}
 	}
-
 	
 	bool checkQuitStatus()
 	{
 		return m_states.back()->getQuitGameStatus();
 	}
+
 private:
 	std::vector <std::unique_ptr<T>> m_states;
 	sf::RenderWindow& m_window;

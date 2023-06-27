@@ -6,9 +6,9 @@
 #include "utilities.h"
 
 
-std::vector<std::string> pokemonFiles { "1", "3", "4", "6",
-"7", "9", "17", "25",
-"56", "69", "88", "144", "145", "146", "382", "383", "384" };
+std::vector<std::string> pokemonFiles { "1", "3", "4", "6", "7", "9", "17",
+										"25", "56", "69", "88", "144", "145",
+										"146", "382", "383", "384" };
 
 enum class PokemonIndex
 {
@@ -47,7 +47,6 @@ std::vector <PokemonIndex> SecondLevel
 		PokemonIndex::LEAF,
 		PokemonIndex::PIKACHU
 };
-
 std::vector <PokemonIndex> ThirdLevel
 {
 	PokemonIndex::ICEBIRD,
@@ -58,8 +57,9 @@ std::vector <PokemonIndex> ThirdLevel
 };
 std::vector <PokemonIndex> FourthLevel
 {
-			PokemonIndex::GREENIGHTMARE
+	PokemonIndex::GREENIGHTMARE
 };
+
 PokemonIndex getRandom(std::vector<PokemonIndex> options)
 {
 	if (options.empty())
@@ -73,7 +73,6 @@ PokemonIndex getRandom(std::vector<PokemonIndex> options)
 
 const std::unordered_map<enum PokemonIndex, std::string> PokemonNames =
 {
-
 	{ PokemonIndex::BULBASOR, "BULBASOR" },
 	{ PokemonIndex::VENASUR, "VENASUR" },
 	{ PokemonIndex::CHARMANDER, "CHARMANDER" },
@@ -92,5 +91,3 @@ const std::unordered_map<enum PokemonIndex, std::string> PokemonNames =
 	{ PokemonIndex::REDMONSTER, "REDMONSTER" },
 	{ PokemonIndex::GREENIGHTMARE, "GREENIGHTMARE" }
 };
-
-

@@ -3,14 +3,16 @@
 #include "../Resources.h"
 #include <optional>
 #include "guis/Gui.h"
+
+
 const int BATTLE_OPTIONS = 2;
+
 enum class BattleOptions
 {
 	Attack,
 	Run
-	//to be added
-	
 };
+
 std::optional<BattleOptions> operator++(std::optional<BattleOptions> option)
 {
 	if (option)
@@ -27,9 +29,13 @@ std::optional<BattleOptions> operator--(std::optional<BattleOptions> option)
 	{
 		int value = static_cast<int>(*option) - 1;
 		if (value < 0)
+		{
 			value = BATTLE_OPTIONS - 1;
+		}
+
 		*option = static_cast<BattleOptions>(value);
 	}
+	
 	return option;
 }
 
@@ -37,16 +43,18 @@ class BattleDialogState : public BaseState
 {
 public:
 	BattleDialogState(Stack<BaseState>& states,sf::Vector2f position,sf::Vector2f size)
-		: BaseState(states),m_position(position),m_size(size) {
+		: BaseState(states),m_position(position),m_size(size)
+	{
 		entry();
 	}
 
-	~BattleDialogState() = default;
+	virtual ~BattleDialogState() = default;
 
-	void entry() override {
-		//Gui(const sf::Font & font, sf::Vector2f buttonSize, sf::Vector2f buttonPosition)
+	void entry() override
+	{
 		sf::Vector2f size;
 		sf::Vector2f pos;
+		
 		pos.x = m_position.x + (m_size.x / 2);
 		pos.y = 452.0f;
 		size.x = m_size.x / 2;
@@ -55,14 +63,17 @@ public:
 		for (int i = 0; i < BATTLE_OPTIONS; i++)
 		{
 			m_menuSelection[i] = std::move(std::make_unique<Gui>(Resources::getInstance().getFont(), size, pos));
+			
 			pos.y += size.y;
 		}
+		
 		m_menuSelection[static_cast<int>(BattleOptions::Attack)]->setText("Attack");
 		m_menuSelection[static_cast<int>(BattleOptions::Run)]->setText("Run");
-	
 	}
+	
 	void exit() override {}
-	void update(sf::Time dt) override {
+	void update(sf::Time dt) override
+	{
 		BattleOptions option = m_hover.value();
 
 		for (int i = 0; i < BATTLE_OPTIONS; i++)
@@ -76,12 +87,13 @@ public:
 				m_menuSelection[i]->setResetColor();
 			}
 		}
+		
 		if (m_choice != std::nullopt)
 		{
 			setStatus(false);
 		}
-	
 	}
+	
 	void handleEvents(sf::Event event) override {
 		if (event.type == sf::Event::KeyReleased)
 		{
@@ -89,31 +101,37 @@ public:
 			{
 				m_choice = m_hover;
 			}
+			
 			if (event.key.code == sf::Keyboard::Down)
 			{
 				m_hover = ++m_hover;
 			}
+			
 			if (event.key.code == sf::Keyboard::Up)
 			{
 				m_hover = --m_hover;
 			}
 		}
 	}
-	void draw(sf::RenderWindow& window) override {
 	
+	void draw(sf::RenderWindow& window) override
+	{
 		for (auto& gui: m_menuSelection)
 		{
 			gui->draw(window);
 		}
 	}
+	
 	const std::optional<BattleOptions> getChoice()
 	{
 		return m_choice;
 	}
+	
 	void resetChoice()
 	{
 		m_choice = std::nullopt;
 	}
+
 private:
 	std::optional<BattleOptions> m_choice{ std::nullopt };
 	std::optional<BattleOptions> m_hover {BattleOptions::Attack};

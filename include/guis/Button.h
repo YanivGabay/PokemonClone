@@ -3,8 +3,7 @@
 #include "Resources.h"
 
 
-class Button
-{
+class Button {
 public:
     Button(sf::Vector2f guiSize,sf::Vector2f position)
         : m_frameBoxRects(Resources::getInstance().getFrameCord()),
@@ -23,9 +22,11 @@ public:
         middle->setPosition(m_startPosition);
         m_shapes.push_back(std::move(middle));
 
-        auto createSprite = [&](FrameID frameID, const sf::Vector2f& position) {
+        auto createSprite = [&](FrameID frameID, const sf::Vector2f& position)
+        {
             auto rect = *m_frameBoxRects[frameID];
-           auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
+            auto sprite = std::make_unique<sf::Sprite>(m_texture, rect);
+            
             sprite->setPosition(position);
             m_shapes.push_back(std::move(sprite));
         };
@@ -38,8 +39,11 @@ public:
 
         // Corners
         createSprite(FrameID::LEFT_UP_CORNER, sf::Vector2f(m_startPosition.x, m_startPosition.y));
+        
         createSprite(FrameID::RIGHT_UP_CORNER, sf::Vector2f(endX, m_startPosition.y));
+        
         createSprite(FrameID::LEFT_DOWN_CORNER, sf::Vector2f(m_startPosition.x, endY));
+        
         createSprite(FrameID::RIGHT_DOWN_CORNER, sf::Vector2f(endX, endY));
 
         // Horizontal lines
@@ -53,6 +57,7 @@ public:
         for (float y = startY; y < endY; y += sizeVector.y)
         {
             createSprite(FrameID::LEFT_VERTICAL, sf::Vector2f(m_startPosition.x, y));
+            
             createSprite(FrameID::RIGHT_VERTICAL, sf::Vector2f(endX, y));
         }
         
@@ -75,10 +80,12 @@ public:
 			window.draw(*shape);
 		}
 	}
+    
     sf::Vector2f getSize()
     {
         return m_size;
     }
+
 private:
     sf::Texture& m_texture;
     std::vector<std::unique_ptr<sf::Sprite>> m_shapes;

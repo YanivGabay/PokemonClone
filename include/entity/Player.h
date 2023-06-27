@@ -8,13 +8,11 @@
 #include "PhysicsMove.h"
 #include "Animation.h"
 #include "Pokemon/Party.h"
-
 #include "entity\Entity.h"
 #include "SoundTon.h"
 
 
-class Player : public Entity
-{
+class Player : public Entity {
 public:
     Player(std::unique_ptr<Party> pokemons)
         : Entity("resources/maleSpriteSheet.png"),
@@ -61,7 +59,9 @@ public:
                
             }
             else
+            {
                 return;
+            }
            
             m_isMoving = true;
         }
@@ -77,9 +77,9 @@ public:
         if (m_isMoving)
         {
             addMoveProgress(getMoveSpeed(), dt);
-           
             
             Side side = m_movingObj.getSide();
+            
             if (side == UP)
             {
                 setSprite(nextFrame(m_curr));
@@ -101,9 +101,9 @@ public:
             {
                 //check upper level and npc for collisions
                 bool isValidPosition = !checkUppers(directionMap, side);
+                
                 if (isValidPosition)
                 {
-                   
                     b2Vec2 newPos = m_movingObj.getPos();
                    
                     setTargetPosition(sf::Vector2i(newPos.x, newPos.y));
@@ -111,7 +111,6 @@ public:
                 }
                 else
                 {
-                   
                     setTargetPosition(getPosition());
                     m_movingObj.setPosition(getPosition());
                 }
@@ -126,66 +125,64 @@ public:
             //we are not moving
         }
     }
+    
     void setSprite(PlayerID desiredSprite)
     {
         m_sprite.setTextureRect(Resources::getInstance().getRect(desiredSprite));
     }
+    
     void setIdle()
     {
         Side side = m_movingObj.getSide();
+        
         if (side == UP)
         {
             m_curr = PlayerID::UP_IDLE;
-            
         }
         else if (side == DOWN)
         {
-           
             m_curr = PlayerID::DOWN_IDLE;
-            
         }
         else if (side == RIGHT)
         {
-           
             m_curr = PlayerID::RIGHT_IDLE;
-            
         }
         else if (side == LEFT)
         {
-           
             m_curr = PlayerID::LEFT_IDLE;
-            
         }
+        
         setSprite(m_curr);
     }
+    
     virtual void draw(sf::RenderWindow& window) override
     {
         sf::Vector2f pixelPosition = gridToPixelPosition(getPosition());
       
         m_sprite.setPosition(pixelPosition);
-             
-        
         window.draw(m_sprite);
     }
+    
     std::shared_ptr<Pokemon> getPokemon(int index)
     {
         return m_pokemons->getPokemon(index);
     }
+    
     std::shared_ptr<Pokemon> getStarterPokemon()
     {
         return m_pokemons->getStarterPokemon();
     }
+    
     void addPokemon(std::shared_ptr<Pokemon> pokemon)
     {
-      
         m_pokemons->addPokemon(pokemon);
     }
+    
     void healPokemons()
     {
         m_pokemons->healPokemon();
     }
     
-
     bool getIsMoving()
     {
         return m_isMoving;

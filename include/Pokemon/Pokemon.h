@@ -5,10 +5,11 @@
 #include <random>
 #include "Resources.h"
 
-class Pokemon
-{
+
+class Pokemon {
 public:
     Pokemon() = default;
+
     Pokemon(enum PokemonIndex name,
             int baseHP,
             int baseAttack,
@@ -27,27 +28,28 @@ public:
             float expToLevel,
             int currentHP)
         : m_name(name),
-        m_baseHP(baseHP),
-        m_baseAttack(baseAttack),
-        m_baseDefense(baseDefense),
-        m_baseSpeed(baseSpeed),
-        m_HPIV(HPIV),
-        m_attackIV(attackIV),
-        m_defenseIV(defenseIV),
-        m_speedIV(speedIV),
-        m_HP(HP),
-        m_attack(attack),
-        m_defense(defense),
-        m_speed(speed),
-        m_level(level),
-        m_currentExp(currentExp),
-        m_expToLevel(expToLevel),
-        m_currentHP(currentHP)
+          m_baseHP(baseHP),
+          m_baseAttack(baseAttack),
+          m_baseDefense(baseDefense),
+          m_baseSpeed(baseSpeed),
+          m_HPIV(HPIV),
+          m_attackIV(attackIV),
+          m_defenseIV(defenseIV),
+          m_speedIV(speedIV),
+          m_HP(HP),
+          m_attack(attack),
+          m_defense(defense),
+          m_speed(speed),
+          m_level(level),
+          m_currentExp(currentExp),
+          m_expToLevel(expToLevel),
+          m_currentHP(currentHP)
     {
         setSprites();
     }
     
     ~Pokemon() = default;
+    
     void levelUpBy(int index)
     {
         for (int i = 0; i < index; i++)
@@ -55,12 +57,15 @@ public:
             levelUp();
         }
     }
+    
     std::vector<int> levelUp()
     {
         m_level++;
         m_expToLevel = m_level * m_level * 5 * 0.75f;
+        
         return statsLevelUp();
     }
+    
     //will return a vector to display to the player
     std::vector<int> statsLevelUp()
     {
@@ -117,6 +122,7 @@ public:
     {
         return PokemonNames.at(m_name);
     }
+    
     int getBaseHP() const
     {
         return m_baseHP;
@@ -196,27 +202,26 @@ public:
     {
         return m_currentHP;
     }
+    
     float getHpPercent() const
     {
-       
         float percentage = (static_cast<float>(m_currentHP) / static_cast<float>(m_HP)) * 100.0f;
       
         return percentage;
     }
+    
     //sets::
     void applyDamage(const int damage)
     {
-        
         m_currentHP -= damage;
+        
         if (m_currentHP < 0)
         {
             m_currentHP = 0;
-            
         }
-       
-
     }
-    void setName(const  enum PokemonIndex name)
+    
+    void setName(const enum PokemonIndex name)
     {
         m_name = name;
     }
@@ -300,30 +305,38 @@ public:
     {
         m_currentHP = currentHP;
     }
+    
     void setSprites()
     {
         std::pair<sf::Sprite,sf::Sprite> spritePair = Resources::getInstance().getPokemonSprites(m_name);
+        
         m_battleSpriteFront = spritePair.first;
         m_battleSpriteBack = spritePair.second;
+        
         if (!m_battleSpriteFront.getTexture()||!m_battleSpriteBack.getTexture())
         {
-            std::cerr << "no texture of pokemon" << "enum value:" << static_cast<int> (m_name) << std::endl;
+            throw std::runtime_error("no texture of pokemon" + static_cast<std::string>("enum value:") + std::to_string(static_cast<int> (m_name)));
         }
+        
         m_battleSpriteFront.setScale(2.0f, 2.0f);
         m_battleSpriteBack.setScale(2.0f, 2.0f);
     }
+    
     std::pair<sf::Sprite, sf::Sprite> getSprites()
     {
         return std::make_pair(m_battleSpriteFront, m_battleSpriteFront);
     }
+    
     sf::Sprite& getBackSprite()
     {
         return m_battleSpriteBack;
     }
+    
     sf::Sprite& getFrontSprite()
     {
         return m_battleSpriteFront;
     }
+    
     bool isAlive()
     {
         if (m_currentHP <= 0)
@@ -338,16 +351,20 @@ public:
         if (m_currentExp > m_expToLevel)
         {
             m_currentExp = 0;
+            
             return true;
         }
+        
         return false;
     }
+    
     float getCurrentExpPercent() const
     {
         if (m_expToLevel == 0)
         {
             return 0.0f;
         }
+        
         return (static_cast<float>(m_currentExp) / m_expToLevel) * 100.0f;
     }
 
@@ -375,6 +392,4 @@ private:
     int m_currentExp{ 0 };
     float m_expToLevel{ 0 };
     int m_currentHP{ 0 };
-
-    
 };

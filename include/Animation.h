@@ -2,6 +2,7 @@
 
 #include "Resources.h"
 
+
 enum class AnimationMode
 {
     SingleLoop,
@@ -12,45 +13,50 @@ template <class T >
 class Animation
 {
 public:
-	Animation()
-	{
-		
-	}
+    Animation() = default;
 
-	~Animation()
-	{
-	}
+    ~Animation() = default;
+    
     void setAnimationMode(AnimationMode mode)
     {
         if (mode == AnimationMode::SingleLoop)
         {
             m_active = false;
         }
+        
         m_mod = mode;
     }
-	void addSequence(T animationType, const std::vector<sf::IntRect>& frames, float duration)
+    
+    void addSequence(T animationType, const std::vector<sf::IntRect>& frames, float duration)
 	{
 		sequences[animationType] = std::make_pair(frames, duration);
 	}
+    
     const AnimationMode getMod()
     {
         return m_mod;
     }
+    
     void setToActive()
     {
         m_active = true;
-   }
+    }
+    
     void setToNotActive()
     {
         m_active = false;
     }
+    
     void playAnimation(T animationType, sf::Time elapsedTime, sf::Sprite& sprite)
     {
         if (sequences.empty() || !m_active)
+        {
             return;
-
+        }
+        
         auto& sequence = sequences[animationType];
         auto& frames = sequence.first;
+        
         float duration = sequence.second;
 
         // Convert elapsedTime to seconds and accumulate
@@ -66,9 +72,9 @@ public:
                 {
                     setToNotActive();
                 }
+                
                 frameIndex = 0;
             }
-               
             
             if (frameIndex < frames.size())
             {
@@ -79,6 +85,7 @@ public:
             m_total -= duration;
         }
     }
+    
     bool getActiveState()
     {
         return m_active;
@@ -90,7 +97,8 @@ private:
 	
     float m_total{ 0 };
 	size_t frameIndex{ 0 };
-    bool m_active{ true };
-    AnimationMode m_mod{ AnimationMode::Continuous };
 
+    bool m_active{ true };
+    
+    AnimationMode m_mod{ AnimationMode::Continuous };
 };

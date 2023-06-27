@@ -4,7 +4,6 @@
 #include <memory>
 #include <vector>
 #include <queue>
-
 #include "Resources.h"
 #include "states/StartState.h"
 #include "Camera.h"
@@ -16,8 +15,7 @@ class StateMachine
 {
 public:
 	StateMachine()
-		: m_window(Resources::getInstance().getWindow())
-	{}
+		: m_window(Resources::getInstance().getWindow()) {}
 	
 	~StateMachine() = default;
 	
@@ -28,6 +26,7 @@ public:
 		sf::Clock clock; // Start a clock for frame timing
 	
 		m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
+		
 		m_stateStack.pushState(std::move(std::make_unique<FadeInState>(getStateStack(), Resources::getInstance().getColor(BLACK))));
 		
 		while (m_window.isOpen()&&!m_stateStack.checkQuitStatus())
@@ -41,10 +40,7 @@ public:
 			{
 				timeSinceLastUpdate -= TimePerFrame;
 				this->update(TimePerFrame);
-				
-				
 			}
-
 			
 			m_window.clear();
 
@@ -52,8 +48,8 @@ public:
 			
 			m_window.display();
 		}
+		
 		return;
-
 	}
 	
 	void handleEvents()
@@ -90,8 +86,7 @@ public:
 	{
 		m_stateStack.popState();
 	}
-
-
+	
 	bool empty()
 	{
 		return m_stateStack.empty();

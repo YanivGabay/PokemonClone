@@ -27,9 +27,14 @@ std::optional<StartMenuOptions> operator--(std::optional<StartMenuOptions> optio
 	if (option)
 	{
 		int value = static_cast<int>(*option) - 1;
+		
 		if (value < 0)
+		{
 			value = MENU_OPTIONS - 1;
+		}
+		
 		*option = static_cast<StartMenuOptions>(value);
 	}
+	
 	return option;
 }

@@ -34,11 +34,7 @@ public:
           m_position(24, 48),
           m_targetPixelPosition(gridToPixelPosition(m_targetPosition)),
           m_movingObj(24, 48),
-          m_sprite(Resources::getInstance().getTexture(myTexture))
-         
-    {
-       
-    }
+          m_sprite(Resources::getInstance().getTexture(myTexture)) {}
     
     virtual ~Entity() = default;
 
@@ -74,11 +70,13 @@ public:
     {
         m_position = targetPos;
     }
+
     void setPositions(sf::Vector2i position)
     {
         m_position = position;
         m_movingObj.setPosition(position);
     }
+    
     sf::Vector2i getTargetPosition()
     {
         return m_targetPosition;
@@ -101,7 +99,6 @@ protected:
 private:
     sf::Vector2i m_position;
     sf::Vector2i m_targetPosition;
-    
     sf::Vector2f m_targetPixelPosition;
 
     float m_moveProgress;

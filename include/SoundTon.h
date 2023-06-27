@@ -3,14 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System/Vector2.hpp>
-// #include <unordered_map>
+#include "tileson/tileson.hpp"
+
 #include <vector>
 #include <memory>
 #include <iostream>
 #include <array>
 #include <string>
-
-#include "tileson/tileson.hpp"
 #include "utilities.h"
 
 
@@ -37,6 +36,7 @@ public:
 	{
 		m_sound[soundName].setVolume(vol);
 	}
+
 private:
 	std::vector<sf::SoundBuffer> m_soundBuffer;
 	std::vector<sf::Sound> m_sound;
@@ -48,7 +48,7 @@ private:
 
 	SoundTon()
 		: m_soundBuffer(sound_files.size()),
-		m_sound(sound_files.size())
+		  m_sound(sound_files.size())
 	{
 		loadSound();
 	}
@@ -66,6 +66,7 @@ private:
 			m_sound[i].setVolume(SOUND_VOLUME);
 			m_sound[i].setLoop(true);
 		}
+		
 		m_sound[soundNames::PORTAL].setVolume(20.f);
 		m_sound[soundNames::PORTAL].setLoop(false);
 		m_sound[soundNames::NM_CLICK].setVolume(10.f);
