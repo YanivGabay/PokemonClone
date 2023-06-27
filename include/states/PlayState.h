@@ -88,7 +88,7 @@ public:
 	
 	void entry() override {
 		getStateStack().get().popStart();
-		m_NPC->setMovable(false);
+		
 	}
 
 	void exit() override {}
@@ -178,9 +178,13 @@ public:
 			entry();
 			firstUpdate = true;
 			//push choosepokemon state
-			auto state = std::make_unique<ChoosePokemonState>(getStateStack().get(), m_camera->getView().getCenter(), m_player);
-			getStateStack().get().pushQueueState(std::move(state));
-			return;
+			if (!m_loaded)//if loading game this need to be true;
+			{
+				auto state = std::make_unique<ChoosePokemonState>(getStateStack().get(), m_camera->getView().getCenter(), m_player);
+				getStateStack().get().pushQueueState(std::move(state));
+				return;
+			}
+			
 		}
 
 
@@ -301,6 +305,7 @@ public:
 	}
 
 private:
+	bool m_loaded {false};
 	bool m_transition {false};
 	bool m_menu{ false };
 	std::unique_ptr<Level> m_currentLevel;
