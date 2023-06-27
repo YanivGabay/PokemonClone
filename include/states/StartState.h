@@ -49,8 +49,11 @@ public:
 		
 		if (m_startMenu->getChoice() == QUIT)
 		{
+			SoundTon::getInstance().playSound(soundNames::CLICK);
 			m_choice = std::nullopt;
 			setStatus(false);
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			std::exit(EXIT_SUCCESS);
 		}
 		
 		if (m_startMenu->getChoice() == NEW_GAME && !m_loadingStarted)
@@ -68,6 +71,8 @@ public:
 
 		if (m_startMenu->getChoice() == LOAD_GAME && !m_loadingStarted)
 		{
+			SoundTon::getInstance().playSound(soundNames::CLICK);
+
 			std::cout << "helboz" << std::endl;
 			m_choice = std::nullopt;
 			m_loadingStarted = true;

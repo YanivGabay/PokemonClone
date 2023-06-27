@@ -9,9 +9,16 @@ public:
 	PokemonMenuState(Stack<BaseState>& states, std::shared_ptr<Player> player, sf::Vector2f cameraCenter) : BaseState(states),
 		m_player(player), m_cameraCenter(cameraCenter), m_front(m_player->getStarterPokemon()->getFrontSprite())
 	{
+		SoundTon::getInstance().stopSound(soundNames::MENU_THEME);
+		SoundTon::getInstance().playSound(soundNames::POKEMON);
 		entry();
 	}
-	~PokemonMenuState() {};
+	
+	virtual ~PokemonMenuState()
+	{
+		SoundTon::getInstance().stopSound(soundNames::POKEMON);
+		SoundTon::getInstance().playSound(soundNames::MENU_THEME);
+	}
 
 	 void entry() {
 		 sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x, m_windowSize.y);

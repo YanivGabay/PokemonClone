@@ -126,6 +126,8 @@ public:
 			 SoundTon::getInstance().playSound(soundNames::CLICK);
 			 m_selection = std::nullopt;
 			 setStatus(false);
+			 std::this_thread::sleep_for(std::chrono::seconds(1));
+			 std::exit(EXIT_SUCCESS);
 		 }
 		//if not null,switch case what to do
 	 }
