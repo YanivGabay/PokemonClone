@@ -228,7 +228,7 @@ private:
 	Resources& operator=(const Resources&) = delete;
 
 	Resources()
-		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
+		: m_window(sf::VideoMode(static_cast<float>(SCREEN_WIDTH), static_cast<float>(SCREEN_HEIGHT)), "Grid Movement Game")
 		
 	{
 		m_window.setFramerateLimit(FPS);

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "secondMap.tmj",
+    "activeFile": "thirdMap.tmj",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -21,8 +21,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 399,
-                "y": 478
+                "x": 399.5,
+                "y": 479.5
             }
         },
         "firstTown.tmj#spritesheet": {
@@ -33,8 +33,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 318,
-                "y": 378
+                "x": 359.5,
+                "y": 359.5
             }
         },
         "fourthMap.tmj#spritesheet": {
@@ -43,10 +43,10 @@
         },
         "secondMap.tmj": {
             "scale": 1,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 398,
-                "y": 477
+                "x": 396,
+                "y": 733
             }
         },
         "secondMap.tmj#spritesheet": {
@@ -58,10 +58,10 @@
         },
         "thirdMap.tmj": {
             "scale": 1,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 573,
-                "y": 321
+                "x": 479,
+                "y": 865
             }
         },
         "thirdMap.tmj#spritesheet": {
@@ -84,9 +84,9 @@
     "project": "firstTown.tiled-project",
     "recentFiles": [
         "firstTown.tmj",
+        "secondMap.tmj",
         "fourthMap.tmj",
-        "thirdMap.tmj",
-        "secondMap.tmj"
+        "thirdMap.tmj"
     ],
     "tileset.embedInMap": true,
     "tileset.lastUsedFilter": "All Files (*)",

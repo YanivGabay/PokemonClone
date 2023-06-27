@@ -27,12 +27,12 @@ public:
           m_position(startPosX, startPosY),
           m_angle(m_body->GetAngle())
     {
-        m_groundBodyDef.position.Set(startPosX, startPosY);
+        m_groundBodyDef.position.Set(static_cast<float>(startPosX), static_cast<float>(startPosY));
         m_groundBox.SetAsBox(50.0f, 10.0f);
         m_groundBody->CreateFixture(&m_groundBox, 0.0f);
 
         m_bodyDef.type = b2_staticBody;
-        m_bodyDef.position.Set(startPosX, startPosY);
+        m_bodyDef.position.Set(static_cast<float>(startPosX), static_cast<float>(startPosY));
 
         m_dynamicBox.SetAsBox(1.0f, 1.0f);
 

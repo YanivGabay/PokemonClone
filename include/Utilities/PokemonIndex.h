@@ -62,7 +62,13 @@ std::vector <PokemonIndex> FourthLevel
 };
 PokemonIndex getRandom(std::vector<PokemonIndex> options)
 {
-	return options[generateRandomNumber(0, options.size() - 1)];
+	if (options.empty())
+	{
+		
+		throw std::runtime_error("Cannot get a random element from an empty vector");
+	}
+
+	return options[generateRandomNumber(0, static_cast<int>(options.size()) - 1)];
 }
 
 const std::unordered_map<enum PokemonIndex, std::string> PokemonNames =

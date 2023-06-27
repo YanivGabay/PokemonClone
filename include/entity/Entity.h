@@ -25,7 +25,7 @@ public:
           m_movingObj(PosX, PosY),
           m_sprite(Resources::getInstance().getTexture(myTexture))
     {
-        m_sprite.setOrigin(0, m_sprite.getTextureRect().height / 2);
+        m_sprite.setOrigin(0, static_cast<float>(m_sprite.getTextureRect().height / 2));
     }
 
     Entity(const std::string myTexture)
@@ -47,7 +47,7 @@ public:
     
     void setOrigin()
     {
-        m_sprite.setOrigin(0, m_sprite.getTextureRect().height / 2);
+        m_sprite.setOrigin(0, static_cast<float>(m_sprite.getTextureRect().height / 2));
    }
 
     sf::Vector2i getPosition()
