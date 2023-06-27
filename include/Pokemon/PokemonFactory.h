@@ -49,9 +49,11 @@ public:
                   name = getRandom(FirstLevel);
                   break;
               case LevelID::START_FIELD:
+                  pokemon->levelUpBy(static_cast<int>(LevelID::START_FIELD));
                   name = getRandom(SecondLevel);
                   break;
               case LevelID::SECOND_TOWN:
+                  pokemon->levelUpBy(5);
                   name = getRandom(ThirdLevel);
                   break;
               default:

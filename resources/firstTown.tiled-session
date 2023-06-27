@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "secondMap.tmj",
+    "activeFile": "thirdMap.tmj",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -48,8 +48,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 368,
-                "y": 587
+                "x": 578,
+                "y": 326
             }
         },
         "thirdMap.tmj#spritesheet": {
@@ -65,12 +65,14 @@
     "map.width": 60,
     "openFiles": [
         "firstTown.tmj",
-        "secondMap.tmj"
+        "secondMap.tmj",
+        "thirdMap.tmj"
     ],
     "project": "firstTown.tiled-project",
     "recentFiles": [
         "firstTown.tmj",
-        "secondMap.tmj"
+        "secondMap.tmj",
+        "thirdMap.tmj"
     ],
     "tileset.embedInMap": true,
     "tileset.lastUsedFilter": "All Files (*)",

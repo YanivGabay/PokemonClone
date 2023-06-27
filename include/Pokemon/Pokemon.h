@@ -48,7 +48,13 @@ public:
     }
     
     ~Pokemon() = default;
-    
+    void levelUpBy(int index)
+    {
+        for (int i = 0; i < index; i++)
+        {
+            levelUp();
+        }
+    }
     std::vector<int> levelUp()
     {
         m_level++;
