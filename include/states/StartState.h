@@ -17,7 +17,7 @@ class StartState : public BaseState
 {
 public:
 	StartState(Stack<BaseState>& states)
-		: BaseState(states)
+		: BaseState(states),m_texture(Resources::getInstance().getTexture("resources/background.png"))
 	{
 		entry();
 	}
@@ -26,6 +26,7 @@ public:
 
 	void entry() override
 	{
+		m_sprite.setTexture(m_texture);
 		m_startMenu = std::move(std::make_unique<StartMenuState>(getStateStack()));
 	}
 	
@@ -104,6 +105,7 @@ public:
 	
 	void draw(sf::RenderWindow& window) override
 	{
+		window.draw(m_sprite);
 		m_startMenu->draw(window);
 	}
 
@@ -111,7 +113,8 @@ private:
 	saveManager m_saveManager;
 	std::optional<StartMenuOptions> m_choice{ std::nullopt };
 	std::unique_ptr<StartMenuState> m_startMenu;
-
+	sf::Texture& m_texture;
+	sf::Sprite m_sprite;
 	std::future<std::unique_ptr<PlayState>> m_loadingFuture;
 	std::atomic<bool> m_loadingStarted {false};
 };

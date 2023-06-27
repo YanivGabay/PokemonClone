@@ -237,6 +237,7 @@ private:
 		sf::Vector2i size(TILE_SIZE, TILE_SIZE);
 		getTexture("resources/spritesheet.png");
 		getTexture("resources/battlegroundSprites.png");
+		getTexture("resources/background.png");
 		loadFrames();
 		loadPlayerRects();
 		loadPokemonSprites();
