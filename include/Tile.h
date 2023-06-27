@@ -15,8 +15,8 @@ public:
 		  m_mySprite(mysprite),
 		  m_position(position)
 	{
-		if (!m_mySprite.getTexture()) {
-			std::cerr << "tile got bad sprite" << std::endl;
+		if (!m_mySprite.getTexture())
+		{
 			throw std::runtime_error("Failed to load sprite.");
 		}
 	}
@@ -29,26 +29,24 @@ public:
 		
 		if (!m_mySprite.getTexture())
 		{
-			std::cerr << "Tile sprite has no texture!" << std::endl;
 			throw std::runtime_error("Failed! Tile sprite has no texture.");
 		}
 		else
 		{
-			//updateAnimation(TIME_PER_FRAME);
 			window.draw(m_mySprite);
 		}
-			
 	}
+	
 	const std::string getId() const
 	{
 		return m_myid;
 	}
+	
 	void playAnimation(sf::Time dt)
 	{
 		m_animation.setToActive();
-		
-
 	}
+	
 	void updateAnimation(sf::Time dt)
 	{
 		m_animation.playAnimation(m_myid, dt, m_mySprite);
@@ -58,18 +56,22 @@ public:
 	{
 		m_animation.addSequence(animationType, frames, duration);
 	}
+	
 	void setAnimationMode(AnimationMode mode)
 	{
 		m_animation.setAnimationMode(mode);
 	}
+	
 	sf::Vector2f getPosition()
 	{
 		return m_position;
 	}
+	
 	bool getAnimationStatus()
 	{
 		return m_animation.getActiveState();
 	}
+
 private:
 	std::string m_myid;
 	sf::Sprite m_mySprite;

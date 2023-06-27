@@ -50,7 +50,6 @@ public:
 		}
 		
 		return;
-
 	}
 	
 	void handleEvents()
@@ -87,8 +86,7 @@ public:
 	{
 		m_stateStack.popState();
 	}
-
-
+	
 	bool empty()
 	{
 		return m_stateStack.empty();
