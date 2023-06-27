@@ -9,13 +9,15 @@
 class TransitionState : public BaseState
 {
 public:
-    TransitionState(Stack<BaseState>& states, std::unique_ptr<BaseState> nextState, sf::Color color)
+    TransitionState(Stack<BaseState>& states,
+                    std::unique_ptr<BaseState> nextState,
+                    sf::Color color)
         : BaseState(states),
           m_nextState(std::move(nextState)),
           m_fadeOutState(std::make_unique<FadeOutState>(states,color,true)),
           m_fadeInState(std::make_unique<FadeInState>(states,color)) {}
     
-    ~TransitionState() = default;
+    virtual ~TransitionState() = default;
     
     std::unique_ptr<BaseState> getNextState()
     {
@@ -35,7 +37,6 @@ public:
         }
         else
         {
-           
             exit();
         }
     }
@@ -46,8 +47,8 @@ public:
     }
     
     void entry() override {}
-    void exit() override {
-      
+    void exit() override
+    {
         getStateStack().get().pushQueueState(getNextState());
         getStateStack().get().pushQueueState(getFadeIn());
         setStatus(false);

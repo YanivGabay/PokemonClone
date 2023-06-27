@@ -23,8 +23,8 @@ public:
 	void loadLevel(const std::string& mapFile)
 	{
 		sf::Texture& spriteSheet = Resources::getInstance().getTexture("resources/spritesheet.png");
-		tson::Tileson parser;
 		
+		tson::Tileson parser;
 		std::unique_ptr<tson::Map> map = parser.parse(fs::path(mapFile));
 		
 		if (map->getStatus() != tson::ParseStatus::OK)
@@ -47,19 +47,24 @@ public:
 					errorMessage = "Unknown error";
 					break;
 			}
-			std::cerr << "Error loading map: " << errorMessage << std::endl;
+			
+			throw std::runtime_error("Error loading map");
+			
 			exit(5);
 			return;
 		}
 		
 		tson::Vector2i myvector = map.get()->getSize();
+		
 		m_mapXSize = myvector.x;
 		m_mapYSize = myvector.y;
 
 		tson::Tileset* tileset = map->getTileset("spritesheet");
+		
 		for (auto& layer : map->getLayers())
 		{
 			std::map<std::tuple<int, int>, tson::Tile*> tileData = layer.getTileData();
+			
 			int x = layer.getSize().x;
 			int y = layer.getSize().y;
 			
@@ -73,12 +78,14 @@ public:
 					if (tile != nullptr)
 					{
 						tson::Rect currRect = tile->getDrawingRect();
+						
 						sf::IntRect myRect(currRect.x, currRect.y, currRect.width, currRect.height);
 						
 						sf::Sprite mySprite(spriteSheet, myRect);
 						
 						tson::Vector2f myPosition = tile->getPosition({i,j});
 						sf::Vector2f actualPosition;
+						
 						actualPosition.x = myPosition.x;
 						actualPosition.y = myPosition.y;
 						
@@ -99,7 +106,9 @@ public:
 								
 								//crashing here:
 								tson::Rect currAnimRect = tileset->getTile(id)->getDrawingRect();
+								
 								sf::IntRect spriteRect(currAnimRect.x, currAnimRect.y, currAnimRect.width, currAnimRect.height);
+								
 								animationsRects.push_back(spriteRect);
 							}
 							
@@ -120,56 +129,66 @@ public:
 						else if (id == static_cast<int>(LAYERS::MEDIUM))
 						{
 							m_mediumTiles.push_back(std::move(gameTile));
+
 							m_mediumMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_mediumTiles.back().get());
+							
 							if (mytype == "portal")
 							{
-								
 								m_exits.push_back((m_mediumTiles.back().get()));
 							}
 						}
 						else
 						{
 							m_upperTiles.push_back(std::move(gameTile));
-							m_upperMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_upperTiles.back().get());
 							
+							m_upperMap.emplace(std::make_pair(actualPosition.x, actualPosition.y), m_upperTiles.back().get());
 						}
 					}
 				}
 			}
 		}
 	}
+	
 	sf::Vector2i getExitBackPos()
 	{
 		sf::Vector2i m_pos;
 
 		m_pos.x = m_exits.back()->getPosition().x / TILE_SIZE;
 		m_pos.y = m_exits.back()->getPosition().y / TILE_SIZE;
+		
 		return m_pos;
 	}
+	
 	sf::Vector2i getExitPos()
 	{
 		sf::Vector2i m_pos;
 		
 		m_pos.x = m_exits.front()->getPosition().x / TILE_SIZE ;
 		m_pos.y = m_exits.front()->getPosition().y / TILE_SIZE ;
+		
 		return m_pos;
 	}
+	
 	void draw(sf::RenderWindow& window)
 	{
-		for (auto& tile	: m_lowerTiles)
+		for (auto& tile : m_lowerTiles)
+		{
 			tile->draw(window);
+		}
 
 		for (auto& tile : m_mediumTiles)
+		{
 			tile->draw(window);
+		}
 
 		for (auto& tile : m_upperTiles)
+		{
 			tile->draw(window);
+		}
 	}
 
 	void updateAnimations(sf::Time dt)
 	{
-		
-
 		for (auto& tile : m_mediumTiles)
 		{
 			if (tile->getAnimationStatus())
@@ -200,6 +219,7 @@ public:
 		{
 			auto h1 = std::hash<T1>{}(p.first);
 			auto h2 = std::hash<T2>{}(p.second);
+			
 			return h1 ^ h2; // or use a better combining function
 		}
 	};

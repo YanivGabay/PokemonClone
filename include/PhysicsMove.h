@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <SFML/Graphics.hpp>
 
 // Disable MSVC analysis warnings for the box2d include
@@ -9,12 +8,14 @@
 #include "box2d/box2d.h"
 #pragma warning(pop)
 
+#include <memory>
 #include "Resources.h"
 
 
 const float moveForce = 1.0f;
 
-class PhysicsMove {
+class PhysicsMove
+{
 public:
     PhysicsMove(int startPosX, int startPosY)
         : m_gravity(0.0f, 9.8f),
@@ -59,7 +60,6 @@ public:
         m_position = m_body->GetPosition();
         
         // (box2d numbers are not in pixels, so we need some scaling here)
-        // m_position *= 30.f;
         
         m_newSide = newSide;
         switch (m_newSide)
@@ -93,6 +93,7 @@ public:
     {
         return m_angle;
     }
+    
     void setPosition(sf::Vector2i position)
     {
         m_position.x = position.x;

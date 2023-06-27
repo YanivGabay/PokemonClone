@@ -5,7 +5,6 @@
 #include <ctime>
 #include <sstream>
 #include <string>
-
 #include <filesystem>
 #include <iomanip>
 #include <fstream>
@@ -13,12 +12,11 @@
 #include <ctime>
 #include <iterator>
 #include <locale>
-//#include <>
-
 #include "Pokemon\Party.h"
 #include "Level.h"
 #include "Utilities\PokemonIndex.h"
 #include "states\BaseState.h"
+
 
 class PlayState;
 using json = nlohmann::json;
@@ -58,12 +56,13 @@ public:
     {
         m_savingBuf["Party"]["Size"] = partySize;
         m_savingBuf["Party"]["RealSize"] = -1;
-        // m_savingBuf["Party"]["ReallSize"] = 0;
     }
+    
     void updateParty (std::shared_ptr<Pokemon> partyPokemon,const int index)
     {
         m_savingBuf["Party"]["RealSize"] = index;
         std::string StrCurrPokemon = std::to_string(static_cast<int>(index));
+        
         m_savingBuf["Party"][StrCurrPokemon]["getAttack"] = partyPokemon->getAttack();
         
         m_savingBuf["Party"][StrCurrPokemon]["getAttackIV"] = partyPokemon->getAttackIV();
@@ -141,19 +140,18 @@ public:
 
             // Parse the string as a JSON object
             m_savingBuf = json::parse(fileContents);
-            // Access values from the JSON object
-            // std::string name = m_savingBuf["name"];
-            // int age = m_savingBuf["age"];
-            // std::string city = m_savingBuf["city"];
-
+            
             std::unique_ptr<Level> currentLevel(std::make_unique<Level>());
+            
             currentLevel->setEncounterRate(m_savingBuf["playState"]["EncounterRate"]);
+            
             currentLevel->setLevelId(m_savingBuf["playState"]["levelId"]);
             
             std::unique_ptr<Party> pokemons(std::make_unique<Party>());
             for (size_t i = 0; i <= m_savingBuf["Party"]["RealSize"]; ++i)
             {
                 std::string StrCurrPokemon = std::to_string(static_cast<int>(i));
+                
                 pokemons->addPokemon(std::make_shared<Pokemon> (
                     static_cast<PokemonIndex>(m_savingBuf.at("Party").at(StrCurrPokemon).at("getName")),
                     m_savingBuf.at("Party").at(StrCurrPokemon).at("getBaseHP"),
@@ -173,12 +171,12 @@ public:
                     m_savingBuf.at("Party").at(StrCurrPokemon).at("getExpToLevel"),
                     m_savingBuf.at("Party").at(StrCurrPokemon).at("getCurrentHP")));
             }
+            
             std::shared_ptr<Player> player(std::make_shared<Player>(std::move(pokemons)));
-            player->setPositions(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"],
-                m_savingBuf["playState"]["Playerposition"]["y"]));
+            
+            player->setPositions(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"], m_savingBuf["playState"]["Playerposition"]["y"]));
 
-            std::unique_ptr<Camera> camera(std::make_unique<Camera>(m_savingBuf["playState"]["cameraPosition"]["x"],
-                m_savingBuf["playState"]["cameraPosition"]["y"]));
+            std::unique_ptr<Camera> camera(std::make_unique<Camera>(m_savingBuf["playState"]["cameraPosition"]["x"], m_savingBuf["playState"]["cameraPosition"]["y"]));
             
             openingJsonFile.close();
             
