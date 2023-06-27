@@ -236,7 +236,7 @@ public:
 		else
 		{
 			m_currentLevel->returnLevel();
-			m_player->setPositions(m_currentLevel->getExit());
+			m_player->setPositions(m_currentLevel->getBackExit());
 			m_player->setMoving(false);
 		}
 

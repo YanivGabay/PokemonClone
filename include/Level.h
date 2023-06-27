@@ -58,6 +58,7 @@ public:
 	{
 		return m_id;
 	}
+
 	void nextLevel()
 	{
 		if (m_currMap != m_maps.end() - 1)

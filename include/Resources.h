@@ -240,6 +240,6 @@ private:
 		loadFrames();
 		loadPlayerRects();
 		loadPokemonSprites();
-		loadNpcSprites();
+		
 	};
 };
