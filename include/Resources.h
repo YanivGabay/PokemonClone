@@ -53,7 +53,7 @@ public:
 				std::cerr << "Failed to load texture: " << filename << std::endl;
 				throw std::runtime_error("Failed to load texture.");
 			}
-			m_textures[filename]->setSmooth(false);
+			
 		}
 		
 		return *m_textures[filename];
