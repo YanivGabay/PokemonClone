@@ -34,6 +34,7 @@ public:
 		 setText();
 
 		 m_front.setPosition(m_cameraCenter.x, m_cameraCenter.y);
+		 m_front.setScale(sf::Vector2f(2.0f, 2.0f));
 	 }
 	 void setText()
 	 {
