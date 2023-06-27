@@ -14,6 +14,8 @@
 #include "saveManager.h"
 #include <iostream>
 #include "PlayerMenuState.h"
+#include "ChoosePokemonState.h"
+
 
 class PlayState : public BaseState
 {
@@ -72,11 +74,12 @@ public:
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 
+		/*
 		//temporary
 		std::cout << "before add pokemon in playstate" << std::endl;
 		std::shared_ptr<Pokemon> firstpokemon = m_pokemonFactory->createPokemon(PokemonIndex::CHARIZARD);
 		m_player->addPokemon(firstpokemon);
-
+		*/
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
@@ -169,6 +172,18 @@ public:
 
 	void update(sf::Time dt) override
 	{
+		static bool firstUpdate = false;
+		if (!firstUpdate)
+		{
+			entry();
+			firstUpdate = true;
+			//push choosepokemon state
+			auto state = std::make_unique<ChoosePokemonState>(getStateStack().get(), m_camera->getView().getCenter(), m_player);
+			getStateStack().get().pushQueueState(std::move(state));
+			return;
+		}
+
+
 		if (m_menu)
 		{
 			//push the playermenu state
@@ -203,12 +218,8 @@ public:
 			getStateStack().get().pushQueueState(std::move(fadein));
 			m_transition = false;
 		}
-		static bool firstUpdate = false;
-		if (!firstUpdate)
-		{
-			entry();
-			firstUpdate = true;
-		}
+	
+		
 		
 		checkCollision(dt);
 		checkTileOn(m_player->getPosition());

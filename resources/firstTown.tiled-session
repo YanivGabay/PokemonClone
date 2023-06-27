@@ -63,8 +63,8 @@
     ],
     "tileset.embedInMap": true,
     "tileset.lastUsedFilter": "All Files (*)",
-    "tileset.margin": 1,
-    "tileset.spacing": 1,
+    "tileset.margin": 0,
+    "tileset.spacing": 0,
     "tileset.tileSize": {
         "height": 16,
         "width": 16

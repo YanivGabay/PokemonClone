@@ -51,6 +51,9 @@ public:
               case LevelID::START_FIELD:
                   name = getRandom(SecondLevel);
                   break;
+              case LevelID::SECOND_TOWN:
+                  name = getRandom(ThirdLevel);
+                  break;
               default:
                   // Handle any other level if needed
                   break;
