@@ -41,8 +41,17 @@ public:
 	{
 		return m_windowSize;
 	}
+	void setQuitGame()
+	{
+		m_quitGame = true;
+	}
+	bool getQuitGameStatus()
+	{
+		return m_quitGame;
+	}
 
 private:
+	bool m_quitGame {false};
 	bool m_status {true};
 	Stack<BaseState>& m_states;
 	sf::Vector2i m_windowSize {Resources::getInstance().getWindow().getSize()};

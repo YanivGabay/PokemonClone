@@ -30,7 +30,7 @@ public:
 		m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
 		m_stateStack.pushState(std::move(std::make_unique<FadeInState>(getStateStack(), Resources::getInstance().getColor(BLACK))));
 		
-		while (m_window.isOpen())
+		while (m_window.isOpen()&&!m_stateStack.checkQuitStatus())
 		{
 			this->handleEvents();
 			
@@ -42,19 +42,18 @@ public:
 				timeSinceLastUpdate -= TimePerFrame;
 				this->update(TimePerFrame);
 				
-				//std::cout << " ===== in while ===== " << std::endl;
-				///  m_window.clear();
-				/// this->draw();
-				/// m_window.display();
+				
 			}
 
-			//std::cout << " !!!!!! out of while !!!!!! " << std::endl;
+			
 			m_window.clear();
 
 			this->draw();
 			
 			m_window.display();
 		}
+		return;
+
 	}
 	
 	void handleEvents()

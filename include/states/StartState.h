@@ -51,9 +51,9 @@ public:
 		{
 			SoundTon::getInstance().playSound(soundNames::CLICK);
 			m_choice = std::nullopt;
-			setStatus(false);
+			
 			std::this_thread::sleep_for(std::chrono::seconds(1));
-			std::exit(EXIT_SUCCESS);
+			setQuitGame();
 		}
 		
 		if (m_startMenu->getChoice() == NEW_GAME && !m_loadingStarted)
@@ -73,7 +73,7 @@ public:
 		{
 			SoundTon::getInstance().playSound(soundNames::CLICK);
 
-			std::cout << "helboz" << std::endl;
+			
 			m_choice = std::nullopt;
 			m_loadingStarted = true;
 			// Asynchronously create PlayState

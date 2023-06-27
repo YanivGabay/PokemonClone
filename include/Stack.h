@@ -118,6 +118,11 @@ public:
 		}
 	}
 
+	
+	bool checkQuitStatus()
+	{
+		return m_states.back()->getQuitGameStatus();
+	}
 private:
 	std::vector <std::unique_ptr<T>> m_states;
 	sf::RenderWindow& m_window;
