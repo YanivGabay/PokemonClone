@@ -38,7 +38,7 @@ public:
           pokemon->setSpeed(pokemon->getBaseSpeed());
           pokemon->setHP(pokemon->getBaseHP());
           pokemon->levelUp(); // Level up the Pokemon to level 1
-          pokemon->setCurrentHP(pokemon->getHP());
+         
           // Set other attributes of the Pokemon as needed
 
         
@@ -60,7 +60,7 @@ public:
                   // Handle any other level if needed
                   break;
           }
-
+          pokemon->setCurrentHP(pokemon->getHP());
           pokemon->setName(name);
           pokemon->setSprites();
         
