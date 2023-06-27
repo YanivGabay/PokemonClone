@@ -219,6 +219,7 @@ public:
                 m_savingBuf["playState"]["cameraPosition"]["y"]));
 
             std::cout << "x = " << m_savingBuf["playState"]["cameraPosition"]["x"] << " y = " << m_savingBuf["playState"]["cameraPosition"]["y"] << std::endl;
+
             std::cout << "111111111" << std::endl;
             openingJsonFile.close();
             std::cout << "12121212" << std::endl;
