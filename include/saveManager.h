@@ -216,9 +216,10 @@ public:
             NPC->setPosition(sf::Vector2i(m_savingBuf["playState"]["NpcPosition"]["x"], m_savingBuf["playState"]["NpcPosition"]["y"]));
             std::cout << "101010" << std::endl;
             std::unique_ptr<Camera> camera(std::make_unique<Camera>(m_savingBuf["playState"]["cameraPosition"]["x"],
-                m_savingBuf["playState"]["cameraPosition"]["y"],
-                SCREEN_WIDTH,
-                SCREEN_HEIGHT));
+                m_savingBuf["playState"]["cameraPosition"]["y"]));
+
+            std::cout << "x = " << m_savingBuf["playState"]["cameraPosition"]["x"] << " y = " << m_savingBuf["playState"]["cameraPosition"]["y"] << std::endl;
+
             std::cout << "111111111" << std::endl;
             openingJsonFile.close();
             std::cout << "12121212" << std::endl;

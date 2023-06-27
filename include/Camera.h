@@ -9,6 +9,12 @@
 class Camera
 {
 public:
+    Camera(float x, float y)
+        : m_view(sf::FloatRect(x, y, SCREEN_WIDTH, SCREEN_HEIGHT))
+    {
+        m_view.setCenter(x, y);
+    }
+
     Camera(float x, float y, float width, float height)
         : m_view(sf::FloatRect(x, y, width, height)) {}
     
@@ -17,19 +23,17 @@ public:
         // Set the center of the view to the player's position
         m_view.setCenter(playerX, playerY);
     }
+
     void setView(sf::View& view)
     {
         m_view = view;
     }
+
     sf::View& getView()
     {
         return m_view;
     }
 
-    void debug()
-    {
-        std::cout << "camera" << std::endl;
-    }
 private:
     sf::View m_view;
 };

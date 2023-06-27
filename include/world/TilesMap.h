@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Resources.h"
 #include "entity/Player.h"
+#include "entity\Entity.h"
 #include "../Tile.h"
 #include "tileson/tileson.hpp"
 

@@ -23,17 +23,16 @@ public:
 	PlayState(Stack<BaseState>& states,
 			  std::unique_ptr<PlayState> other)
 		: BaseState(states),
-		  m_camera(std::move(other->m_camera)),
+		  
 		  m_player(other->m_player),
 		  m_NPC(other->m_NPC),
 		  m_currentLevel(std::move(other->m_currentLevel)),
+		m_camera(std::move(other->m_camera)),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
 		m_firstUpdate = true;
 
 		m_currentLevel->resetMap();
-		
-		
 	}
 
 	PlayState(Stack<BaseState>& states,
@@ -42,10 +41,11 @@ public:
 			  std::shared_ptr<NPC> NPC,
 			  std::unique_ptr<Camera> camera)
 		: BaseState(states),
-		  m_camera(std::move(camera)),
+		  
 		  m_player(player),
 		  m_NPC(NPC),
 		  m_currentLevel(std::move(currentLevel)),
+		m_camera(std::move(camera)),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
 		m_firstUpdate = true;
@@ -78,6 +78,10 @@ public:
 	
 	~PlayState() = default;
 	
+	sf::View& getView()
+	{
+		return m_camera->getView();
+	}
 	void entry() override {
 		getStateStack().get().popStart();
 		
@@ -165,6 +169,7 @@ public:
 
 	void update(sf::Time dt) override
 	{
+		std::cout << "x = " << m_camera->getView().getCenter().x << " y = " << m_camera->getView().getCenter().y << std::endl;
 		if (!m_firstUpdate)
 		{
 			entry();
