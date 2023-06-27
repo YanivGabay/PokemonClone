@@ -14,6 +14,7 @@ public:
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/firstTown.tmj"));
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/secondMap.tmj"));
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/thirdMap.tmj"));
+		m_maps.emplace_back(std::make_unique<TilesMap>("resources/fourthMap.tmj"));
 			m_currMap = m_maps.begin();
 	}
 	

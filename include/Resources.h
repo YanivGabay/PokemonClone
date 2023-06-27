@@ -207,12 +207,7 @@ public:
 			}
 		
 	}
-	static sf::ContextSettings getContextSettings()
-	{
-		sf::ContextSettings settings;
-		settings.antialiasingLevel = 0;
-		return settings;
-	}
+	
 private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
@@ -233,7 +228,7 @@ private:
 	Resources& operator=(const Resources&) = delete;
 
 	Resources()
-		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game",sf::Style::Default, getContextSettings())
+		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
 		
 	{
 		m_window.setFramerateLimit(FPS);

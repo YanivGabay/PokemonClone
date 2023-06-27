@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "thirdMap.tmj",
+    "activeFile": "secondMap.tmj",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -21,11 +21,23 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 220,
-                "y": 379
+                "x": 399,
+                "y": 478
             }
         },
         "firstTown.tmj#spritesheet": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "fourthMap.tmj": {
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 318,
+                "y": 378
+            }
+        },
+        "fourthMap.tmj#spritesheet": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -33,8 +45,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 149,
-                "y": 425
+                "x": 398,
+                "y": 477
             }
         },
         "secondMap.tmj#spritesheet": {
@@ -46,10 +58,10 @@
         },
         "thirdMap.tmj": {
             "scale": 1,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 578,
-                "y": 326
+                "x": 573,
+                "y": 321
             }
         },
         "thirdMap.tmj#spritesheet": {
@@ -58,21 +70,23 @@
     },
     "last.externalTilesetPath": "D:/CODING/github_repos/ShaharAshe/oop-Project-Pokemon/resources",
     "last.imagePath": "D:/CODING/github_repos/ShaharAshe/oop-Project-Pokemon/resources",
-    "map.height": 60,
+    "map.height": 45,
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 60,
+    "map.width": 45,
     "openFiles": [
         "firstTown.tmj",
         "secondMap.tmj",
-        "thirdMap.tmj"
+        "thirdMap.tmj",
+        "fourthMap.tmj"
     ],
     "project": "firstTown.tiled-project",
     "recentFiles": [
         "firstTown.tmj",
-        "secondMap.tmj",
-        "thirdMap.tmj"
+        "fourthMap.tmj",
+        "thirdMap.tmj",
+        "secondMap.tmj"
     ],
     "tileset.embedInMap": true,
     "tileset.lastUsedFilter": "All Files (*)",
