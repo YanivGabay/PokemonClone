@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-
 #include "BaseState.h"
 #include "guis/Gui.h"
 #include "StartState.h"
@@ -18,11 +17,12 @@ public:
 		entry();
 	}
 	
-	~StartMenuState() = default;
+	virtual ~StartMenuState() = default;
 	
 	void entry() override
 	{
 		sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 4, m_windowSize.y / 4);
+		
 		float x = (static_cast<float>(m_windowSize.x / 2) - (buttonSize.x / 2));
 		
 		for (size_t i = 0; i < MENU_OPTIONS; i++)
@@ -50,12 +50,11 @@ public:
 				m_menuSelection[i]->setResetColor();
 			}
 		}
+		
 		if (m_choice != std::nullopt)
 		{
 			setStatus(false);
 		}
-
-		
 	}
 	
 	void handleEvents(sf::Event event) override
@@ -91,22 +90,26 @@ public:
 	{
 		return m_choice;
 	}
+
 	void setLoadingText()
 	{
 		m_menuSelection[NEW_GAME]->setText("Loading...");
 		m_menuSelection[LOAD_GAME]->setText("Loading..");
 		m_menuSelection[QUIT]->setText("Loading.");
 	}
+	
 	void resetText()
 	{
 		m_menuSelection[NEW_GAME]->setText("New Game");
 		m_menuSelection[LOAD_GAME]->setText("Load Game");
 		m_menuSelection[QUIT]->setText("Quit");
 	}
+
 private:
 	std::array<std::unique_ptr<Gui>, MENU_OPTIONS> m_menuSelection {};
+
 	std::optional<StartMenuOptions> m_hover{ NEW_GAME };
-	
 	std::optional<StartMenuOptions> m_choice {std::nullopt};
+	
 	sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
 };

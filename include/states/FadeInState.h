@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-
 #include "BaseState.h"
 #include "Utilities/Fades.h"
 
@@ -14,10 +13,10 @@ public:
     {
         m_fadeShape.setSize(sf::Vector2f(getWindowSize().x*3,getWindowSize().y*3));
         m_fadeShape.setFillColor(color);
-      getStateStack().get().printTypeOf();
+        getStateStack().get().printTypeOf();
     }
 
-    ~FadeInState() = default;
+    virtual ~FadeInState() = default;
 
     void entry() override {}
     void exit() override {}
@@ -47,5 +46,6 @@ public:
 private:
     sf::RectangleShape m_fadeShape;
     sf::Color m_color;
+
     float m_progress{ 65535.0f };
 };

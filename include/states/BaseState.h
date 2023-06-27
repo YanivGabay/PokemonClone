@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <functional>
-
 #include "Resources.h"
 #include "Stack.h"
 
@@ -11,8 +10,7 @@ class BaseState
 {
 public:
 	BaseState(Stack<BaseState>& states)
-		: m_states(states)
-	{}
+		: m_states(states) {}
 
 	virtual void entry() = 0;
 	virtual void exit() = 0;
@@ -41,10 +39,12 @@ public:
 	{
 		return m_windowSize;
 	}
+
 	void setQuitGame()
 	{
 		m_quitGame = true;
 	}
+	
 	bool getQuitGameStatus()
 	{
 		return m_quitGame;

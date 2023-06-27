@@ -109,6 +109,7 @@ public:
 
 		return m_states.size();
 	}
+	
 	void printTypeOf()
 	{
 		for (std::size_t i = 0; i < m_states.size(); ++i)

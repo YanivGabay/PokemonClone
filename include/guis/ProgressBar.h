@@ -1,10 +1,11 @@
 #pragma once
+
 #include "../Resources.h"
+
 
 class ProgressBar {
 public:
-    ProgressBar(float x, float y, float width, float height,
-        sf::Color backgroundColor, sf::Color barColor)
+    ProgressBar(float x, float y, float width, float height, sf::Color backgroundColor, sf::Color barColor)
         : position(x, y), size(width, height)
     {
         background.setFillColor(backgroundColor);
@@ -15,16 +16,17 @@ public:
         bar.setPosition(position);
         bar.setSize(sf::Vector2f(0, height));
     }
-  
-
-    void setProgress(float progress) {
+    
+    void setProgress(float progress)
+    {
         float fraction = progress / 100.0f;
 
         // Modify the bar size based on the fraction
         bar.setSize(sf::Vector2f(size.x * fraction, size.y));
     }
 
-    void draw(sf::RenderWindow& window) {
+    void draw(sf::RenderWindow& window)
+    {
         window.draw(background);
         window.draw(bar);
     }
@@ -36,5 +38,4 @@ private:
     sf::RectangleShape bar;
 
     //need to add the functionality to add text, and print it on top of the progress bars
-
 };
