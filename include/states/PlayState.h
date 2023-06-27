@@ -57,8 +57,9 @@ public:
 
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
-		  m_camera(std::make_unique<Camera>(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)),
+		
 		  m_player(std::make_shared<Player>()),
+		m_camera(std::make_unique<Camera>(gridToPixelPosition(m_player->getPosition()).x + TILE_SIZE / 2.0f, gridToPixelPosition(m_player->getPosition()).y + TILE_SIZE / 2.0f, SCREEN_WIDTH, SCREEN_HEIGHT)),
 		  m_NPC(std::make_shared<NPC>()),
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
