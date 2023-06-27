@@ -29,6 +29,10 @@ public:
 		  m_currentLevel(std::move(other->m_currentLevel)),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
+		m_firstUpdate = true;
+
+		m_currentLevel->resetMap();
+		
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
@@ -43,7 +47,11 @@ public:
 		  m_player(player),
 		  m_NPC(NPC),
 		  m_currentLevel(std::move(currentLevel)),
-		  m_pokemonFactory(std::make_unique<PokemonFactory>()) {}
+		  m_pokemonFactory(std::make_unique<PokemonFactory>())
+	{
+		m_firstUpdate = true;
+		m_currentLevel->resetMap();
+	}
 
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
@@ -54,11 +62,6 @@ public:
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
-		m_camera->debug();
-		std::cout << m_player->getPosition().x << "  " << m_player->getPosition().y << std::endl;
-		std::cout << m_NPC->getPosition().x << "  " << m_NPC->getPosition().y << std::endl;
-		std::cout << int(m_currentLevel->getLevelId()) << std::endl;
-
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
 
@@ -160,11 +163,10 @@ public:
 
 	void update(sf::Time dt) override
 	{
-		static bool firstUpdate = false;
-		if (!firstUpdate)
+		if (!m_firstUpdate)
 		{
 			entry();
-			firstUpdate = true;
+			m_firstUpdate = true;
 			//push choosepokemon state
 			if (!m_loaded)//if loading game this need to be true;
 			{
@@ -218,14 +220,12 @@ public:
 			m_currentLevel->nextLevel();
 			m_player->setPositions(m_currentLevel->getExit());
 			m_player->setMoving(false);
-
 		}
 		else
 		{
 			m_currentLevel->returnLevel();
 			m_player->setPositions(m_currentLevel->getExit());
 			m_player->setMoving(false);
-
 		}
 
 
@@ -293,6 +293,8 @@ public:
 	}
 
 private:
+	static bool m_firstUpdate;
+
 	bool m_loaded {false};
 	bool m_transition {false};
 	bool m_menu{ false };
@@ -305,3 +307,5 @@ private:
 
 	saveManager m_savingbufs;
 };
+
+bool PlayState::m_firstUpdate = false;

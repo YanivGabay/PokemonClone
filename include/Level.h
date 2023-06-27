@@ -15,7 +15,6 @@ public:
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/secondMap.tmj"));
 		m_maps.emplace_back(std::make_unique<TilesMap>("resources/thirdMap.tmj"));
 			m_currMap = m_maps.begin();
-			
 	}
 	
 
@@ -62,7 +61,6 @@ public:
 	{
 		if (m_currMap != m_maps.end() - 1)
 		{
-			
 			m_currMap++;
 			m_id = static_cast<LevelID>(static_cast<int>(m_id) + 1);
 		}
@@ -71,7 +69,6 @@ public:
 	{
 		if (m_currMap != m_maps.begin())
 		{
-			
 			m_currMap--;
 			m_id = static_cast<LevelID>(static_cast<int>(m_id) - 1);
 		}
@@ -85,6 +82,21 @@ public:
 	{
 		m_id = id;
 	}
+
+	void resetMap()
+	{
+		m_currMap = m_maps.begin();
+
+		for (size_t i = 0; i < size_t(m_id); i++)
+		{
+			if (m_currMap != m_maps.end() - 1)
+			{
+				m_currMap++;
+			}
+		}
+	}
+
+
 private:
 	
 	std::vector<std::unique_ptr<TilesMap>> m_maps;
