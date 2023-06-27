@@ -68,8 +68,9 @@ public:
 
 		 if (event.type == sf::Event::KeyReleased)
 		 {
-			 if (event.key.code == sf::Keyboard::M)
+			 if (event.key.code == sf::Keyboard::M || event.key.code == sf::Keyboard::Escape)
 			 {
+				 SoundTon::getInstance().playSound(soundNames::CLICK);
 				 setStatus(false);
 			 }
 		 }

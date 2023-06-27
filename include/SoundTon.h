@@ -25,7 +25,6 @@ public:
 
 	void playSound(soundNames soundName)
 	{
-
 		m_sound[soundName].play();
 	}
 
@@ -67,5 +66,17 @@ private:
 			m_sound[i].setVolume(SOUND_VOLUME);
 			m_sound[i].setLoop(true);
 		}
+		m_sound[soundNames::NM_CLICK].setVolume(10.f);
+		m_sound[soundNames::NM_CLICK].setLoop(false);
+		m_sound[soundNames::POKEMON_CHOOSE].setVolume(10.f);
+		m_sound[soundNames::POKEMON_CHOOSE].setLoop(false);
+		m_sound[soundNames::MENU].setVolume(10.f);
+		m_sound[soundNames::MENU].setLoop(false);
+		m_sound[soundNames::CLICK].setVolume(20.f);
+		m_sound[soundNames::CLICK].setLoop(false);
+		m_sound[soundNames::HEAL].setVolume(10.f);
+		m_sound[soundNames::HEAL].setLoop(false);
+		m_sound[soundNames::SAVING].setVolume(10.f);
+		m_sound[soundNames::SAVING].setLoop(false);
 	}
 };

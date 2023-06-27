@@ -29,10 +29,6 @@ public:
 		  m_currentLevel(std::move(other->m_currentLevel)),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
-		m_camera->debug();
-		std::cout << m_player->getPosition().x << "  " << m_player->getPosition().y << std::endl;
-		std::cout << m_NPC->getPosition().x << "  " << m_NPC->getPosition().y << std::endl;
-		std::cout << int(m_currentLevel->getLevelId()) << std::endl;
 		SoundTon::getInstance().stopSound(soundNames::OPEN);
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
@@ -47,15 +43,7 @@ public:
 		  m_player(player),
 		  m_NPC(NPC),
 		  m_currentLevel(std::move(currentLevel)),
-		  m_pokemonFactory(std::make_unique<PokemonFactory>())
-	{
-		m_camera->debug();
-		std::cout << m_player->getPosition().x << "  " << m_player->getPosition().y << std::endl;
-		std::cout << m_NPC->getPosition().x << "  " << m_NPC->getPosition().y << std::endl;
-		std::cout << int(m_currentLevel->getLevelId()) << std::endl;
-		// SoundTon::getInstance().stopSound(soundNames::OPEN);
-		// SoundTon::getInstance().playSound(soundNames::CITY);
-	}
+		  m_pokemonFactory(std::make_unique<PokemonFactory>()) {}
 
 	PlayState(Stack<BaseState>& states)
 		: BaseState(states),
@@ -284,8 +272,8 @@ public:
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
 		{
+			SoundTon::getInstance().playSound(soundNames::NM_CLICK);
 			m_menu = true;
-
 		}
 		if (event.type == sf::Event::Resized)
 		{

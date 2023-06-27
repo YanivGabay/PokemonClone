@@ -4,6 +4,9 @@
 #include "entity/Player.h"
 #include "PokemonMenuState.h"
 #include "saveManager.h"
+#include "SoundTon.h"
+#include "utilities.h"
+
 class PlayState;
 
 enum PlayerMenuOptions
@@ -14,7 +17,9 @@ enum PlayerMenuOptions
 	QuitGame
 
 };
+
 const int PlayerMenuSize = 4;
+
 std::optional<PlayerMenuOptions> operator++(std::optional<PlayerMenuOptions> option)
 {
 	if (option)
@@ -30,10 +35,13 @@ std::optional<PlayerMenuOptions> operator--(std::optional<PlayerMenuOptions> opt
 	if (option)
 	{
 		int value = static_cast<int>(*option) - 1;
+		
 		if (value < 0)
 			value = PlayerMenuSize - 1;
+		
 		*option = static_cast<PlayerMenuOptions>(value);
 	}
+
 	return option;
 }
 
@@ -44,9 +52,16 @@ public:
 	PlayerMenuState(Stack<BaseState>& states, saveManager& manager,sf::Vector2f cameraCenter,
 					std::shared_ptr<Player> player): BaseState(states),
 		m_saveGame(manager),m_cameraCenter(cameraCenter),m_player(player) {
+		SoundTon::getInstance().stopSound(soundNames::CITY);
+		SoundTon::getInstance().playSound(soundNames::MENU_THEME);
 		entry();
-	};
-	~PlayerMenuState() {};
+	}
+	
+	virtual ~PlayerMenuState()
+	{
+		SoundTon::getInstance().stopSound(soundNames::MENU_THEME);
+		SoundTon::getInstance().playSound(soundNames::CITY);
+	}
 
 
 	 void entry(){
@@ -74,7 +89,7 @@ public:
 	 }
 	 void update(sf::Time dt){
 		 PlayerMenuOptions option = m_hover.value();
-
+		 
 		 for (int i = 0; i < PlayerMenuSize; i++)
 		 {
 			 if (i == option)
@@ -91,28 +106,30 @@ public:
 		 {
 			 auto state = std::make_unique<PokemonMenuState>(getStateStack().get(), m_player, m_cameraCenter);
 			 getStateStack().get().pushQueueState(std::move(state));
+			 SoundTon::getInstance().playSound(soundNames::CLICK);
 			 m_selection = std::nullopt;
 		 }
 		 else if (m_selection == SaveGame)
-		 {	
-			 
+		 {
 			 m_saveGame.savingIntoFile();
+			 SoundTon::getInstance().playSound(soundNames::SAVING);
+			 m_selection = std::nullopt;
 		 }
 		 else if (m_selection == Heal)
 		 {
-
 			 m_player->healPokemons();
+			 SoundTon::getInstance().playSound(soundNames::HEAL);
 			 m_selection = std::nullopt;
 		 }
-
 		 else if (m_selection == QuitGame)
 		 {
+			 SoundTon::getInstance().playSound(soundNames::CLICK);
 			 m_selection = std::nullopt;
 			 setStatus(false);
-			 
 		 }
 		//if not null,switch case what to do
 	 }
+	 
 	 void handleEvents(sf::Event event){
 		 if (event.type == sf::Event::KeyPressed)
 		 {
@@ -122,14 +139,17 @@ public:
 			 }
 			 if (event.key.code == sf::Keyboard::Down)
 			 {
+				 SoundTon::getInstance().playSound(soundNames::MENU);
 				 m_hover = ++m_hover;
 			 }
 			 if (event.key.code == sf::Keyboard::Up)
 			 {
+				 SoundTon::getInstance().playSound(soundNames::MENU);
 				 m_hover = --m_hover;
 			 }
-			 if (event.key.code == sf::Keyboard::M)
+			 if (event.key.code == sf::Keyboard::M || event.key.code == sf::Keyboard::Escape)
 			 {
+				 SoundTon::getInstance().playSound(soundNames::NM_CLICK);
 				 setStatus(false);
 			 }
 			

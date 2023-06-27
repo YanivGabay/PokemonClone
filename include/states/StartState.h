@@ -55,6 +55,8 @@ public:
 		
 		if (m_startMenu->getChoice() == NEW_GAME && !m_loadingStarted)
 		{
+			SoundTon::getInstance().playSound(soundNames::CLICK);
+
 			m_choice = std::nullopt;
 			m_loadingStarted = true;
 			// Asynchronously create PlayState

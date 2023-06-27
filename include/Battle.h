@@ -58,7 +58,8 @@ public:
 	
 	~Battle()
 	{
-		SoundTon::getInstance().stopSound(soundNames::BATTLE);
+		isEnemyPokemonDead() ? SoundTon::getInstance().stopSound(soundNames::WIN) : SoundTon::getInstance().stopSound(soundNames::BATTLE);
+		
 		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
 	

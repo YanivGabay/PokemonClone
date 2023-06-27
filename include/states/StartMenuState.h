@@ -6,6 +6,7 @@
 #include "guis/Gui.h"
 #include "StartState.h"
 #include "Utilities/StartMenuOptions.h"
+#include "SoundTon.h"
 
 
 class StartMenuState : public BaseState
@@ -67,10 +68,12 @@ public:
 			}
 			if (event.key.code == sf::Keyboard::Down)
 			{
+				SoundTon::getInstance().playSound(soundNames::MENU);
 				m_hover = ++m_hover;
 			}
 			if (event.key.code == sf::Keyboard::Up)
 			{
+				SoundTon::getInstance().playSound(soundNames::MENU);
 				m_hover = --m_hover;
 			}
 		}

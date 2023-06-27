@@ -5,6 +5,9 @@
 #include "guis/Gui.h"
 #include "Resources.h"
 #include "FadeOutState.h"
+#include "SoundTon.h"
+#include "utilities.h"
+
 const int SELECTION = 3;
 
 class ChoosePokemonState : public BaseState
@@ -30,7 +33,10 @@ public:
 		m_prompt->setText("Choose Your Starter Pokemon! Use Arrows Keys to change, and Enter To choose");
 	};
 
-	~ChoosePokemonState() {};
+	virtual ~ChoosePokemonState()
+	{
+		SoundTon::getInstance().playSound(soundNames::POKEMON_CHOOSE);
+	}
 	 void entry() {
 	 
 	 
