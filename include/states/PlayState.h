@@ -33,8 +33,7 @@ public:
 
 		m_currentLevel->resetMap();
 		
-		SoundTon::getInstance().stopSound(soundNames::OPEN);
-		SoundTon::getInstance().playSound(soundNames::CITY);
+		
 	}
 
 	PlayState(Stack<BaseState>& states,
@@ -51,6 +50,8 @@ public:
 	{
 		m_firstUpdate = true;
 		m_currentLevel->resetMap();
+		SoundTon::getInstance().stopSound(soundNames::OPEN);
+		SoundTon::getInstance().playSound(soundNames::CITY);
 	}
 
 	PlayState(Stack<BaseState>& states)
