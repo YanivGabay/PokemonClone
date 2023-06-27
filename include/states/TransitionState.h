@@ -52,7 +52,7 @@ public:
         getStateStack().get().pushQueueState(getNextState());
         getStateStack().get().pushQueueState(getFadeIn());
         setStatus(false);
-        getStateStack().get().printTypeOf();
+        
     }
     
     void handleEvents(sf::Event event) override {}

@@ -37,5 +37,5 @@ private:
     sf::RectangleShape background;
     sf::RectangleShape bar;
 
-    //need to add the functionality to add text, and print it on top of the progress bars
+    
 };

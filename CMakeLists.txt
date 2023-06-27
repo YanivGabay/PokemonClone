@@ -3,6 +3,7 @@ cmake_minimum_required (VERSION 3.23)
 project (MiniMon)
 set (MY_AUTHORS "shahar_asher-yaniv_gabay")
 
+
 include (cmake/CompilerSettings.cmake)
 
 

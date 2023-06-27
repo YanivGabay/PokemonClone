@@ -13,7 +13,7 @@ public:
     {
         m_fadeShape.setSize(sf::Vector2f(getWindowSize().x*3,getWindowSize().y*3));
         m_fadeShape.setFillColor(color);
-        getStateStack().get().printTypeOf();
+        
     }
 
     virtual ~FadeInState() = default;
