@@ -56,6 +56,10 @@ public:
                   pokemon->levelUpBy(5);
                   name = getRandom(ThirdLevel);
                   break;
+              case LevelID::SECOND_FIELD:
+                  pokemon->levelUpBy(10);
+                  name = getRandom(FourthLevel);
+                  break;
               default:
                   // Handle any other level if needed
                   break;

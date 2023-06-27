@@ -87,7 +87,7 @@ enum class LevelID
 	//START_FIELD,
 	SECOND_TOWN,
 	THIRD_TOWN,
-	//SECOND_FIELD,
+	SECOND_FIELD,
 	//MINI_PHYSICS_LEVEL,
 
 
@@ -117,6 +117,7 @@ enum Side
 	LEFT,
 	RIGHT
 };
+
 
 
 const float SOUND_VOLUME = 5;

@@ -15,7 +15,7 @@
 #include <iostream>
 #include "PlayerMenuState.h"
 #include "ChoosePokemonState.h"
-
+#include "GuideState.h"
 
 class PlayState : public BaseState
 {
@@ -172,10 +172,14 @@ public:
 			//push choosepokemon state
 			if (!m_loaded)//if loading game this need to be true;
 			{
-				auto state = std::make_unique<ChoosePokemonState>(getStateStack().get(), m_camera->getView().getCenter(), m_player);
-				getStateStack().get().pushQueueState(std::move(state));
+				auto guideState = std::make_unique<GuideState>(getStateStack().get(), m_camera->getView().getCenter());
+				getStateStack().get().pushQueueState(std::move(guideState));
+				auto chooseState = std::make_unique<ChoosePokemonState>(getStateStack().get(), m_camera->getView().getCenter(), m_player);
+				getStateStack().get().pushQueueState(std::move(chooseState));
 				return;
 			}
+			
+			
 			
 		}
 
