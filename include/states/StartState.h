@@ -34,12 +34,13 @@ public:
 		auto playstate = m_loadingFuture.get();
 
 		sf::View view = playstate->getView();
-		Resources::getInstance().getWindow().setView(view);
+		
+		
 		// Now that PlayState is created, push it to the queue
 		auto transition = std::make_unique<TransitionState>(getStateStack().get(), std::move(playstate), Resources::getInstance().getColor(BLACK));
 		
 		getStateStack().get().pushQueueState(std::move(transition));
-
+		
 		m_startMenu->resetText();
 		m_loadingStarted = false;
 		//setStatus(false);

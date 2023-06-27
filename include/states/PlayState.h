@@ -5,7 +5,6 @@
 #include "Level.h"
 #include "entity/Player.h"
 #include "entity\Entity.h"
-#include "entity\NPC.h"
 #include <random>
 #include "Pokemon/PokemonFactory.h"
 #include "EncounterBattleState.h"
@@ -25,8 +24,7 @@ public:
 		: BaseState(states),
 		  
 		  m_player(other->m_player),
-		  m_NPC(other->m_NPC),
-		  m_currentLevel(std::move(other->m_currentLevel)),
+		m_currentLevel(std::move(other->m_currentLevel)),
 		m_camera(std::move(other->m_camera)),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
@@ -38,13 +36,10 @@ public:
 	PlayState(Stack<BaseState>& states,
 			  std::unique_ptr<Level> currentLevel,
 			  std::shared_ptr<Player> player,
-			  std::shared_ptr<NPC> NPC,
 			  std::unique_ptr<Camera> camera)
 		: BaseState(states),
-		  
-		  m_player(player),
-		  m_NPC(NPC),
-		  m_currentLevel(std::move(currentLevel)),
+		m_player(player),
+		m_currentLevel(std::move(currentLevel)),
 		m_camera(std::move(camera)),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
@@ -59,7 +54,6 @@ public:
 		
 		  m_player(std::make_shared<Player>()),
 		m_camera(std::make_unique<Camera>(gridToPixelPosition(m_player->getPosition()).x + TILE_SIZE / 2.0f, gridToPixelPosition(m_player->getPosition()).y + TILE_SIZE / 2.0f, SCREEN_WIDTH, SCREEN_HEIGHT)),
-		  m_NPC(std::make_shared<NPC>()),
 		  m_currentLevel(std::make_unique<Level>()),
 		  m_pokemonFactory(std::make_unique<PokemonFactory>())
 	{
@@ -253,9 +247,7 @@ public:
 								  m_currentLevel->getLevelId(),
 								  m_currentLevel->getEncounterRate(),
 								  m_camera->getView().getCenter().x,
-								  m_camera->getView().getCenter().y,
-								  m_NPC->getPosition().x,
-								  m_NPC->getPosition().y);
+								  m_camera->getView().getCenter().y);
 
 		m_savingbufs.updateParty(m_player->getPartySize());
 
@@ -270,11 +262,8 @@ public:
 	void checkCollision(sf::Time dt)
 	{
 		m_player->update(dt, getMovesMap(m_player->getPosition()));
-		m_NPC->update(dt, getMovesMap(m_NPC->getPosition()));
-
-		//if we are here, the player is after collision check
-
 		
+		//if we are here, the player is after collision check
 	}
 	
 	
@@ -312,7 +301,6 @@ private:
 	bool m_menu{ false };
 	std::unique_ptr<Level> m_currentLevel;
 	std::shared_ptr<Player> m_player;
-	std::shared_ptr<NPC> m_NPC;
 	std::unique_ptr<Camera> m_camera;
 
 	std::unique_ptr<PokemonFactory> m_pokemonFactory;

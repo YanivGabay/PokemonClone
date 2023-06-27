@@ -17,7 +17,6 @@
 
 #include "Pokemon\Party.h"
 #include "Level.h"
-#include "entity\NPC.h"
 #include "Utilities\PokemonIndex.h"
 #include "states\BaseState.h"
 
@@ -43,8 +42,7 @@ public:
 
 	void updatePlayer(int playerPosX, int playerPosY,
                       enum LevelID levelId, int encounterRate,
-                      float cameraX, float cameraY,
-                      int NpcPosX, int NpcPosY)
+                      float cameraX, float cameraY)
     {
         m_savingBuf["playState"]["Playerposition"]["x"] = playerPosX;
         m_savingBuf["playState"]["Playerposition"]["y"] = playerPosY;
@@ -54,9 +52,6 @@ public:
 
         m_savingBuf["playState"]["cameraPosition"]["x"] = cameraX;
         m_savingBuf["playState"]["cameraPosition"]["y"] = cameraY;
-
-        m_savingBuf["playState"]["NpcPosition"]["x"] = NpcPosX;
-        m_savingBuf["playState"]["NpcPosition"]["y"] = NpcPosY;
     }
 
     void updateParty(int partySize)
@@ -212,9 +207,6 @@ public:
             player->setPositions(sf::Vector2i(m_savingBuf["playState"]["Playerposition"]["x"],
                 m_savingBuf["playState"]["Playerposition"]["y"]));
 
-            std::shared_ptr<NPC> NPC(std::make_shared<NPC>());
-            NPC->setPosition(sf::Vector2i(m_savingBuf["playState"]["NpcPosition"]["x"], m_savingBuf["playState"]["NpcPosition"]["y"]));
-            std::cout << "101010" << std::endl;
             std::unique_ptr<Camera> camera(std::make_unique<Camera>(m_savingBuf["playState"]["cameraPosition"]["x"],
                 m_savingBuf["playState"]["cameraPosition"]["y"]));
 
@@ -223,7 +215,7 @@ public:
             std::cout << "111111111" << std::endl;
             openingJsonFile.close();
             std::cout << "12121212" << std::endl;
-            return std::unique_ptr<PlayState>((std::make_unique<PlayState>(states, std::move(currentLevel), player, NPC, std::move(camera))));
+            return std::unique_ptr<PlayState>((std::make_unique<PlayState>(states, std::move(currentLevel), player, std::move(camera))));
         }
         
         return std::unique_ptr<PlayState>((std::make_unique<PlayState>(states)));
