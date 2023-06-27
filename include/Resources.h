@@ -53,6 +53,7 @@ public:
 				std::cerr << "Failed to load texture: " << filename << std::endl;
 				throw std::runtime_error("Failed to load texture.");
 			}
+			m_textures[filename]->setSmooth(false);
 		}
 		
 		return *m_textures[filename];
@@ -206,6 +207,12 @@ public:
 			}
 		
 	}
+	static sf::ContextSettings getContextSettings()
+	{
+		sf::ContextSettings settings;
+		settings.antialiasingLevel = 0;
+		return settings;
+	}
 private:
 	sf::RenderWindow m_window;
 	std::unordered_map<Colors, std::unique_ptr<sf::Color>> m_colors;
@@ -226,7 +233,7 @@ private:
 	Resources& operator=(const Resources&) = delete;
 
 	Resources()
-		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game")
+		: m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Grid Movement Game",sf::Style::Default, getContextSettings())
 		
 	{
 		m_window.setFramerateLimit(FPS);

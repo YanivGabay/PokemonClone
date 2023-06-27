@@ -23,6 +23,7 @@ public:
     {
         for (auto& pokemon : m_pokemons)
         {
+            if(pokemon)
             pokemon->setCurrentHP(pokemon->getHP());
         }
     }

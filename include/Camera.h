@@ -17,7 +17,10 @@ public:
         // Set the center of the view to the player's position
         m_view.setCenter(playerX, playerY);
     }
-
+    void setView(sf::View& view)
+    {
+        m_view = view;
+    }
     sf::View& getView()
     {
         return m_view;

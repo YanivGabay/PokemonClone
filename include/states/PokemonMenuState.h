@@ -25,11 +25,11 @@ public:
 											 sf::Color::Black, sf::Color::Green, m_currentPlayerPokemon->getHpPercent());*/
 		 m_life = std::move(std::make_unique<Gui>(font, buttonSize,
 												  sf::Vector2f(m_cameraCenter.x, m_cameraCenter.y - m_windowSize.y / 2)));
-		 m_life->addProgressBar(m_life->getPosition().x, m_life->getPosition().y, buttonSize.x, buttonSize.y, sf::Color::Black,
+		 m_life->addProgressBar(m_life->getPosition().x-10, m_life->getPosition().y-10, buttonSize.x, buttonSize.y, sf::Color::Black,
 								sf::Color::Green,m_player->getStarterPokemon()->getHpPercent());
 		 m_exp = std::move(std::make_unique<Gui>(font, buttonSize,
 												  sf::Vector2f(m_cameraCenter.x, m_cameraCenter.y - m_windowSize.y / 2+100)));
-		 m_exp->addProgressBar(m_exp->getPosition().x, m_exp->getPosition().y, buttonSize.x, buttonSize.y, sf::Color::Black,
+		 m_exp->addProgressBar(m_exp->getPosition().x-10, m_exp->getPosition().y-10, buttonSize.x, buttonSize.y, sf::Color::Black,
 								sf::Color::Blue, m_player->getStarterPokemon()->getCurrentExpPercent());
 		 setText();
 
@@ -50,7 +50,9 @@ public:
 		 textStream << "Defense:" << m_player->getStarterPokemon()->getDefense() << "\n";
 		 textStream << "Speed:" << m_player->getStarterPokemon()->getSpeed() << "\n";
 		 textStream << "Exp for next level:" << m_player->getStarterPokemon()->getExpToLevel()-m_player->getStarterPokemon()->getCurrentExp() << "\n";
+		 textStream << "Current Exp:" << m_player->getStarterPokemon()->getCurrentExp() << "\n";
 		 textStream << "Speed:" << m_player->getStarterPokemon()->getSpeed() << "\n";
+		 textStream << "\n Press M again to go back to the Menu" << "\n";
 		 m_main->setText(textStream.str());
 	 }
 	 void exit() {

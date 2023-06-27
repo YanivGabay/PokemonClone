@@ -283,7 +283,12 @@ public:
 			m_menu = true;
 
 		}
+		if (event.type == sf::Event::Resized)
+		{
+			// Adjust the viewport to keep the same portion of the game world visible
+			m_camera->getView().setSize(event.size.width, event.size.height);
 			
+		}
 		
 	}
 	

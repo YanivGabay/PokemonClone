@@ -51,7 +51,7 @@ public:
 
 	 void entry(){
 		 
-		 sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 3, m_windowSize.y / 3);
+		 sf::Vector2f buttonSize = sf::Vector2f(m_windowSize.x / 3, m_windowSize.y / 6);
 		// float x = (static_cast<float>(m_cameraCenter.x ) - (buttonSize.x / 2));
 
 		 for (size_t i = 0; i < PlayerMenuSize; i++)
@@ -102,6 +102,7 @@ public:
 		 {
 
 			 m_player->healPokemons();
+			 m_selection = std::nullopt;
 		 }
 
 		 else if (m_selection == QuitGame)
