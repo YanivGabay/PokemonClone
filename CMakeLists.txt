@@ -7,7 +7,7 @@ set (MY_AUTHORS "shahar_asher-yaniv_gabay")
 include (cmake/CompilerSettings.cmake)
 
 
-add_executable (${CMAKE_PROJECT_NAME})
+add_executable (${CMAKE_PROJECT_NAME} WIN32)
 
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
 target_link_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
@@ -35,6 +35,26 @@ target_include_directories(nlohmann_json INTERFACE ${CMAKE_SOURCE_DIR}/external/
 target_link_libraries(${CMAKE_PROJECT_NAME} nlohmann_json)
 
 #--------------------------------------
+
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    message("Doxygen build started")
+    
+    add_custom_target(doc_doxygen ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM)
+else()
+    message("Doxygen needs to be installed to generate documentation")
+endif()
+
+
+
 
 find_package (SFML 2.5 COMPONENTS graphics audio REQUIRED)
 

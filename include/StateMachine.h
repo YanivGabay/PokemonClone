@@ -9,7 +9,7 @@
 #include "Camera.h"
 #include "Stack.h"
 #include "SoundTon.h"
-
+#include <Windows.h>
 
 class StateMachine 
 {
@@ -21,32 +21,40 @@ public:
 	
 	void runGame()
 	{
-		const sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 fps
-		sf::Time timeSinceLastUpdate = sf::Time::Zero;
-		sf::Clock clock; // Start a clock for frame timing
-	
-		m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
-		
-		m_stateStack.pushState(std::move(std::make_unique<FadeInState>(getStateStack(), Resources::getInstance().getColor(BLACK))));
-		
-		while (m_window.isOpen()&&!m_stateStack.checkQuitStatus())
+		try
 		{
-			this->handleEvents();
-			
-			sf::Time elapsedTime = clock.restart();
-			timeSinceLastUpdate += elapsedTime;
-		
-			while (timeSinceLastUpdate > TimePerFrame)
-			{
-				timeSinceLastUpdate -= TimePerFrame;
-				this->update(TimePerFrame);
-			}
-			
-			m_window.clear();
+			const sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 fps
+			sf::Time timeSinceLastUpdate = sf::Time::Zero;
+			sf::Clock clock; // Start a clock for frame timing
 
-			this->draw();
-			
-			m_window.display();
+			m_stateStack.pushState(std::make_unique<StartState>(getStateStack()));
+
+			m_stateStack.pushState(std::move(std::make_unique<FadeInState>(getStateStack(), Resources::getInstance().getColor(BLACK))));
+
+			while (m_window.isOpen() && !m_stateStack.checkQuitStatus())
+			{
+				this->handleEvents();
+
+				sf::Time elapsedTime = clock.restart();
+				timeSinceLastUpdate += elapsedTime;
+
+				while (timeSinceLastUpdate > TimePerFrame)
+				{
+					timeSinceLastUpdate -= TimePerFrame;
+					this->update(TimePerFrame);
+				}
+
+				m_window.clear();
+
+				this->draw();
+
+				m_window.display();
+			}
+		}
+		catch (const std::exception& e)
+		{
+			std::string message = "An exception occurred: " + std::string(e.what());
+			MessageBox(NULL, message.c_str(), "Error", MB_ICONERROR | MB_OK);
 		}
 		
 		return;
