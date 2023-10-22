@@ -12,6 +12,8 @@ public:
     Camera(float x, float y)
         : m_view(sf::FloatRect(x, y, SCREEN_WIDTH, SCREEN_HEIGHT))
     {
+        
+       // m_view.setSize()
         m_view.setCenter(x, y);
     }
 
@@ -22,8 +24,14 @@ public:
     {
         // Set the center of the view to the player's position
         m_view.setCenter(playerX, playerY);
+      
+       
     }
-
+    void setSize(std::pair<int, int> mapSize)
+    {
+        //m_view.setSize(sf::Vector2f(mapSize.first*16.65 , mapSize.second*15.65));
+        
+   }
     void setView(sf::View& view)
     {
         m_view = view;
@@ -35,5 +43,6 @@ public:
     }
 
 private:
+  
     sf::View m_view;
 };

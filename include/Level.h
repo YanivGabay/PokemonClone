@@ -49,6 +49,10 @@ public:
 		return (*m_currMap)->checkCollisionUpper(target);
 	}
 
+	const std::pair<int,int> getMapSize()
+	{
+		return m_currMap->get()->getMapSize();
+	}
 	const int getEncounterRate()
 	{
 		return m_encounterRate;

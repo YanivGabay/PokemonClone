@@ -237,6 +237,12 @@ public:
 		// Tile does not exist
 		return nullptr;
 	}
+	std::pair<int, int> getMapSize()
+	{
+		std::pair<int, int>x(m_mapXSize, m_mapYSize);
+
+		return x;
+	}
 
 private:
 	std::vector<std::unique_ptr<Tile>> m_lowerTiles;

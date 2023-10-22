@@ -216,7 +216,7 @@ public:
 		sf::Vector2f playerPixelPosition = gridToPixelPosition(m_player->getPosition());
 		
 		m_camera->update(playerPixelPosition.x + TILE_SIZE / 2.0f, playerPixelPosition.y + TILE_SIZE / 2.0f);
-		
+		m_camera->setSize(m_currentLevel.get()->getMapSize());
 		m_currentLevel->updateAnimations(dt);
 
 		savingIntoBuffer();
