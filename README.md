@@ -10,8 +10,8 @@ This project is our final project for the Object-Oriented Programming (OOP) cour
 - Shahar Asher - ID: 209305408
 
 ## Project Description
-
-MiniMons is a Pokémon-inspired game where players traverse various maps, encounter wild Pokémon, battle opponents, and ultimately confront the Green Nightmare. Here's an overview of the project structure and key components:
+This is our attemp of creating a pokemon game engine. we can go through 4 different maps, battle different pokemons, level up our own starter.
+We've integrated the Tiled application into our workflow. Tiled allows us to design and create maps with ease. Once the maps are created, we use the [Tileson API](https://github.com/SSBMTonberry/Tileson) to process the output and seamlessly integrate it into our game engine.
 
 ### List of Files Created
 
