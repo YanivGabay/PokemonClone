@@ -1,0 +1,33 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$class_base_state.html" title=" " alt="" coords="5,360,88,387"/>
+<area shape="rect" id="Node000001" href="$class_add_exp_state.html" title=" " alt="" coords="162,5,261,32"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="44,345,47,283,58,203,70,160,85,118,106,78,134,42,160,25,163,30,137,46,111,81,90,120,75,161,64,204,52,284,50,345"/>
+<area shape="rect" id="Node000002" href="$class_battle_dialog_state.html" title=" " alt="" coords="150,56,273,83"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="46,345,51,292,65,225,91,155,110,122,134,93,150,81,153,85,138,97,114,125,96,157,70,226,57,293,51,346"/>
+<area shape="rect" id="Node000003" href="$class_choose_pokemon_state.html" title=" " alt="" coords="136,107,287,133"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="48,345,56,302,72,248,97,192,114,166,134,143,151,132,154,136,137,147,118,170,101,195,77,249,61,303,54,346"/>
+<area shape="rect" id="Node000004" href="$class_encounter_battle_state.html" title=" " alt="" coords="139,157,284,184"/>
+<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="52,345,63,311,79,270,103,229,134,194,152,182,155,187,137,198,107,232,84,273,68,312,57,346"/>
+<area shape="rect" id="Node000005" href="$class_fade_in_state.html" title=" " alt="" coords="166,208,257,235"/>
+<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="58,345,88,294,109,268,134,244,164,229,166,234,137,249,113,271,92,297,62,348"/>
+<area shape="rect" id="Node000006" href="$class_fade_out_state.html" title=" " alt="" coords="160,259,263,285"/>
+<area shape="poly" id="edge6_Node000000_Node000006" title=" " alt="" coords="68,348,98,321,134,295,159,283,162,288,137,300,102,325,72,352"/>
+<area shape="rect" id="Node000007" href="$class_guide_state.html" title=" " alt="" coords="168,309,255,336"/>
+<area shape="poly" id="edge7_Node000000_Node000007" title=" " alt="" coords="101,354,167,333,168,338,102,359"/>
+<area shape="rect" id="Node000008" href="$class_play_state.html" title=" " alt="" coords="172,360,251,387"/>
+<area shape="poly" id="edge8_Node000000_Node000008" title=" " alt="" coords="102,371,172,371,172,376,102,376"/>
+<area shape="rect" id="Node000009" href="$class_player_menu_state.html" title=" " alt="" coords="151,411,272,437"/>
+<area shape="poly" id="edge9_Node000000_Node000009" title=" " alt="" coords="102,388,166,407,164,413,101,393"/>
+<area shape="rect" id="Node000010" href="$class_pokemon_menu_state.html" title=" " alt="" coords="142,461,281,488"/>
+<area shape="poly" id="edge10_Node000000_Node000010" title=" " alt="" coords="72,395,102,422,137,447,162,458,159,463,134,452,98,426,68,399"/>
+<area shape="rect" id="Node000011" href="$class_start_menu_state.html" title=" " alt="" coords="155,512,268,539"/>
+<area shape="poly" id="edge11_Node000000_Node000011" title=" " alt="" coords="62,399,92,449,113,475,137,498,157,509,154,514,134,502,109,479,88,452,58,402"/>
+<area shape="rect" id="Node000012" href="$class_start_state.html" title=" " alt="" coords="171,563,252,589"/>
+<area shape="poly" id="edge12_Node000000_Node000012" title=" " alt="" coords="57,400,68,434,84,474,107,514,137,549,153,559,172,566,170,571,151,564,134,553,103,517,79,477,63,436,52,402"/>
+<area shape="rect" id="Node000013" href="$class_take_damage_state.html" title=" " alt="" coords="147,613,276,640"/>
+<area shape="poly" id="edge13_Node000000_Node000013" title=" " alt="" coords="54,400,61,444,77,497,101,552,118,577,137,599,154,611,151,615,134,603,114,580,97,555,72,499,56,445,48,401"/>
+<area shape="rect" id="Node000014" href="$class_take_turn_state.html" title=" " alt="" coords="159,664,264,691"/>
+<area shape="poly" id="edge14_Node000000_Node000014" title=" " alt="" coords="51,401,57,454,70,520,96,590,114,622,137,650,160,665,157,669,134,654,110,625,91,592,65,522,51,454,46,402"/>
+<area shape="rect" id="Node000015" href="$class_transition_state.html" title=" " alt="" coords="157,715,266,741"/>
+<area shape="poly" id="edge15_Node000000_Node000015" title=" " alt="" coords="50,402,52,463,64,543,75,585,90,627,111,666,138,701,158,715,155,719,134,705,106,669,85,629,70,587,58,544,47,463,44,402"/>
+</map>

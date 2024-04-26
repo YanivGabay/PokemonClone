@@ -1,0 +1,33 @@
+<map id="BaseState" name="BaseState">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1085,5,1231,331"/>
+<area shape="rect" id="Node000002" href="$class_add_exp_state.html" title=" " alt="" coords="5,411,121,629"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1071,180,853,205,575,246,437,273,311,305,207,341,166,360,134,381,105,413,102,409,131,377,164,356,205,336,310,300,436,268,574,241,852,199,1071,175"/>
+<area shape="rect" id="Node000003" href="$class_battle_dialog_state.html" title=" " alt="" coords="145,400,285,640"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1070,172,913,181,815,193,711,211,603,238,495,274,393,321,344,349,298,381,276,402,272,398,295,377,341,345,390,316,493,269,601,233,709,206,814,187,912,175,1070,166"/>
+<area shape="rect" id="Node000004" href="$class_choose_pokemon_state.html" title=" " alt="" coords="309,421,479,619"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1071,181,948,201,797,238,717,264,638,296,562,335,492,381,469,400,450,423,446,420,466,397,488,377,559,330,636,292,716,259,796,233,947,196,1070,176"/>
+<area shape="rect" id="Node000005" href="$class_encounter_battle_state.html" title=" " alt="" coords="503,421,667,619"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1072,194,984,222,882,262,777,314,727,346,681,381,642,423,638,420,678,377,724,341,775,310,880,257,982,217,1070,189"/>
+<area shape="rect" id="Node000006" href="$class_fade_in_state.html" title=" " alt="" coords="691,421,801,619"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1073,207,1010,238,942,277,875,325,815,380,785,423,781,420,811,377,871,321,939,272,1008,233,1070,202"/>
+<area shape="rect" id="Node000007" href="$class_fade_out_state.html" title=" " alt="" coords="825,421,945,619"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1077,247,1016,310,959,380,932,423,928,420,954,377,1012,306,1073,243"/>
+<area shape="rect" id="Node000008" href="$class_guide_state.html" title=" " alt="" coords="969,421,1077,619"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1093,345,1063,422,1058,420,1088,343"/>
+<area shape="rect" id="Node000009" href="$class_play_state.html" title=" " alt="" coords="1102,379,1214,661"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1161,345,1161,379,1155,379,1155,345"/>
+<area shape="rect" id="Node000010" href="$class_player_menu_state.html" title=" " alt="" coords="1239,411,1379,629"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1235,342,1265,410,1260,412,1230,344"/>
+<area shape="rect" id="Node000011" href="$class_pokemon_menu_state.html" title=" " alt="" coords="1403,411,1561,629"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="1244,233,1319,300,1393,377,1418,409,1414,412,1389,380,1316,304,1240,237"/>
+<area shape="rect" id="Node000012" href="$class_start_menu_state.html" title=" " alt="" coords="1585,389,1715,651"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="1246,193,1322,222,1408,263,1496,314,1537,344,1575,377,1587,390,1583,393,1571,381,1533,348,1493,318,1406,267,1320,227,1244,198"/>
+<area shape="rect" id="Node000013" href="$class_start_state.html" title=" " alt="" coords="1740,421,1848,619"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="1246,178,1353,199,1481,237,1547,263,1612,295,1673,332,1729,377,1747,397,1762,420,1758,423,1743,400,1726,381,1670,337,1609,299,1545,268,1479,242,1352,205,1245,183"/>
+<area shape="rect" id="Node000014" href="$class_take_damage_state.html" title=" " alt="" coords="1873,421,2019,619"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="1246,173,1376,190,1454,205,1537,226,1622,252,1707,286,1788,327,1862,377,1884,397,1902,420,1898,423,1880,400,1859,381,1785,331,1705,290,1620,257,1536,231,1453,210,1375,195,1245,178"/>
+<area shape="rect" id="Node000015" href="$class_take_turn_state.html" title=" " alt="" coords="2044,379,2168,661"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="1246,178,1434,207,1666,252,1780,279,1885,309,1971,341,2006,359,2033,377,2046,388,2043,392,2030,381,2003,363,1969,346,1883,314,1779,284,1665,257,1433,213,1245,184"/>
+<area shape="rect" id="Node000016" href="$class_transition_state.html" title=" " alt="" coords="2192,400,2319,640"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="1246,175,1464,200,1740,242,1878,270,2003,301,2108,337,2149,356,2182,377,2205,399,2202,403,2179,381,2147,361,2106,342,2002,306,1877,275,1739,248,1463,206,1245,180"/>
+</map>
