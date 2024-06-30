@@ -1,9 +1,0 @@
-<map id="json11::Statics" name="json11::Statics">
-<area shape="rect" id="Node000001" title=" " alt="" coords="97,155,197,267"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,13,51,83"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="37,82,45,106,57,129,86,162,82,166,52,132,40,108,32,83"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="75,13,219,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,82,149,137,144,137,144,82"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="243,5,371,91"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="278,92,243,133,211,162,208,158,239,129,274,89"/>
-</map>

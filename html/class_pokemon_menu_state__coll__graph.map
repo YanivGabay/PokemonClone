@@ -1,5 +1,0 @@
-<map id="PokemonMenuState" name="PokemonMenuState">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,379,163,597"/>
-<area shape="rect" id="Node000002" href="$class_base_state.html" title=" " alt="" coords="11,5,157,331"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,345,87,379,81,379,81,345"/>
-</map>
