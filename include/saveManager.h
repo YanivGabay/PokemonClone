@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "../../external/nlohmann/json.hpp"
 
 #include <ctime>
 #include <sstream>

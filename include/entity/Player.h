@@ -5,7 +5,6 @@
 #include "Camera.h"
 #include "Tile.h"
 #include "world\TilesMap.h"
-#include "PhysicsMove.h"
 #include "Animation.h"
 #include "Pokemon/Party.h"
 #include "entity\Entity.h"
@@ -40,22 +39,22 @@ public:
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
-                m_movingObj.setMove(LEFT);
+                Entity::setMove(LEFT);
                
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
-                m_movingObj.setMove(RIGHT);
+                Entity::setMove(RIGHT);
                
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
             {
-                m_movingObj.setMove(UP);
+                Entity::setMove(UP);
                 
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
             {
-                m_movingObj.setMove(DOWN);
+                Entity::setMove(DOWN);
                
             }
             else
@@ -78,7 +77,7 @@ public:
         {
             addMoveProgress(getMoveSpeed(), dt);
             
-            Side side = m_movingObj.getSide();
+            Side side = Entity::getSide();
             
             if (side == UP)
             {
@@ -104,15 +103,15 @@ public:
                 
                 if (isValidPosition)
                 {
-                    b2Vec2 newPos = m_movingObj.getPos();
+                    
                    
-                    setTargetPosition(sf::Vector2i(newPos.x, newPos.y));
+                    setTargetPosition(getNextPosition(Entity::getPosition(), Entity::getSide()));
                     setPositions(getTargetPosition());
                 }
                 else
                 {
                     setTargetPosition(getPosition());
-                    m_movingObj.setPosition(getPosition());
+                    
                 }
                 
                 m_isMoving = false;
@@ -125,6 +124,29 @@ public:
             //we are not moving
         }
     }
+    sf::Vector2i getNextPosition(sf::Vector2i position,Side side)
+    {
+        sf::Vector2i new_posi = position;
+        switch (side)
+        {
+            case UP:
+                new_posi.y--;
+                break;
+            case DOWN:
+                new_posi.y++;
+                break;
+            case LEFT:
+                new_posi.x--;
+                break;
+            case RIGHT:
+                new_posi.x++;
+                break;
+            default:
+                break;
+        }
+        return new_posi;
+
+    }
     
     void setSprite(PlayerID desiredSprite)
     {
@@ -133,7 +155,7 @@ public:
     
     void setIdle()
     {
-        Side side = m_movingObj.getSide();
+        Side side = Entity::getSide();
         
         if (side == UP)
         {
