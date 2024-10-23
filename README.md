@@ -10,8 +10,58 @@ This project is our final project for the Object-Oriented Programming (OOP) cour
 - Shahar Asher - ID: 209305408
 
 ## Project Description
-This is our attemp of creating a pokemon game engine. we can go through 4 different maps, battle different pokemons, level up our own starter.
-We've integrated the Tiled application into our workflow. Tiled allows us to design and create maps with ease. Once the maps are created, we use the [Tileson API](https://github.com/SSBMTonberry/Tileson) to process the output and seamlessly integrate it into our game engine.
+This is our attemp of creating a pokemon game engine. we can go through 4 different maps, battle different pokemons, 
+level up our own starter.
+We've integrated the Tiled application into our workflow. Tiled allows us to design and create maps with ease.
+Once the maps are created, we use the [Tileson API](https://github.com/SSBMTonberry/Tileson) to process the output and seamlessly integrate it into our game engine.
+
+## Installation
+
+### Prerequisites
+
+- Git: Ensure you have Git installed. You can download it from [here](https://git-scm.com/)
+- Visual Studio or Visual Studio Code: Install one of these IDEs (Visual Studio is recommended for CMake projects
+- SFML 2.5.1 Download and extract SFML from https://www.sfml-dev.org/download.php.
+    - Extract to:
+    ```bash 
+    C:\SFML\SFML-2.5.1
+    ```
+
+
+### **Setup and Build Instructions**
+
+1. **Clone the Repository:**
+
+   Open a terminal or Git Bash and run:
+
+   ```bash
+    https://github.com/YanivGabay/PokemonClone
+   ```
+
+2. **Open the Project in Visual Studio or VSCode:**
+
+   - For **Visual Studio**:
+     - Open Visual Studio and select **"Open a Local Folder"**.
+     - Choose the cloned repository folder.
+
+   - For **VSCode**:
+     - Open VSCode and select **"Open Folder"**.
+     - Choose the cloned repository folder.
+
+3. **Ensure SFML is Installed Correctly:**
+   - Make sure that SFML is located at:  
+     ```
+     C:\SFML\SFML-2.5.1
+     ```
+
+4. **Build the Project:**
+   - Open the project in Visual Studio.
+   - Click on **CMake -> Build All** to compile the project.
+
+5. **Running the Game:**
+   - After building, the executable will be available. Run it directly from Visual Studio.
+
+---
 
 ### List of Files Created
 
@@ -67,7 +117,6 @@ We've integrated the Tiled application into our workflow. Tiled allows us to des
 - **Camera.h**: Controls the view.
 - **Game.h**: Main game loop.
 - **Level.h**: Represents a level with a vector of tile maps.
-- **PhysicsMove.h**: Implements basic physics movements for the player.
 - **Resources.h**: Singleton class for managing textures, rects, fonts, etc.
 - **SaveManager.h**: Helps with saving and loading the game.
 - **SoundTon.h**: Singleton class for sound manipulation.

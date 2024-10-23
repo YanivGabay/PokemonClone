@@ -42,6 +42,7 @@ public:
 		
 		m_startMenu->resetText();
 		m_loadingStarted = false;
+		
 	}
 	
 	void update(sf::Time dt) override

@@ -71,9 +71,8 @@ public:
 			 
 			 m_player->addPokemon(m_starters[m_selection.value()]);
 			 
-			 auto state = (std::make_unique<FadeOutState>(getStateStack().get(), sf::Color::White, false));
 			 
-			 getStateStack().get().pushQueueState(std::move(state));
+			
 			 setStatus(false);
 		 }
 	}

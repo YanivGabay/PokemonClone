@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <nlohmann/json.hpp>
+#include "../../external/nlohmann/json.hpp"
 
 using json = nlohmann::json;
 
