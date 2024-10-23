@@ -15,7 +15,7 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=a
 add_subdirectory (include)
 add_subdirectory (src) 
 add_subdirectory (resources)
-add_subdirectory (external/box2d/src)
+
 
 include (cmake/Zip.cmake)
 
@@ -25,11 +25,11 @@ set (SFML_DIR "${SFML_LOCATION}/lib/cmake/SFML")
 #--------------------------------------
 
 # Add the include directory for nlohmann json
-include_directories(${CMAKE_SOURCE_DIR}/external/json-develop/single_include)
+include_directories(${CMAKE_SOURCE_DIR}/external/json.hhp)
 
 # Add the library to your project
 add_library(nlohmann_json INTERFACE)
-target_include_directories(nlohmann_json INTERFACE ${CMAKE_SOURCE_DIR}/external/json-develop/single_include)
+target_include_directories(nlohmann_json INTERFACE ${CMAKE_SOURCE_DIR}/external/json.hhp)
 
 # Link the library to your executable
 target_link_libraries(${CMAKE_PROJECT_NAME} nlohmann_json)
