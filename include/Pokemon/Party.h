@@ -28,9 +28,15 @@ public:
         }
     }
 
-    int getPartySize()
+    int getPartySize() const
     {
-        return PARTY_SIZE;
+        int count = 0;
+        for (const auto& pokemon : m_pokemons)
+        {
+            if (pokemon)
+                ++count;
+        }
+        return count;
     }
     
     void addPokemon(std::shared_ptr<Pokemon> pokemon)
@@ -76,7 +82,7 @@ public:
     {
         checkIndex(index);
         
-        return m_pokemons[index];
+        return m_pokemons[index] ? m_pokemons[index] : nullptr;
     }
     
     std::shared_ptr<Pokemon> getCurrPokemon()

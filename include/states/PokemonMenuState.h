@@ -14,6 +14,7 @@ struct PokemonUI
     std::unique_ptr<Gui> mainGui;
     std::unique_ptr<Gui> lifeBar;
     std::unique_ptr<Gui> expBar;
+    std::unique_ptr<Gui> textGui;
     sf::Sprite frontSprite;
 };
 
@@ -40,75 +41,114 @@ public:
         SoundTon::getInstance().stopSound(soundNames::POKEMON);
         SoundTon::getInstance().playSound(soundNames::MENU_THEME);
     }
-
     void entry()
     {
+        if (!m_player)
+        {
+            std::cerr << "Error: Player is nullptr!" << std::endl;
+            return;
+        }
+
         const sf::Font& font = Resources::getInstance().getFont();
 
-        // Determine the number of Pokémon to display
-        size_t numPokemon = m_player->getPartySize(); // Assume this function exists
+        // Determine the actual number of Pokémon to display
+        size_t numPokemon = m_player->getPartySize();
 
-        // Calculate spacing based on the number of Pokémon
-        float startX = m_cameraCenter.x - (numPokemon * 400) / 2.0f; // Adjust 400 as needed
-        float yPosition = m_cameraCenter.y - m_windowSize.y / 2.0f + 100.0f; // Starting Y position
+        if (numPokemon == 0)
+        {
+            std::cerr << "Error: No Pokémon in the party!" << std::endl;
+            return;
+        }
+
+        // Define padding and calculate container size
+        float padding = 50.0f; // Adjust padding as needed
+        sf::Vector2u windowSize = Resources::getInstance().getWindow().getSize();
+        // Correct container size: window size minus padding on each side
+
+        sf::Vector2f containerSize(windowSize.x - 2 * padding, windowSize.y - 2 * padding);
+        sf::Vector2f containerPosition = m_cameraCenter - (containerSize / 2.0f);
+
+
+        // Create container GUI
+        m_containerGui = std::make_unique<Gui>(font, containerSize, containerPosition);
+        m_containerGui->setText(""); // Clear any text if necessary
+
+        // Define inner padding within container
+        float innerPadding = 20.0f;
+
+        // Calculate positions within the container
+        float textWidth = containerSize.x * 0.3f; // 30% for text
+        float spriteWidth = containerSize.x * 0.5f; // 50% for sprite and bars
+        float textStartX = containerPosition.x + innerPadding; // Slight offset from left
+        float textStartY = containerPosition.y - innerPadding;
 
         for (size_t i = 0; i < numPokemon; ++i)
         {
-            auto pokemon = m_player->getPokemon(i); // Assume this function returns a pointer or reference to a Pokémon
+            auto pokemon = m_player->getPokemon(i); // Fetch Pokémon by index
 
-            PokemonUI ui;
+            if (!pokemon)
+            {
+                std::cerr << "Error: Pokémon at index " << i << " is nullptr!" << std::endl;
+                continue; // Skip to the next Pokémon
+            }
 
-            // Main GUI (background or container)
-            sf::Vector2f mainButtonSize(400, 200); // Adjust size as needed
-            sf::Vector2f mainButtonPosition(startX + i * 400, yPosition);
-            ui.mainGui = std::make_unique<Gui>(font, mainButtonSize, mainButtonPosition);
+            PokemonUI ui; // Instantiate inside the loop
 
-            // Health Bar
-            sf::Vector2f barSize(300, 30);
-            sf::Vector2f lifeBarPosition(mainButtonPosition.x + 50, mainButtonPosition.y + 150);
-            ui.lifeBar = std::make_unique<Gui>(font, barSize, lifeBarPosition);
-            ui.lifeBar->addProgressBar(
-                lifeBarPosition.x - 10,
-                lifeBarPosition.y - 10,
-                barSize.x,
-                barSize.y,
-                sf::Color::Black,
-                sf::Color::Green,
-                pokemon->getHpPercent()
-            );
-
-            // Experience Bar
-            sf::Vector2f expBarPosition(lifeBarPosition.x, lifeBarPosition.y + 50);
-            ui.expBar = std::make_unique<Gui>(font, barSize, expBarPosition);
-            ui.expBar->addProgressBar(
-                expBarPosition.x - 10,
-                expBarPosition.y - 10,
-                barSize.x,
-                barSize.y,
-                sf::Color::Black,
-                sf::Color::Blue,
-                pokemon->getExpPercent()
-            );
+            // ----------- Text GUI (Left Side) -----------
+            sf::Vector2f textGuiSize(textWidth, containerSize.y / numPokemon - 2 * innerPadding); // Adjust height as needed
+            sf::Vector2f textGuiPosition(textStartX, textStartY + i * (textGuiSize.y - innerPadding)); // Vertical stacking with spacing
+            ui.mainGui = std::make_unique<Gui>(font, textGuiSize, textGuiPosition);
 
             // Set Text for the main GUI
             setText(ui.mainGui.get(), pokemon);
 
+            // ----------- Sprite and Bars GUI (Right Side) -----------
+            float spriteStartX = containerPosition.x + containerSize.x * 0.3f + innerPadding; // 30% + offset
+            float spriteStartY = containerPosition.y + innerPadding + i * (containerSize.y / numPokemon);
+
             // Pokémon Sprite
             ui.frontSprite = pokemon->getFrontSprite();
-            ui.frontSprite.setPosition(mainButtonPosition.x + 200, mainButtonPosition.y + 100); // Center of the main GUI
-            ui.frontSprite.setScale(2.0f, 2.0f);
+            ui.frontSprite.setPosition(spriteStartX + spriteWidth / 2.0f, spriteStartY + 100.0f); // Center of the sprite area
+            ui.frontSprite.setScale(2.0f, 2.0f); // Adjust scale as needed
+
+            // Health Bar
+            sf::Vector2f barSize(300.0f, 30.0f);
+            sf::Vector2f lifeBarPosition(spriteStartX, spriteStartY + 200.0f);
+            ui.lifeBar = std::make_unique<Gui>(font, barSize, lifeBarPosition);
+            ui.lifeBar->addProgressBar(
+                lifeBarPosition.x - 10.0f,
+                lifeBarPosition.y - 10.0f,
+                barSize.x,
+                barSize.y,
+                sf::Color::Black,
+                sf::Color::Green,
+                pokemon->getHpPercent());
+            
+            // Experience Bar
+            sf::Vector2f expBarPosition(spriteStartX, lifeBarPosition.y + 50.0f);
+            ui.expBar = std::make_unique<Gui>(font, barSize, expBarPosition);
+            ui.expBar->addProgressBar(
+                expBarPosition.x - 10.0f,
+                expBarPosition.y - 10.0f,
+                barSize.x,
+                barSize.y,
+                sf::Color::Black,
+                sf::Color::Blue,
+                pokemon->getCurrentExpPercent());
+           
 
             // Add to the vector
             m_pokemonUIs.emplace_back(std::move(ui));
         }
     }
 
+
     void setText(Gui* gui, const std::shared_ptr<Pokemon>& pokemon)
     {
         gui->setResetColor();
         std::ostringstream textStream;
 
-        textStream << "Name: " << pokemon->getName() << "\n";
+        textStream << "Name: " << (pokemon->getPokemonName()) << "\n";
         textStream << "Level: " << pokemon->getLevel() << "\n";
         textStream << "Current HP: " << pokemon->getCurrentHP() << "\n";
         textStream << "Attack: " << pokemon->getAttack() << "\n";
@@ -140,6 +180,13 @@ public:
 
     void draw(sf::RenderWindow& window)
     {
+        // Draw the container GUI first to act as a background
+        if (m_containerGui)
+        {
+            m_containerGui->draw(window);
+        }
+
+        // Draw each Pokémon's UI elements
         for (auto& ui : m_pokemonUIs)
         {
             ui.mainGui->draw(window);
@@ -149,11 +196,12 @@ public:
         }
     }
 
+
 private:
     std::shared_ptr<Player> m_player;
     sf::Vector2f m_cameraCenter;
     std::vector<PokemonUI> m_pokemonUIs;
     sf::Vector2i m_windowSize{ Resources::getInstance().getWindow().getSize() };
-
+    std::unique_ptr<Gui> m_containerGui;
     // Other member variables as needed
 };
