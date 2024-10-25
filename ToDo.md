@@ -8,6 +8,7 @@ Currently, there arent any installation guide, and cloning doesnt work even when
 
 ### Problems found
 
+
 #### Box2d isnt needed
 Object are reliant on box2d, despite not using any real physics. 
 Box2d is a big library, we dont want to push, or logicly even use here.
@@ -25,6 +26,9 @@ seperate into cpp files.
 
 #### Alot of files are staticly typed
 instead of doing a modular loading from a specific folder
+
+#### Very self explantory (like this word)
+![Exampleui](exampleui.png)
 
 #### Solution
 create a script and folders, to load all the names/path from a folder.

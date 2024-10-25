@@ -3,6 +3,8 @@
 #include "../Resources.h"
 
 
+
+
 class ProgressBar {
 public:
     ProgressBar(float x, float y, float width, float height, sf::Color backgroundColor, sf::Color barColor)
