@@ -35,7 +35,7 @@ Once the maps are created, we use the [Tileson API](https://github.com/SSBMTonbe
    Open a terminal or Git Bash and run:
 
    ```bash
-    https://github.com/YanivGabay/PokemonClone
+ git clone   https://github.com/YanivGabay/PokemonClone
    ```
 
 2. **Open the Project in Visual Studio or VSCode:**
