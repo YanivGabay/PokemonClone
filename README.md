@@ -1,6 +1,17 @@
 
 # MiniMons - Pokémon Clone
 
+![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)&nbsp;
+![C++](https://img.shields.io/badge/Language-C++-blue)&nbsp;
+![SFML](https://img.shields.io/badge/Framework-SFML%202.5.1-brightgreen)&nbsp;
+![Tileson](https://img.shields.io/badge/Library-Tileson-yellow)&nbsp;
+![Tiled](https://img.shields.io/badge/Map%20Editor-Tiled-orange)&nbsp;
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)&nbsp;
+![Game Genre](https://img.shields.io/badge/Genre-RPG-red)&nbsp;
+![Platform](https://img.shields.io/badge/Platform-Windows-blue)&nbsp;
+![Build System](https://img.shields.io/badge/Build%20System-CMake-informational)&nbsp;
+![IDE](https://img.shields.io/badge/IDE-Visual%20Studio-purple)
+
 ## Overview
 
 **MiniMons** is a Pokémon-inspired game developed as the final project for our Object-Oriented Programming (OOP) course. Players embark on a journey to train their starter Pokémon and ultimately face the powerful Green Nightmare on the fourth map. Through exploration, battles, and leveling up, players prepare to take on this ultimate challenge.
@@ -138,6 +149,12 @@ Planned features (yet to be implemented):
 - Character may move an extra space after battle.
 - Resizing issues in menus when window size changes.
 - Minor imperfections in fade-in and fade-out effects.
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
